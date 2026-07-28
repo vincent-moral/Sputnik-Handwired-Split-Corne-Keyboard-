@@ -1,0 +1,69 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/ {
+    combos {
+        compatible = "zmk,combos";
+        
+        /* Combo E + R = é */
+        combo_e_aigu {
+            timeout-ms = <50>;
+            key-positions = <3 4>;
+            bindings = <&kp N2>;
+            layers = <0>;
+        };
+
+        /* Combo Z + E = è */
+        combo_e_grave {
+            timeout-ms = <50>;
+            key-positions = <2 3>;
+            bindings = <&kp N7>;
+            layers = <0>;
+        };
+
+        /* Combo A + Z = à */
+        combo_a_grave {
+            timeout-ms = <50>;
+            key-positions = <1 2>;
+            bindings = <&kp N0>;
+            layers = <0>;
+        };
+
+        /* Combo X + C = ç */
+        combo_c_cedille {
+            timeout-ms = <50>;
+            key-positions = <26 27>;
+            bindings = <&kp N9>;
+            layers = <0>;
+        };
+
+        /* Combo U + I = ù */
+        combo_u_grave {
+            timeout-ms = <50>;
+            key-positions = <7 8>;
+            bindings = <&kp SQT>;
+            layers = <0>;
+        };
+
+        /* Combo I + O = ^ */
+        combo_circonflexe {
+            timeout-ms = <50>;
+            key-positions = <8 9>;
+            bindings = <&kp LBKT>;
+            layers = <0>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            bindings = <
+                &kp TAB   &kp Q &kp W &kp E &kp R &kp T        &kp Y &kp U &kp I     &kp O   &kp P    &kp BSPC
+                &kp ESC   &kp A &kp S &kp D &kp F &kp G        &kp H &kp J &kp K     &kp L   &kp SEMI &kp SQT
+                &kp LSHFT &kp Z &kp X &kp C &kp V &kp B        &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp RET
+                                &kp LALT &mo 1 &kp SPACE     &kp RET &mo 2 &kp RGUI
+            >;
+        };
+    };
+};
