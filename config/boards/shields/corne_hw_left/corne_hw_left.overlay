@@ -33,20 +33,3 @@
         map = <0 1 2 3 4 5  6 7 8 9 10 11  12 13 14 15 16 17  18 19 20 21 22 23>;
     };
 };
-
-&i2c0 {
-    status = "okay";
-    sda-pin = <17>;
-    scl-pin = <20>;
-    clock-frequency = <I2C_BITRATE_STANDARD>;
-
-    oled0: oled@3c {
-        compatible = "solomon,ssd1306fb";
-        reg = <0x3C>;
-        width = <128>;
-        height = <32>;
-        label = "OLED";
-    };
-};
-
-
