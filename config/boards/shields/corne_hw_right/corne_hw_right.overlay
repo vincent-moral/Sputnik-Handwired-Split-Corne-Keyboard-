@@ -1,10 +1,14 @@
-/
-{
-    chosen { zmk,kscan = &kscan0; };
+/ {
+    chosen { 
+        zmk,kscan = &kscan0; 
+    };
 
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN_RIGHT";
+        
+        /* Shift all right-side column coordinates by 6 */
+        col-offset = <6>;
 
         /* Rows: P0.29, P1.13, P0.10, P0.09 */
         row-gpios = <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
@@ -24,12 +28,5 @@
         debounce-press-ms = <5>;
         debounce-release-ms = <5>;
         wakeup-source;
-    };
-
-    matrix_transform {
-        compatible = "zmk,matrix-transform";
-        columns = <6>;
-        rows = <4>;
-        map = <0 1 2 3 4 5  6 7 8 9 10 11  12 13 14 15 16 17  18 19 20 21 22 23>;
     };
 };
