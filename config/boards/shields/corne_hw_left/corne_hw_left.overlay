@@ -26,7 +26,7 @@
         wakeup-source;
     };
 
-    matrix_transform {
+    default_transform: matrix_transform {
         compatible = "zmk,matrix-transform";
         columns = <6>;
         rows = <4>;
