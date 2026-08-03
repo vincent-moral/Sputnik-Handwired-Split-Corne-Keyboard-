@@ -1,3 +1,5 @@
+if SHIELD_CORNE_HW_RIGHT
+
 config ZMK_SPLIT
 	def_bool y
 
@@ -10,4 +12,5 @@ config ZMK_SPLIT_ROLE_PERIPHERAL
 config ZMK_USB
 	def_bool y
 
+endif
 
