@@ -23,3 +23,5 @@ include:
     shield: corne_hw_left
   - board: nice_nano//zmk
     shield: corne_hw_right
+  - board: nice_nano//zmk
+    shield: settings_reset
