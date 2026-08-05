@@ -10,7 +10,7 @@ config ZMK_SPLIT_ROLE_PERIPHERAL
 	def_bool y
 
 config ZMK_USB
-	def_bool y
+	def_bool n
 
 endif
 
