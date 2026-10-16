@@ -328,8 +328,8 @@ needs a settings reset.
 ### Implementation Plan
 1. **Done (2026-10-16):** set `CONFIG_ZMK_KEYBOARD_NAME` in
    `config/corne_hw.conf`.
-2. Push to a `dev` branch, read the run's jobs and annotations, then
-   fast-forward `main`.
+2. **Done (2026-10-16):** pushed to `dev`, all five jobs green (only the
+   Ubuntu 26 runner notice), `main` fast-forwarded to `8f5aa23`.
 3. The user flashes `settings_reset` on both halves, then the new
    firmware on both (together with `FEAT-6` and `BUG-3`).
 4. Verify: the keyboard pairs as "Clavier Vincent", and over USB it
