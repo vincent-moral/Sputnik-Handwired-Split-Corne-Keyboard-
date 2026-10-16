@@ -72,12 +72,26 @@ The digits are keypad keys: NumLock must be on (`num` toggles it).
 ### Nav (hold left outer thumb, right hand)
 
 ```
- pgup  home  ↑    end   ^   del
- pgdn  ←     ↓    →     ·   ·
+ pgup  home  ↑     end    ^     del
+ pgdn  ←     ↓     →      kcpy  kpst
+ undo  cut   copy  paste  redo  ·
 ```
 
+`kcpy` / `kpst` are kitty's copy and paste (Ctrl+Shift+C / V).
 `^` here types right away (AltGr+9), for vim and regexes; the `i + o`
 combo stays the dead key for ê, î, ô.
+
+**How and when to use it** (added 2026-10-16, still a habit to build):
+
+- **Edit shortcuts without a chord:** hold nav, tap one key. Use them
+  instead of `k` + a letter for undo, cut, copy, paste and redo
+  (Ctrl+Shift+Z), mostly while already on nav.
+- **Select then copy in one go:** hold nav, hold `f` (Shift), move with the
+  arrows, let go of `f`, tap `copy` (or `cut`), all without leaving nav.
+- **In kitty, use `kcpy` / `kpst`**, never `copy` / `paste`: plain Ctrl+C
+  stops the running program and Ctrl+V doesn't paste. They replace
+  Ctrl+Shift+C/V, which the same-hand rule makes impossible otherwise
+  (Ctrl and Shift are both right-hand home-row mods).
 
 ## Credits
 
@@ -85,6 +99,7 @@ combo stays the dead key for ê, î, ô.
   [Selenium](https://onedeadkey.github.io/selenium/), through their ZMK
   implementation [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox):
   the advice behind the home-row mod timing, and the timing of the nav thumb
-  key (layer as soon as another key is pressed, Super only on a quick tap).
+  key (layer as soon as another key is pressed, Super only on a quick tap),
+  and the single-key edit shortcuts on the nav layer.
 - ZMK's [timeless home-row mods](https://zmk.dev/docs/keymaps/behaviors/hold-tap)
   example, which the home-row mod settings follow.

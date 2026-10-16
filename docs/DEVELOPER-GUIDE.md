@@ -15,7 +15,9 @@ check every change against them.
    keymap is changed.
 2. **Change locally, as small atomic commits**, one logical change each.
    A keymap change updates the README's layer diagrams **in the same
-   commit** (R1).
+   commit** (R1). A new way of doing something also gets a short "how
+   and when to use it" note under its layer: the user has to build the
+   habit, and the README is where they look it up.
 3. **Push only with explicit approval.** A push to `main` makes GitHub
    Actions build new firmware. Nothing changes on the keyboard until the
    user flashes it, but a broken build blocks every later change.

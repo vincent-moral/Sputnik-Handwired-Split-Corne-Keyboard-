@@ -239,11 +239,26 @@ slots.
 - The nav layer is held by the left thumb, so under the same-hand rule
   they go on the right hand.
 
-### Implementation Plan
-_Not yet discussed._
+- Study (2026-10-16): fits the ground rules (nav thumb on the left, the
+  shortcuts on the right). The real gain is kitty's Ctrl+Shift+C/V,
+  impossible today since Ctrl (`k`) and Shift (`j`) are both right-hand
+  home-row mods; plain undo/copy/paste already work as `k` + a letter.
+- Layout (proposed, the user liked it 2026-10-16): undo, cut, copy,
+  paste, redo (Ctrl+Shift+Z) on the bottom row (`n , ; : !`); kitty copy
+  and paste on the two free home-row slots (`m`, `'`).
+- New habit for the user: the README says how and when to use it.
 
-### Prerequisites
-- Study with the user: does it fit the README's ground rules?
+### Implementation Plan
+Approved 2026-10-16.
+1. **Done (2026-10-16):** bindings on the nav layer: `LC(W)`, `LC(X)`,
+   `LC(C)`, `LC(V)`, `LC(LS(W))` at 30–34, `LC(LS(C))`, `LC(LS(V))` at
+   22–23; README diagram plus a "how and when" note; README credits
+   Arsenik (guide §4).
+2. Push to `dev`; fast-forward `main` once green.
+3. Flash the left half; verify each key in a text editor and in kitty
+   (nav + `m` copies a selection, nav + `'` pastes).
+4. After a few weeks: is it used? If not, remove it rather than keep
+   unused keys.
 
 ## FEAT-10: Study Arsenik's symbols layer for the raise layer
 
