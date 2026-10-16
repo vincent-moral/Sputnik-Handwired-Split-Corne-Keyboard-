@@ -5,7 +5,9 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      # Pinned (BUG-1): must match the workflow's ref in
+      # .github/workflows/build.yml. Upgrade both in one commit.
+      revision: 4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85
       import: app/west.yml
   self:
     path: config

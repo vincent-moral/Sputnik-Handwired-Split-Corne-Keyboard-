@@ -8,4 +8,6 @@ on:
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+    # Pinned (BUG-1): must match the zmk revision in config/west.yml.
+    # Upgrade both in one commit.
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85
