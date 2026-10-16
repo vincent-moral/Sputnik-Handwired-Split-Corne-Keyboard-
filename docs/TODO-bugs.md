@@ -29,8 +29,8 @@ Approved 2026-10-16.
    `quick-tap-ms`: tapping Super and then holding for nav must give nav.
 2. **Done (2026-10-16):** use it instead of `&lt 3 LGUI`.
 3. **Done (2026-10-16):** README credits Arsenik for it (guide §4).
-4. Same push and check as `FEAT-6` (dev branch, then `main`), as a
-   separate commit.
+4. **Done (2026-10-16):** pushed and checked with `FEAT-6` (dev branch,
+   then `main` at `7a40cc5`), as a separate commit.
 5. Flash and verify: tapping the thumb alone opens COSMIC's launcher; a
    quick nav + arrow gives the arrow, never Super.
 

@@ -163,9 +163,14 @@ Approved 2026-10-16.
 3. **Done (2026-10-16):** README: say the firmware enforces the same-hand rule, and credit
    Arsenik and ZMK's timeless home-row mods (guide §4).
 4. The user opens and saves the keymap in keymap-editor: check that the
-   behaviors survive.
-5. Push to a `dev` branch, read the run's jobs and annotations, then
-   fast-forward `main`.
+   behaviors survive. Opening: **done (2026-10-16)**, the editor shows the
+   home-row keys as `&hml`/`&hmr`/`&hsl`/`&hsr` and the nav thumb as
+   `&lthp`, with one warning still to read. Saving: not yet tested (the
+   editor only saves after a change; proposed test on a throwaway
+   `editor-test` branch).
+5. **Done (2026-10-16):** pushed to `dev`; all five jobs green, the only
+   annotation the known Ubuntu 26 runner notice (full logs need a `gh`
+   login); `main` fast-forwarded to `7a40cc5`.
 6. Flash and verify: fast rolls (`le`, `la`, `sd`, `de`, `fr`) give
    letters; `k`+`c` copies; a capital right after a space works; Shift +
    nav + arrow selects; tap-then-hold `j` repeats.
