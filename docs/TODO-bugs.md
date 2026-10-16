@@ -19,9 +19,21 @@ layer is immediate and the tap only happens when the thumb is tapped alone.
 ### Spec
 - Replace `&lt 3 LGUI` with a hold-preferred layer-tap.
 - Whether the user has hit it yet is unknown: the keymap isn't flashed.
+- Study (2026-10-16): fits the ground rules; it fixes a change made the
+  same day and moves no key.
 
 ### Implementation Plan
-_Not yet discussed._
+Proposed 2026-10-16, to approve:
+1. Add a hold-tap behavior to `config/corne_hw.keymap`: `hold-preferred`,
+   `tapping-term-ms` 150, `&mo` on hold and `&kp` on tap. No
+   `quick-tap-ms`: tapping Super and then holding for nav must give nav.
+2. Use it instead of `&lt 3 LGUI`.
+3. README: credit Arsenik with `FEAT-6`'s commit, or in this one if it
+   lands first (guide §4).
+4. Same push and check as `FEAT-6` (dev branch, then `main`), as a
+   separate commit.
+5. Flash and verify: tapping the thumb alone opens COSMIC's launcher; a
+   quick nav + arrow gives the arrow, never Super.
 
 ### Prerequisites
-- Study with the user: does it fit the README's ground rules?
+- Approval of the plan above.

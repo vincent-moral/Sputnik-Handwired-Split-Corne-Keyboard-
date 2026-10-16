@@ -134,14 +134,46 @@ need tuning by daily use.
   - Candidates to evaluate: `require-prior-idle-ms` (letters while typing
     fast), `quick-tap-ms` (key repeat), `hold-trigger-on-release`.
   - Arsenik's own default is tap-preferred with a 300 ms term.
-- Unknown: whether the user hits misfires today.
+- Study (2026-10-16): fits the ground rules. It enforces the same-hand
+  rule and moves no key. The thumbs count as triggers, which keeps the
+  nav-layer exception (Shift on `f` + nav + arrow) working. A same-hand
+  modifier is still possible on purpose, by holding past the tapping term.
+- The user confirmed misfires (2026-10-16): Alt sometimes fires instead
+  of the letter. Alt is on the ring fingers (`s`, `l`), which release
+  late in rolls like `l`→`e`.
+- Shift stays instant (user's choice, 2026-10-16): no
+  `require-prior-idle-ms` on the Shift keys, so a capital right after a
+  quick space still works.
+- The user holds `j`/`k` to scroll in vim and Vimium. Both are home-row
+  mods (Shift, Ctrl), so a long press is a modifier, today and after this
+  change. `quick-tap-ms` makes tap-then-hold repeat; hjkl arrows on the
+  nav layer are the other option (see Prerequisites).
 
 ### Implementation Plan
-_Not yet discussed._
+Proposed 2026-10-16, to approve:
+1. Add four hold-tap behaviors to `config/corne_hw.keymap`, following
+   ZMK's "timeless home-row mods" example: `balanced`,
+   `tapping-term-ms` 280, `quick-tap-ms` 175, `hold-trigger-on-release`,
+   `hold-trigger-key-positions` = the other hand's 18 keys plus all six
+   thumbs (36–41).
+   - `hml` / `hmr` (GUI, Alt, Ctrl): with `require-prior-idle-ms` 150.
+   - `hsl` / `hsr` (Shift): without it.
+2. Use them for the eight home-row keys instead of `&mt`.
+3. README: say the firmware enforces the same-hand rule, and credit
+   Arsenik and ZMK's timeless home-row mods (guide §4).
+4. The user opens and saves the keymap in keymap-editor: check that the
+   behaviors survive.
+5. Push to a `dev` branch, read the run's jobs and annotations, then
+   fast-forward `main`.
+6. Flash and verify: fast rolls (`le`, `la`, `sd`, `de`, `fr`) give
+   letters; `k`+`c` copies; a capital right after a space works; Shift +
+   nav + arrow selects; tap-then-hold `j` repeats.
+7. Tune the timings after a week of daily use.
 
 ### Prerequisites
-- Study with the user: does it fit the README's ground rules?
-- Does the user get stray capitals or shortcuts when typing fast?
+- Holding `j`/`k`: tap-then-hold only, or also hjkl arrows on the nav
+  layer?
+- Approval of the plan above.
 
 ## FEAT-7: Sticky modifiers and sticky layers
 
