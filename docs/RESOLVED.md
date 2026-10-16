@@ -24,3 +24,16 @@ Two things that weren't obvious:
   2026-10-19, per the CI notice). Accepted as a gap: pinning either means
   copying the whole workflow into this repo. If a build ever breaks or changes with no
   commit here, suspect that image first.
+
+## BUG-2: The build workflow's path filter wasn't a real GitHub Actions key
+
+**Closed:** 2026-10-16
+
+`.github/workflows/build.yml` filtered pushes with `paths-before-commit`,
+which GitHub Actions doesn't know. It didn't reject the workflow: it
+silently ignored the key, so every push built firmware, docs-only ones
+included. Replaced with `paths-ignore` for `**.md` and `docs/**`; the
+docs-only push of `b83f135` started no run.
+
+The lesson: a workflow that runs doesn't prove its filters work. Check
+the behavior with a push that should be skipped (R3).
