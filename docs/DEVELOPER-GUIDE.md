@@ -98,7 +98,19 @@ claims carry a date.
 - `**Depends on X**` lead-ins link entries.
 - When closing an entry, `git grep -nw '<ID>'` and fix every reference.
 
-## 4. For AI assistants
+## 4. Borrowed ideas
+
+Entries marked **From Arsenik** come from
+[Arsenik](https://github.com/OneDeadKey/arsenik) and its split variant
+[Selenium](https://onedeadkey.github.io/selenium/), as implemented for ZMK
+by [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox).
+
+- Each one is studied with the user before any plan: it's adopted only
+  if it fits the ground rules in the README.
+- **Once one is adopted, the README credits Arsenik** (same commit as the
+  keymap change), saying what was taken.
+
+## 5. For AI assistants
 
 - Read this guide, then the backlog, before assuming something is new.
 - Follow §1's authorization rules exactly: prepare, explain, ask.

@@ -25,6 +25,8 @@ the niri bindings, which aren't known yet.
   - Print Screen (position 35) prints on tap and holds Ctrl+Shift;
   - a Super+Ctrl and/or Super+Shift key placed the same way, once the
     niri bindings are known.
+- Alternative from Arsenik: sticky modifiers (`FEAT-7`) solve the same
+  problem without new keys.
 - App side, outside this repo: in `~/.config/kitty/kitty.conf`,
   `map ctrl+c copy_or_interrupt` and `map ctrl+v paste_from_clipboard`
   remove the need for Ctrl+Shift for copy and paste.
@@ -108,3 +110,137 @@ legends show QWERTY keycodes: it needs a mapping to what AZERTY types.
 
 ### Implementation Plan
 _Not yet discussed._
+
+## FEAT-6: Home-row mods that only trigger with the other hand
+
+**Priority:** High — the home-row mods use ZMK's default `&mt`
+(hold-preferred, 200 ms, checked in ZMK `4dd95d7` on 2026-10-16): any key
+pressed while a home-row key is still down makes it a modifier, so a fast
+roll like `f`→`r` types `R` and `d`→`e` sends Ctrl+E.
+
+**Complexity:** Medium — one custom hold-tap behavior, but its timings
+need tuning by daily use.
+
+**From Arsenik** (guide §4): its FAQ recommends, for ZMK, the
+`balanced` flavor plus positional hold-tap.
+
+### Spec
+- A custom hold-tap for the eight home-row mods:
+  - `hold-trigger-key-positions`: the other hand's keys and the thumbs,
+    so a same-hand key always resolves as a tap. This is the same-hand
+    rule enforced by the firmware.
+  - `balanced` or `tap-preferred` flavor instead of `hold-preferred`, so
+    rolls across hands stay letters.
+  - Candidates to evaluate: `require-prior-idle-ms` (letters while typing
+    fast), `quick-tap-ms` (key repeat), `hold-trigger-on-release`.
+  - Arsenik's own default is tap-preferred with a 300 ms term.
+- Unknown: whether the user hits misfires today.
+
+### Implementation Plan
+_Not yet discussed._
+
+### Prerequisites
+- Study with the user: does it fit the README's ground rules?
+- Does the user get stray capitals or shortcuts when typing fast?
+
+## FEAT-7: Sticky modifiers and sticky layers
+
+**Priority:** Medium — tapping a modifier or layer key, then the key,
+turns every chord into a sequence: the purest form of the same-hand rule.
+
+**Complexity:** Medium — ZMK's `&sk` and `&sl` exist; the work is
+deciding which keys become sticky and how they combine with the holds.
+
+**From Arsenik** (guide §4): sticky Shift and Sym on the thumbs,
+and Callum-style one-shot mods on a layer.
+
+### Spec
+- Alternative to `FEAT-1`'s combined-modifier keys: Ctrl+Shift+C becomes
+  tap Ctrl, tap Shift, tap C; niri and COSMIC's Super+Shift+… the same.
+- A sticky raise key would make right-hand symbols reachable without
+  breaking the same-hand rule (tap raise, then any symbol), which gives
+  room for all symbols on one layer (`FEAT-10`).
+- ZMK defaults (`4dd95d7`): sticky keys release after 1000 ms;
+  Ækeynox adds `quick-release` to `&sk` to avoid false positives.
+
+### Implementation Plan
+_Not yet discussed._
+
+### Prerequisites
+- Study with the user: does it fit the README's ground rules?
+
+## FEAT-8: One accent key (1dk) instead of the accent combos
+
+**Priority:** Medium — capital accented letters (É, À, Ç, È) can't be
+typed at all today: Shift plus an accent combo types a digit. This gap
+exists whether or not 1dk is adopted.
+
+**Complexity:** Medium — two extra layers (accents, shifted accents) and
+the capitals trick; the key's position conflicts with `'`.
+
+**From Arsenik** (guide §4): Ækeynox's AZERTY-1dk.
+
+### Spec
+- Tap the accent key, then a letter: à é è ù ç â ê î ô û œ µ €, plus the
+  dead diaeresis on a double tap. Sequential, unlike the current combos,
+  which press two keys with the same hand at once (to confirm with the
+  user whether the combos were an intended exception).
+- Capitals on Linux: Ækeynox wraps the key in Caps Lock (`&caps N2` = É),
+  which works on the Linux AZERTY layout.
+- Conflict: Ækeynox puts the accent key on the outer right home key,
+  where `'` went on 2026-10-16, and types `'` as accent key + Space.
+
+### Implementation Plan
+_Not yet discussed._
+
+### Prerequisites
+- Study with the user: does it fit the README's ground rules?
+- Were the accent combos an intended exception to the same-hand rule?
+- Where would the accent key go, given that `'` must stay one keypress?
+
+## FEAT-9: Single-key shortcuts on the nav layer
+
+**Priority:** Low — undo, cut, copy, paste (and kitty's Ctrl+Shift+C /
+Ctrl+Shift+V) as single keys need no chord at all.
+
+**Complexity:** Low — a few bindings on the nav layer's free right-hand
+slots.
+
+**From Arsenik** (guide §4): its nav layer has them on ZXCV.
+
+### Spec
+- On AZERTY the keyboard sends QWERTY positions: undo is `LC(W)`, select
+  all `LC(Q)` (Ækeynox's AZERTY aliases).
+- The nav layer is held by the left thumb, so under the same-hand rule
+  they go on the right hand.
+
+### Implementation Plan
+_Not yet discussed._
+
+### Prerequisites
+- Study with the user: does it fit the README's ground rules?
+
+## FEAT-10: Study Arsenik's symbols layer for the raise layer
+
+**Priority:** Low — the raise layer has no muscle memory yet (the user
+knows the base and number layers well, as of 2026-10-16), so it can still
+be redesigned freely.
+
+**Complexity:** Medium — the layer uses both hands, which needs sticky
+raise (`FEAT-7`) under the same-hand rule.
+
+**From Arsenik** (guide §4): its symbols layer, taken from
+Ergo-L, with AZERTY keycodes in Ækeynox's `aliases/azerty.h`.
+
+### Spec
+- All 30 programming symbols on one layer, none needing Shift, the most
+  frequent (`{ ( ) } =`) on the left home row, common sequences without
+  same-finger bigrams, designed with vim in mind.
+- Would replace today's raise layer and the symbols around the numpad on
+  the low layer.
+
+### Implementation Plan
+_Not yet discussed._
+
+### Prerequisites
+- Study with the user: does it fit the README's ground rules?
