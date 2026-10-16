@@ -17,6 +17,10 @@ The keymap is only changed through this repository: no ZMK Studio edits.
   bindings read differently from what is typed (`&kp Q` types `a`, `&kp N4` types `'`,
   `&kp RA(N0)` types `@`, …). The diagrams below show what is *typed*.
 - **Home row modifiers**: GUI / Alt / Ctrl / Shift on `q s d f` and `j k l m`.
+  The firmware enforces the same-hand rule for them: a home-row key only
+  becomes a modifier when the next key is on the other hand or a thumb, or
+  when held past 280 ms. To repeat a home-row letter (e.g. `j` in vim), tap
+  it, then hold it.
 - **Never press two keys at the same time with the same hand.** Layers are held
   with a thumb, and their keys sit on the opposite hand. Accepted exceptions:
   - Bluetooth management on the low layer.
@@ -71,3 +75,12 @@ The digits are keypad keys: NumLock must be on (`num` toggles it).
  pgup  home  ↑    end   ·   del
  pgdn  ←     ↓    →     ·   ·
 ```
+
+## Credits
+
+- [Arsenik](https://github.com/OneDeadKey/arsenik) and its split variant
+  [Selenium](https://onedeadkey.github.io/selenium/), through their ZMK
+  implementation [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox):
+  the advice behind the home-row mod timing.
+- ZMK's [timeless home-row mods](https://zmk.dev/docs/keymaps/behaviors/hold-tap)
+  example, which the home-row mod settings follow.

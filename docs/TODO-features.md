@@ -150,16 +150,17 @@ need tuning by daily use.
   nav layer are the other option (see Prerequisites).
 
 ### Implementation Plan
-Proposed 2026-10-16, to approve:
-1. Add four hold-tap behaviors to `config/corne_hw.keymap`, following
+Approved 2026-10-16.
+1. **Done (2026-10-16):** add four hold-tap behaviors to `config/corne_hw.keymap`, following
    ZMK's "timeless home-row mods" example: `balanced`,
    `tapping-term-ms` 280, `quick-tap-ms` 175, `hold-trigger-on-release`,
    `hold-trigger-key-positions` = the other hand's 18 keys plus all six
    thumbs (36–41).
    - `hml` / `hmr` (GUI, Alt, Ctrl): with `require-prior-idle-ms` 150.
    - `hsl` / `hsr` (Shift): without it.
-2. Use them for the eight home-row keys instead of `&mt`.
-3. README: say the firmware enforces the same-hand rule, and credit
+2. **Done (2026-10-16):** use them for the eight home-row keys instead
+   of `&mt`.
+3. **Done (2026-10-16):** README: say the firmware enforces the same-hand rule, and credit
    Arsenik and ZMK's timeless home-row mods (guide §4).
 4. The user opens and saves the keymap in keymap-editor: check that the
    behaviors survive.
@@ -171,9 +172,9 @@ Proposed 2026-10-16, to approve:
 7. Tune the timings after a week of daily use.
 
 ### Prerequisites
-- Holding `j`/`k`: tap-then-hold only, or also hjkl arrows on the nav
-  layer?
-- Approval of the plan above.
+- Plan approved 2026-10-16. Holding `j`/`k`: tap-then-hold for now;
+  hjkl arrows on the nav layer are deferred until the user has more
+  experience with arrows on this keyboard.
 
 ## FEAT-7: Sticky modifiers and sticky layers
 
