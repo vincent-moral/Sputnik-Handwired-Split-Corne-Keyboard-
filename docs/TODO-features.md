@@ -304,6 +304,15 @@ known from `config/corne_hw.dtsi`.
   editor save after the change reformats the whole keymap once.
 - The guide's note on keeping the editor's one-line format (§1, "Who may
   change what") changes with it.
+- `row`/`col` are the matrix positions from the shields' `default_transform`
+  (`RC(row,col)`): rows 0–2 use columns 0–11, the thumbs row 3,
+  columns 3–8.
 
 ### Implementation Plan
-_Not yet discussed._
+Approved 2026-10-16, built together with `FEAT-2`.
+1. **Done (2026-10-16):** add `row` and `col` to the 42 keys of
+   `config/corne_hw.json`; update the guide's note on the editor format.
+2. Push to `dev` with `FEAT-2`; fast-forward `main` once green.
+3. The user opens the keymap in keymap-editor: the row/col warning is
+   gone. The first save after that reformats the layers as a grid
+   (one-off whitespace diff).

@@ -46,10 +46,12 @@ check every change against them.
   `config/corne_hw.json`. So:
   - `git pull` before changing anything: the remote may have editor
     commits.
-  - The editor rewrites `config/corne_hw.keymap` in its own format (each
-    layer's bindings on one line). Keep that format so its diffs stay
-    readable. A save (tested 2026-10-16) changes only the edited bindings:
-    behaviors, combos and comments survive.
+  - The editor rewrites `config/corne_hw.keymap` in its own format: each
+    layer's bindings as a grid, laid out from the `row`/`col` of each key
+    in `config/corne_hw.json` (`FEAT-11`; one line per layer before).
+    Keep that format so its diffs stay readable. A save (tested
+    2026-10-16) changes only the edited bindings: behaviors, combos and
+    comments survive.
   - Editor commits don't follow the commit format below or update the
     README; check the README diagrams after one (R1).
   - The editor shows QWERTY keycodes, not what AZERTY types (`FEAT-5`).
