@@ -1,6 +1,6 @@
 # Features
 
-Capabilities to add that don't exist yet. Reference an entry by its ID (e.g. `FEAT-2`).
+Capabilities to add that don't exist yet. Reference an entry by its ID (`FEAT-N`).
 
 ## FEAT-1: Keys for shortcuts with two modifiers
 
@@ -37,33 +37,6 @@ _Not yet discussed._
 ### Prerequisites
 - The user's niri `config.kdl` and any custom Dank Material Shell
   keybindings from the work PC.
-
-## FEAT-2: Plain `^` for vim and regexes
-
-**Priority:** Medium — `^` (start of line in vim, anchor in regexes) is
-only reachable as the dead key from the `i+o` combo, which waits for a
-second key.
-
-**Complexity:** Low — one binding.
-
-**Quick win:** yes, one key on a free slot of the nav layer.
-
-### Spec
-- On AZERTY, AltGr+9 (`RA(N9)`) types a non-dead `^`.
-- Proposed (2026-10-16): put it on the nav layer, next to Home and End,
-  mirroring vim's `^` and `$` (line start and end). The dead key stays on
-  the combo for ê, î, ô.
-
-- Position chosen by the user (2026-10-16): `p` (position 10), right of
-  End. `$` stays on the low layer.
-
-### Implementation Plan
-Approved 2026-10-16, built together with `FEAT-11`.
-1. **Done (2026-10-16):** `&kp RA(N9)` at position 10 of the nav layer;
-   README nav diagram updated.
-2. Push to `dev` with `FEAT-11`; fast-forward `main` once green.
-3. Flash the left half; verify nav + `p` types `^` at once (no waiting
-   for a second key), and the `i+o` combo still makes ê.
 
 ## FEAT-3: LazyVim Ctrl+/ (toggle terminal) on AZERTY
 
@@ -173,7 +146,7 @@ Approved 2026-10-16.
 4. **Done (2026-10-16):** the user opens and saves the keymap in
    keymap-editor: the behaviors survive. Opening: the editor shows the
    home-row keys as `&hml`/`&hmr`/`&hsl`/`&hsr` and the nav thumb as
-   `&lthp` (its warning became `FEAT-11`). Saving: on a throwaway
+   `&lthp` (its warning, no row/col in the layout file, fixed 2026-10-16). Saving: on a throwaway
    `editor-test` branch the user changed one key (position 31, `M` to
    `A`); the editor's commit `5a059ab` changed only that binding, and
    left behaviors, combos and comments byte-identical. Branch deleted.
@@ -295,32 +268,3 @@ _Not yet discussed._
 
 ### Prerequisites
 - Study with the user: does it fit the README's ground rules?
-
-## FEAT-11: Row and column positions in the layout file
-
-**Priority:** Low — keymap-editor warns (seen 2026-10-16) that
-`config/corne_hw.json` has no `row`/`col` per key, so it saves each
-layer's bindings on one line, which makes keymap diffs hard to review.
-
-**Complexity:** Low — add `row` and `col` to the 42 keys; positions are
-known from `config/corne_hw.dtsi`.
-
-**Quick win:** yes.
-
-### Spec
-- With them, the editor saves the bindings as a readable grid. The first
-  editor save after the change reformats the whole keymap once.
-- The guide's note on keeping the editor's one-line format (§1, "Who may
-  change what") changes with it.
-- `row`/`col` are the matrix positions from the shields' `default_transform`
-  (`RC(row,col)`): rows 0–2 use columns 0–11, the thumbs row 3,
-  columns 3–8.
-
-### Implementation Plan
-Approved 2026-10-16, built together with `FEAT-2`.
-1. **Done (2026-10-16):** add `row` and `col` to the 42 keys of
-   `config/corne_hw.json`; update the guide's note on the editor format.
-2. Push to `dev` with `FEAT-2`; fast-forward `main` once green.
-3. The user opens the keymap in keymap-editor: the row/col warning is
-   gone. The first save after that reformats the layers as a grid
-   (one-off whitespace diff).

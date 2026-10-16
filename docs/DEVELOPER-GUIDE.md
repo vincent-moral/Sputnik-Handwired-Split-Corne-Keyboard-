@@ -48,7 +48,7 @@ check every change against them.
     commits.
   - The editor rewrites `config/corne_hw.keymap` in its own format: each
     layer's bindings as a grid, laid out from the `row`/`col` of each key
-    in `config/corne_hw.json` (`FEAT-11`; one line per layer before).
+    in `config/corne_hw.json` (added 2026-10-16; one line per layer before).
     Keep that format so its diffs stay readable. A save (tested
     2026-10-16) changes only the edited bindings: behaviors, combos and
     comments survive.
