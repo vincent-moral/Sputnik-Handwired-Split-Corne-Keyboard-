@@ -323,8 +323,14 @@ needs a settings reset.
   (ZMK docs, `config/system.md`).
 - It's also the USB product name (`USB_DEVICE_PRODUCT` defaults to it).
 
-### Implementation Plan
-_Not yet discussed._
+- Name chosen by the user (2026-10-16): "Clavier Vincent" (15 characters).
 
-### Prerequisites
-- Which name, at most 16 characters?
+### Implementation Plan
+1. **Done (2026-10-16):** set `CONFIG_ZMK_KEYBOARD_NAME` in
+   `config/corne_hw.conf`.
+2. Push to a `dev` branch, read the run's jobs and annotations, then
+   fast-forward `main`.
+3. The user flashes `settings_reset` on both halves, then the new
+   firmware on both (together with `FEAT-6` and `BUG-3`).
+4. Verify: the keyboard pairs as "Clavier Vincent", and over USB it
+   shows the same product name (`lsusb`).
