@@ -19,6 +19,13 @@ check every change against them.
 3. **Push only with explicit approval.** A push to `main` makes GitHub
    Actions build new firmware. Nothing changes on the keyboard until the
    user flashes it, but a broken build blocks every later change.
+   - Firmware changes go to a `dev` branch first. Once its build is
+     green (every job and annotation read), fast-forward `main` to it and
+     delete `dev`.
+   - If `main` has moved meanwhile (e.g. a keymap-editor commit), rebase
+     `dev` onto it, push again and wait for the new build before
+     fast-forwarding: never merge, never fast-forward an untested rebase.
+   - Docs-only commits can go straight to `main` (they start no build).
 4. **Check the build** after a push (Actions tab, or
    `gh run list --limit 1`). "The build is green" only proves it
    compiles.
