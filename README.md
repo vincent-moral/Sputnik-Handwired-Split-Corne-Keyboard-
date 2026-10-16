@@ -81,6 +81,7 @@ The digits are keypad keys: NumLock must be on (`num` toggles it).
 - [Arsenik](https://github.com/OneDeadKey/arsenik) and its split variant
   [Selenium](https://onedeadkey.github.io/selenium/), through their ZMK
   implementation [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox):
-  the advice behind the home-row mod timing.
+  the advice behind the home-row mod timing, and the timing of the nav thumb
+  key (layer as soon as another key is pressed, Super only on a quick tap).
 - ZMK's [timeless home-row mods](https://zmk.dev/docs/keymaps/behaviors/hold-tap)
   example, which the home-row mod settings follow.
