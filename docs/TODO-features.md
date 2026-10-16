@@ -282,3 +282,49 @@ _Not yet discussed._
 
 ### Prerequisites
 - Study with the user: does it fit the README's ground rules?
+
+## FEAT-11: Row and column positions in the layout file
+
+**Priority:** Low — keymap-editor warns (seen 2026-10-16) that
+`config/corne_hw.json` has no `row`/`col` per key, so it saves each
+layer's bindings on one line, which makes keymap diffs hard to review.
+
+**Complexity:** Low — add `row` and `col` to the 42 keys; positions are
+known from `config/corne_hw.dtsi`.
+
+**Quick win:** yes.
+
+### Spec
+- With them, the editor saves the bindings as a readable grid. The first
+  editor save after the change reformats the whole keymap once.
+- The guide's note on keeping the editor's one-line format (§1, "Who may
+  change what") changes with it.
+
+### Implementation Plan
+_Not yet discussed._
+
+## FEAT-12: A readable Bluetooth name
+
+**Priority:** Medium — the keyboard shows up as its MAC address when
+pairing, because `CONFIG_ZMK_KEYBOARD_NAME` isn't set anywhere in this
+repo (checked 2026-10-16).
+
+**Complexity:** Low — one line in `config/corne_hw.conf`, but applying it
+needs a settings reset.
+
+**Quick win:** yes.
+
+### Spec
+- The user would like "Clavier de Vincent". ZMK limits the name to 16
+  characters (`BT_DEVICE_NAME_MAX`, ZMK `4dd95d7`) so it fits in the
+  Bluetooth advertising data; that name has 18.
+- ZMK stores the name at runtime: changing it only takes effect after
+  flashing `settings_reset`, which also deletes the Bluetooth pairings
+  (ZMK docs, `config/system.md`).
+- It's also the USB product name (`USB_DEVICE_PRODUCT` defaults to it).
+
+### Implementation Plan
+_Not yet discussed._
+
+### Prerequisites
+- Which name, at most 16 characters?
