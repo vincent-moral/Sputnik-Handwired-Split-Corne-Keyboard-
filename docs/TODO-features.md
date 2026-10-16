@@ -172,10 +172,14 @@ Approved 2026-10-16.
 5. **Done (2026-10-16):** pushed to `dev`; all five jobs green, the only
    annotation the known Ubuntu 26 runner notice (full logs need a `gh`
    login); `main` fast-forwarded to `7a40cc5`.
-6. Flash and verify: fast rolls (`le`, `la`, `sd`, `de`, `fr`) give
-   letters; `k`+`c` copies; a capital right after a space works; Shift +
-   nav + arrow selects; tap-then-hold `j` repeats.
-7. Tune the timings after a week of daily use.
+6. **Done (2026-10-16):** flashed (`8f5aa23`) and verified: fast rolls
+   (`le`, `la`, `sd`, `de`, `fr`) give letters; `k`+`c` copies; a
+   capital right after a space works; Shift + nav + arrow selects;
+   tap-then-hold `j` repeats, but only when the second press is fast.
+7. Tune the timings after a week of daily use. Candidate: the
+   tap-then-hold window is short because ZMK counts `quick-tap-ms` (175)
+   from the first tap's *press* (`behavior_hold_tap.c` at `4dd95d7`); if
+   it stays awkward, raise it to about 250 on `hmr`/`hsr`.
 
 ### Prerequisites
 - Plan approved 2026-10-16. Holding `j`/`k`: tap-then-hold for now;
@@ -331,7 +335,8 @@ needs a settings reset.
    `config/corne_hw.conf`.
 2. **Done (2026-10-16):** pushed to `dev`, all five jobs green (only the
    Ubuntu 26 runner notice), `main` fast-forwarded to `8f5aa23`.
-3. The user flashes `settings_reset` on both halves, then the new
-   firmware on both (together with `FEAT-6` and `BUG-3`).
+3. **Done (2026-10-16):** the user flashed `settings_reset` on both
+   halves, then the new firmware on both (together with `FEAT-6` and
+   `BUG-3`).
 4. Verify: the keyboard pairs as "Clavier Vincent", and over USB it
    shows the same product name (`lsusb`).

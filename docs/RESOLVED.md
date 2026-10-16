@@ -37,3 +37,18 @@ docs-only push of `b83f135` started no run.
 
 The lesson: a workflow that runs doesn't prove its filters work. Check
 the behavior with a push that should be skipped (R3).
+
+## BUG-3: A quick arrow on the nav layer could type Super + a letter
+
+**Closed:** 2026-10-16
+
+The left outer thumb (tap Super, hold nav) used ZMK's `&lt`, which is
+tap-preferred with a 200 ms term: thumb + arrow released within 200 ms
+gave Super and a letter. It is now a custom hold-tap (`lthp`):
+hold-preferred, 150 ms, no `quick-tap-ms`, following Arsenik. Verified
+on the keyboard: a quick nav + arrow gives the arrow, and a tap alone
+opens COSMIC's launcher.
+
+The lesson: `&lt` suits keys that are mostly tapped. A thumb whose
+layer is used in fast rolls needs hold-preferred, so the layer wins as
+soon as another key is pressed.
