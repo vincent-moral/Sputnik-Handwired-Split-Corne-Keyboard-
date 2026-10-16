@@ -50,8 +50,12 @@ read.
   which GitHub Actions doesn't know (`paths` and `paths-ignore` are the
   real keys). As of 2026-10-16 runs start on every push, so it appears
   to be ignored.
-- Fix: `paths-ignore` for `**.md` and `docs/**`. Verify after pushing
-  that a docs-only push starts no run (R3).
+- Confirmed 2026-10-16: the docs-only push of `5df66fb` started a build.
+- Fix: `paths-ignore` for `**.md` and `docs/**`. Manual builds stay
+  possible through `workflow_dispatch`.
 
 ### Implementation Plan
-_Not yet discussed._
+1. **Done (2026-10-16):** replace `paths-before-commit` with
+   `paths-ignore`.
+2. Push (the push itself changes the workflow, so it builds).
+3. Verify with the next docs-only push: no run must start (R3).

@@ -2,8 +2,10 @@ name: Build ZMK Firmware
 
 on:
   push:
-    paths-before-commit:
-      - '**'
+    # Docs-only pushes don't change the firmware (BUG-2).
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
   workflow_dispatch:
 
 jobs:
