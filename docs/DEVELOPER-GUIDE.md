@@ -72,7 +72,7 @@ README's diagrams describe what they type, and must change with it
 ### R2. Pin every version
 A floating version changes the firmware without a commit: ZMK on
 `main` can change what a binding does between two builds of the same
-keymap (`BUG-1`). Tools come from pixi when it has them.
+keymap ([`BUG-1`](RESOLVED.md#bug-1-zmk-and-its-build-workflow-floated-on-main)). Tools come from pixi when it has them.
 
 ### R3. Check how the tool behaves; don't assume it
 Before relying on how ZMK, the OS layout or an app handles a key,
