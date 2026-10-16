@@ -48,7 +48,8 @@ check every change against them.
     commits.
   - The editor rewrites `config/corne_hw.keymap` in its own format (each
     layer's bindings on one line). Keep that format so its diffs stay
-    readable; comments outside the combos may not survive an editor save.
+    readable. A save (tested 2026-10-16) changes only the edited bindings:
+    behaviors, combos and comments survive.
   - Editor commits don't follow the commit format below or update the
     README; check the README diagrams after one (R1).
   - The editor shows QWERTY keycodes, not what AZERTY types (`FEAT-5`).

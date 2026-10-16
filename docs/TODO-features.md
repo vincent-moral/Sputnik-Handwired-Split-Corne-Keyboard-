@@ -162,12 +162,13 @@ Approved 2026-10-16.
    of `&mt`.
 3. **Done (2026-10-16):** README: say the firmware enforces the same-hand rule, and credit
    Arsenik and ZMK's timeless home-row mods (guide §4).
-4. The user opens and saves the keymap in keymap-editor: check that the
-   behaviors survive. Opening: **done (2026-10-16)**, the editor shows the
+4. **Done (2026-10-16):** the user opens and saves the keymap in
+   keymap-editor: the behaviors survive. Opening: the editor shows the
    home-row keys as `&hml`/`&hmr`/`&hsl`/`&hsr` and the nav thumb as
-   `&lthp`, with one warning still to read. Saving: not yet tested (the
-   editor only saves after a change; proposed test on a throwaway
-   `editor-test` branch).
+   `&lthp` (its warning became `FEAT-11`). Saving: on a throwaway
+   `editor-test` branch the user changed one key (position 31, `M` to
+   `A`); the editor's commit `5a059ab` changed only that binding, and
+   left behaviors, combos and comments byte-identical. Branch deleted.
 5. **Done (2026-10-16):** pushed to `dev`; all five jobs green, the only
    annotation the known Ubuntu 26 runner notice (full logs need a `gh`
    login); `main` fast-forwarded to `7a40cc5`.
