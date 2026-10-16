@@ -254,10 +254,12 @@ Approved 2026-10-16.
    `LC(C)`, `LC(V)`, `LC(LS(W))` at 30–34, `LC(LS(C))`, `LC(LS(V))` at
    22–23; README diagram plus a "how and when" note; README credits
    Arsenik (guide §4).
-2. Push to `dev`; fast-forward `main` once green.
-3. Flash the left half; verify each key in a text editor and in kitty
-   (nav + `m` copies a selection, nav + `'` pastes).
-4. After a few weeks: is it used? If not, remove it rather than keep
+2. **Done (2026-10-16):** pushed to `dev`, all five jobs green (only the
+   Ubuntu 26 runner notice), `main` fast-forwarded to `4109eae`.
+3. **Done (2026-10-16):** flashed the left half and verified in COSMIC
+   Text Editor (select on nav then copy, paste, undo, redo, cut) and in
+   kitty (nav + `m` copies, nav + `'` pastes, nav + `;` stops `sleep`).
+4. Around 2026-11-06: is it used? If not, remove it rather than keep
    unused keys.
 
 ## FEAT-10: Study Arsenik's symbols layer for the raise layer
