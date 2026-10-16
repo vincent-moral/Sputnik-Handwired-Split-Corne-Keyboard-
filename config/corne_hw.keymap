@@ -160,7 +160,7 @@
 
         nav_layer {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &kp PG_UP  &kp HOME  &kp UP  &kp END  &trans  &kp DEL  &trans  &trans  &trans  &trans  &trans  &trans  &kp PG_DN  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &kp PG_UP  &kp HOME  &kp UP  &kp END  &kp RA(N9)  &kp DEL  &trans  &trans  &trans  &trans  &trans  &trans  &kp PG_DN  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
     };

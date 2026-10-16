@@ -72,9 +72,12 @@ The digits are keypad keys: NumLock must be on (`num` toggles it).
 ### Nav (hold left outer thumb, right hand)
 
 ```
- pgup  home  ↑    end   ·   del
+ pgup  home  ↑    end   ^   del
  pgdn  ←     ↓    →     ·   ·
 ```
+
+`^` here types right away (AltGr+9), for vim and regexes; the `i + o`
+combo stays the dead key for ê, î, ô.
 
 ## Credits
 

@@ -54,8 +54,16 @@ second key.
   mirroring vim's `^` and `$` (line start and end). The dead key stays on
   the combo for ê, î, ô.
 
+- Position chosen by the user (2026-10-16): `p` (position 10), right of
+  End. `$` stays on the low layer.
+
 ### Implementation Plan
-_Not yet discussed._
+Approved 2026-10-16, built together with `FEAT-11`.
+1. **Done (2026-10-16):** `&kp RA(N9)` at position 10 of the nav layer;
+   README nav diagram updated.
+2. Push to `dev` with `FEAT-11`; fast-forward `main` once green.
+3. Flash the left half; verify nav + `p` types `^` at once (no waiting
+   for a second key), and the `i+o` combo still makes ê.
 
 ## FEAT-3: LazyVim Ctrl+/ (toggle terminal) on AZERTY
 
