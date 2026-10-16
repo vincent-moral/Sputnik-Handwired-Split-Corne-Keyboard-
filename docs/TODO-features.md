@@ -195,9 +195,10 @@ _Not yet discussed._
 
 ## FEAT-8: One accent key (1dk) instead of the accent combos
 
-**Priority:** Medium — capital accented letters (É, À, Ç, È) can't be
+**Priority:** Low — capital accented letters (É, À, Ç, È) can't be
 typed at all today: Shift plus an accent combo types a digit. This gap
-exists whether or not 1dk is adopted.
+exists whether or not 1dk is adopted. The user's standard AZERTY
+keyboards can't type them either, so it isn't a priority (2026-10-16).
 
 **Complexity:** Medium — two extra layers (accents, shifted accents) and
 the capitals trick; the key's position conflicts with `'`.
