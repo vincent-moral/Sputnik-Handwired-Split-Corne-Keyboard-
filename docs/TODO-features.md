@@ -307,36 +307,3 @@ known from `config/corne_hw.dtsi`.
 
 ### Implementation Plan
 _Not yet discussed._
-
-## FEAT-12: A readable Bluetooth name
-
-**Priority:** Medium — the keyboard shows up as its MAC address when
-pairing, because `CONFIG_ZMK_KEYBOARD_NAME` isn't set anywhere in this
-repo (checked 2026-10-16).
-
-**Complexity:** Low — one line in `config/corne_hw.conf`, but applying it
-needs a settings reset.
-
-**Quick win:** yes.
-
-### Spec
-- The user would like "Clavier de Vincent". ZMK limits the name to 16
-  characters (`BT_DEVICE_NAME_MAX`, ZMK `4dd95d7`) so it fits in the
-  Bluetooth advertising data; that name has 18.
-- ZMK stores the name at runtime: changing it only takes effect after
-  flashing `settings_reset`, which also deletes the Bluetooth pairings
-  (ZMK docs, `config/system.md`).
-- It's also the USB product name (`USB_DEVICE_PRODUCT` defaults to it).
-
-- Name chosen by the user (2026-10-16): "Clavier Vincent" (15 characters).
-
-### Implementation Plan
-1. **Done (2026-10-16):** set `CONFIG_ZMK_KEYBOARD_NAME` in
-   `config/corne_hw.conf`.
-2. **Done (2026-10-16):** pushed to `dev`, all five jobs green (only the
-   Ubuntu 26 runner notice), `main` fast-forwarded to `8f5aa23`.
-3. **Done (2026-10-16):** the user flashed `settings_reset` on both
-   halves, then the new firmware on both (together with `FEAT-6` and
-   `BUG-3`).
-4. Verify: the keyboard pairs as "Clavier Vincent", and over USB it
-   shows the same product name (`lsusb`).

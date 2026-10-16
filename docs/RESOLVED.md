@@ -52,3 +52,18 @@ opens COSMIC's launcher.
 The lesson: `&lt` suits keys that are mostly tapped. A thumb whose
 layer is used in fast rolls needs hold-preferred, so the layer wins as
 soon as another key is pressed.
+
+## FEAT-12: A readable Bluetooth name
+
+**Closed:** 2026-10-16
+
+`CONFIG_ZMK_KEYBOARD_NAME="Clavier Vincent"` in `config/corne_hw.conf`
+names the keyboard over Bluetooth and USB (`lsusb`), verified on both.
+
+Two things that weren't obvious:
+
+- ZMK caps the name at 16 characters (`BT_DEVICE_NAME_MAX`) so it fits
+  in the advertising data: the first choice, "Clavier de Vincent", had 18.
+- ZMK keeps the name in its settings, so a new firmware alone doesn't
+  apply it: flash `settings_reset` first, which also deletes every
+  Bluetooth pairing.
