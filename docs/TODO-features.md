@@ -62,7 +62,9 @@ Approved 2026-10-17.
 1. **Done (2026-10-17):** `&kp LC(N8)` at position 35 of the nav layer
    (bottom right, free); legend "nvim Term" in the drawing config; README
    ground rule (everything on the keyboard) and a "how and when" note.
-2. Push to `dev`; fast-forward `main` once green.
+2. **Done (2026-10-17):** pushed to `dev`; firmware build and draw job
+   green (only the Ubuntu 26 runner notice), no redraw commit needed;
+   `main` fast-forwarded to `e46a123`.
 3. Flash the left half; verify nav + bottom right opens LazyVim's
    terminal and hides it again.
 
