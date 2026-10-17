@@ -1,0 +1,18 @@
+# Pinned tools for this repo (R2). `pixi run draw` redraws the keymap
+# (FEAT-5); CI runs the same task. `pixi run cheatsheet` makes a
+# printable A4 PDF of it (not committed).
+[workspace]
+name = "sputnik-corne-zmk"
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = "3.12.*"
+librsvg = "2.62.*"
+
+[pypi-dependencies]
+keymap-drawer = "==0.23.0"
+
+[tasks]
+draw = { cmd = "mkdir -p keymap-drawer && keymap -c keymap_drawer.config.yaml parse -z config/corne_hw.keymap --layer-names Base Low Raise Nav > keymap-drawer/corne_hw.yaml && keymap -c keymap_drawer.config.yaml draw -j config/corne_hw.json keymap-drawer/corne_hw.yaml > keymap-drawer/corne_hw.svg" }
+cheatsheet = { cmd = "rsvg-convert -f pdf --page-width 210mm --page-height 297mm --left 17mm --top 10mm --width 176mm --keep-aspect-ratio keymap-drawer/corne_hw.svg -o keymap-drawer/cheatsheet.pdf", depends-on = ["draw"] }

@@ -1,0 +1,193 @@
+layout: {zmk_keyboard: corne_hw}
+layers:
+  Base:
+  - Tab
+  - A
+  - Z
+  - E
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - ⌫
+  - Esc
+  - {t: Q, h: Super}
+  - {t: S, h: Alt}
+  - {t: D, h: Ctrl}
+  - {t: F, h: Shift}
+  - G
+  - H
+  - {t: J, h: Shift}
+  - {t: K, h: Ctrl}
+  - {t: L, h: Alt}
+  - {t: M, h: Super}
+  - ''''
+  - Shift
+  - W
+  - X
+  - C
+  - V
+  - B
+  - N
+  - ','
+  - ;
+  - ':'
+  - '!'
+  - PrtSc
+  - {t: Super, h: Nav}
+  - Low
+  - ␣
+  - ↵
+  - Raise
+  - AltGr
+  Low:
+  - Tab
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - NumLk
+  - '7'
+  - '8'
+  - '9'
+  - '*'
+  - ⌫
+  - BT clear
+  - BT 0
+  - BT 1
+  - BT 2
+  - BT 3
+  - BT 4
+  - '{'
+  - '4'
+  - '5'
+  - '6'
+  - '}'
+  - $
+  - Shift
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - '&'
+  - '1'
+  - '2'
+  - '3'
+  - '%'
+  - '~'
+  - Super
+  - {type: held}
+  - ␣
+  - ↵
+  - '0'
+  - AltGr
+  Raise:
+  - '`'
+  - '"'
+  - ''''
+  - '='
+  - (
+  - )
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - ⌫
+  - Ctrl
+  - '@'
+  - '['
+  - ']'
+  - <
+  - '>'
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - \
+  - '#'
+  - _
+  - +
+  - '-'
+  - '|'
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - Super
+  - {type: trans}
+  - ␣
+  - ↵
+  - {type: held}
+  - AltGr
+  Nav:
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - PgUp
+  - Home
+  - ↑
+  - End
+  - {t: ^, s: plain}
+  - Del
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - PgDn
+  - ←
+  - ↓
+  - →
+  - {t: Copy, s: kitty}
+  - {t: Paste, s: kitty}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - Undo
+  - Cut
+  - Copy
+  - Paste
+  - Redo
+  - {type: trans}
+  - {type: held}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+combos:
+- p: [3, 4]
+  k: é
+  l: [Base]
+- p: [2, 3]
+  k: è
+  l: [Base]
+- p: [1, 2]
+  k: à
+  l: [Base]
+- p: [26, 27]
+  k: ç
+  l: [Base]
+- p: [7, 8]
+  k: ù
+  l: [Base]
+- p: [8, 9]
+  k: ^
+  l: [Base]

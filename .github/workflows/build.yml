@@ -2,10 +2,16 @@ name: Build ZMK Firmware
 
 on:
   push:
-    # Docs-only pushes don't change the firmware (BUG-2).
+    # Docs-only pushes don't change the firmware (BUG-2), and neither
+    # does the keymap drawing or its setup (FEAT-5).
     paths-ignore:
       - '**.md'
       - 'docs/**'
+      - 'keymap-drawer/**'
+      - 'keymap_drawer.config.yaml'
+      - 'pixi.toml'
+      - 'pixi.lock'
+      - '.github/workflows/draw.yml'
   workflow_dispatch:
 
 jobs:

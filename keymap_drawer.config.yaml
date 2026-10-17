@@ -1,0 +1,103 @@
+# keymap-drawer settings (FEAT-5). The keymap sends QWERTY keycodes to a
+# French AZERTY OS: these maps make the drawing show what is *typed*.
+# Checked against /usr/share/X11/xkb/symbols/fr (basic) on 2026-10-17.
+parse_config:
+  trans_legend: {t: "", type: trans}
+  zmk_keycode_map:
+    # Letters that move between QWERTY and AZERTY
+    Q: A
+    W: Z
+    A: Q
+    Z: W
+    SEMI: M
+    M: ","
+    COMMA: ";"
+    DOT: ":"
+    FSLH: "!"
+    # Unshifted number row and punctuation keys
+    N1: "&"
+    N2: é
+    N3: '"'
+    N4: "'"
+    N5: (
+    N6: "-"
+    N7: è
+    N8: _
+    N9: ç
+    N0: à
+    MINUS: )
+    EQUAL: "="
+    SQT: ù
+    LBKT: ^
+    RBKT: $
+    NUBS: <
+    # Modifiers and other keys
+    LGUI: Super
+    LALT: Alt
+    LCTRL: Ctrl
+    LSHFT: Shift
+    RALT: AltGr
+    TAB: Tab
+    ESC: Esc
+    BSPC: ⌫
+    DEL: Del
+    RET: ↵
+    SPACE: ␣
+    PRINTSCREEN: PrtSc
+    PG_UP: PgUp
+    PG_DN: PgDn
+    HOME: Home
+    END: End
+    UP: ↑
+    DOWN: ↓
+    LEFT: ←
+    RIGHT: →
+    KP_NUM: NumLk
+    KP_N0: "0"
+    KP_N1: "1"
+    KP_N2: "2"
+    KP_N3: "3"
+    KP_N4: "4"
+    KP_N5: "5"
+    KP_N6: "6"
+    KP_N7: "7"
+    KP_N8: "8"
+    KP_N9: "9"
+    KP_MULTIPLY: "*"
+  raw_binding_map:
+    # Shift and AltGr symbols
+    "&kp LS(SQT)": "%"
+    "&kp LS(NUBS)": ">"
+    "&kp LS(EQUAL)": "+"
+    "&kp RA(N0)": "@"
+    "&kp RA(N2)": "~"
+    "&kp RA(N3)": "#"
+    "&kp RA(N4)": "{"
+    "&kp RA(N5)": "["
+    "&kp RA(N6)": "|"
+    "&kp RA(N7)": "`"
+    "&kp RA(N8)": \
+    "&kp RA(N9)": {t: "^", s: plain}
+    "&kp RA(MINUS)": "]"
+    "&kp RA(EQUAL)": "}"
+    # Edit shortcuts on the nav layer (FEAT-9)
+    "&kp LC(W)": Undo
+    "&kp LC(X)": Cut
+    "&kp LC(C)": Copy
+    "&kp LC(V)": Paste
+    "&kp LC(LS(W))": Redo
+    "&kp LC(LS(C))": {t: Copy, s: kitty}
+    "&kp LC(LS(V))": {t: Paste, s: kitty}
+    # Bluetooth
+    "&bt BT_CLR": BT clear
+    "&bt BT_SEL 0": BT 0
+    "&bt BT_SEL 1": BT 1
+    "&bt BT_SEL 2": BT 2
+    "&bt BT_SEL 3": BT 3
+    "&bt BT_SEL 4": BT 4
+draw_config:
+  footer_text: "Small legend: when held · Red: thumb holding the layer · Blue: combo (both keys)"
+  dark_mode: auto
+  key_h: 60
+  combo_w: 26
+  combo_h: 22

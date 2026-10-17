@@ -14,16 +14,20 @@ check every change against them.
    `FEAT-N`, see §3) with a Spec and an Implementation Plan before the
    keymap is changed.
 2. **Change locally, as small atomic commits**, one logical change each.
-   A keymap change updates the README's layer diagrams **in the same
-   commit** (R1). A new way of doing something also gets a short "how
-   and when to use it" note under its layer: the user has to build the
-   habit, and the README is where they look it up.
+   The README's layer drawing is generated, never edited by hand: run
+   `pixi run draw` and commit the redrawn `keymap-drawer/` files **in the
+   same commit** as the keymap change (R1). GitHub Actions redraws it
+   after every keymap push as a safety net. A new way of doing something
+   also gets a short "how and when to use it" note under its layer: the
+   user has to build the habit, and the README is where they look it up.
 3. **Push only with explicit approval.** A push to `main` makes GitHub
    Actions build new firmware. Nothing changes on the keyboard until the
    user flashes it, but a broken build blocks every later change.
    - Firmware changes go to a `dev` branch first. Once its build is
      green (every job and annotation read), fast-forward `main` to it and
-     delete `dev`.
+     delete `dev`. If the drawing workflow added a "redraw the keymap"
+     commit on `dev` (the drawing wasn't committed), fast-forward `main`
+     to `origin/dev`, which includes it, then `git pull`.
    - If `main` has moved meanwhile (e.g. a keymap-editor commit), rebase
      `dev` onto it, push again and wait for the new build before
      fast-forwarding: never merge, never fast-forward an untested rebase.
@@ -54,9 +58,12 @@ check every change against them.
     Keep that format so its diffs stay readable. A save (tested
     2026-10-16) changes only the edited bindings: behaviors, combos and
     comments survive.
-  - Editor commits don't follow the commit format below or update the
-    README; check the README diagrams after one (R1).
-  - The editor shows QWERTY keycodes, not what AZERTY types (`FEAT-5`).
+  - Editor commits don't follow the commit format below. GitHub Actions
+    redraws the README's drawing after one, as a second commit: check
+    the README text still matches.
+  - The editor shows QWERTY keycodes, not what AZERTY types; the README
+    drawing shows the AZERTY result (`keymap_drawer.config.yaml` maps
+    each keycode to what it types, so a new keycode needs an entry there).
 - **AI assistants** prepare local commits and stop there. They don't
   push without explicit approval for that push.
 - **A command for the user fits on one short line** (they copy it from a
@@ -78,8 +85,9 @@ check every change against them.
 
 ### R1. One source of truth per fact
 A fact written in two places drifts. The keymap owns the bindings; the
-README's diagrams describe what they type, and must change with it
-(until `FEAT-5` generates them). Link instead of copying anywhere else.
+README's drawing is generated from it, and the README text explains
+layers without repeating what the drawing shows. Link instead of
+copying anywhere else.
 
 ### R2. Pin every version
 A floating version changes the firmware without a commit: ZMK on

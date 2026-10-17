@@ -86,11 +86,45 @@ so today the README is the only place showing what AZERTY types.
 legends show QWERTY keycodes: it needs a mapping to what AZERTY types.
 
 ### Spec
-- Generate SVG diagrams with a pinned keymap-drawer, ideally in CI, and
-  embed them in the README instead of the text diagrams.
+- keymap-drawer 0.23.0 (PyPI, 2026-03-17; not on conda-forge), pinned
+  through a pixi manifest with a lockfile (R2), run as `pixi run draw`.
+- `keymap_drawer.config.yaml` maps each QWERTY keycode and modified
+  binding to what the AZERTY OS types, checked against the system's
+  `xkb/symbols/fr` (2026-10-17). Physical layout from
+  `config/corne_hw.json`.
+- Prototype (2026-10-17): the drawing is deterministic, and it showed
+  the hand-drawn diagrams had already drifted (low: Tab top-left and
+  Bluetooth on the home row; raise: ⌫ top right; outer left thumb is
+  plain Super on low and raise).
+- Decided with the user (2026-10-17): GitHub Actions redraws it after
+  every keymap push (keymap-editor commits included) and commits it; the
+  README's text diagrams and combo table are replaced by the drawing,
+  and the "how and when" notes stay as text.
+- Own workflow instead of keymap-drawer's reusable one, so CI uses the
+  same pixi lockfile as local runs. Actions pinned by commit SHA. Commits
+  pushed with `GITHUB_TOKEN` start no other workflow (GitHub docs), so a
+  drawing commit doesn't rebuild the firmware; `build.yml` also ignores
+  the drawing files.
 
 ### Implementation Plan
-_Not yet discussed._
+Approved 2026-10-17.
+1. **Done (2026-10-17):** `pixi.toml`/`pixi.lock` (keymap-drawer
+   0.23.0, Python 3.12), `keymap_drawer.config.yaml`, the `draw` task and
+   the first drawing in `keymap-drawer/`. Asked by the user the same day:
+   `pixi run cheatsheet` turns it into a one-page A4 PDF (librsvg 2.62,
+   not committed), checked by rendering the page; the draw workflow
+   attaches it to each run (upload-artifact v7.0.1, as a plain PDF).
+2. **Done (2026-10-17):** `.github/workflows/draw.yml` (checkout v7.0.1,
+   setup-pixi v0.10.2 with pixi v0.81.0, locked), commit only when the
+   drawing changed; `build.yml` ignores the drawing files.
+3. **Done (2026-10-17):** README shows the drawing instead of the text
+   diagrams; the guide (§1, R1, editor notes) says how it's kept current.
+4. Push to `dev`: the firmware build is green (it runs because
+   `build.yml` changed), the draw job finds the drawing up to date, and
+   its run has `cheatsheet.pdf`. Fast-forward `main`.
+5. Check the README on GitHub, light and dark theme: every key legible.
+6. Check the safety net on the next keymap-editor commit: the drawing
+   follows within a minute, and no firmware build starts for it.
 
 ## FEAT-6: Home-row mods that only trigger with the other hand
 
