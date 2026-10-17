@@ -119,9 +119,10 @@ Approved 2026-10-17.
    drawing changed; `build.yml` ignores the drawing files.
 3. **Done (2026-10-17):** README shows the drawing instead of the text
    diagrams; the guide (§1, R1, editor notes) says how it's kept current.
-4. Push to `dev`: the firmware build is green (it runs because
-   `build.yml` changed), the draw job finds the drawing up to date, and
-   its run has `cheatsheet.pdf`. Fast-forward `main`.
+4. **Done (2026-10-17):** pushed to `dev`: the firmware build is green
+   (all five jobs, only the Ubuntu 26 runner notice), the draw job is
+   green, found the drawing up to date (no bot commit) and attached
+   `cheatsheet.pdf`. `main` fast-forwarded to `70bd514`.
 5. Check the README on GitHub, light and dark theme: every key legible.
 6. Check the safety net on the next keymap-editor commit: the drawing
    follows within a minute, and no firmware build starts for it.
