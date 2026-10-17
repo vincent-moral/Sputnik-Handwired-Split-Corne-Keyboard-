@@ -67,3 +67,34 @@ Two things that weren't obvious:
 - ZMK keeps the name in its settings, so a new firmware alone doesn't
   apply it: flash `settings_reset` first, which also deletes every
   Bluetooth pairing.
+
+## FEAT-5: Generate the README's layer diagrams from the keymap
+
+**Closed:** 2026-10-17
+
+The README's hand-drawn diagrams are replaced by a drawing generated
+with keymap-drawer (`pixi run draw`), which a GitHub Actions workflow
+(`draw.yml`) redraws and commits after every keymap push. The same run
+attaches a printable A4 `cheatsheet.pdf`. Verified: the README reads
+well in GitHub's light and dark themes; a keymap-editor save on a test
+branch was followed 12 s later by a "redraw the keymap" commit showing
+the change, with no firmware build for that commit.
+
+Things that weren't obvious:
+
+- The drawing found drift on its first run: the hand-drawn low and raise
+  diagrams were already wrong. Hand-kept copies of the keymap drift
+  even when everyone means to update them (R1).
+- keymap-drawer isn't on conda-forge; pixi pins its PyPI release in
+  `pixi.lock` all the same, and CI installs from that lockfile, so local
+  and CI drawings are byte-identical.
+- keymap-drawer draws QWERTY keycode names: the AZERTY legends come
+  from `keymap_drawer.config.yaml`, so a new keycode needs an entry
+  there or it shows up under its raw name.
+- Commits pushed with `GITHUB_TOKEN` start no other workflow, so the
+  bot's drawing commit never rebuilds the firmware.
+- ImageMagick 6 ignores the SVG's CSS (keys come out as black boxes), so
+  inline previews in kitty/neovim through it don't work; librsvg renders
+  it correctly, and `:MarkdownPreview` shows it in the browser.
+- The editor test confirmed `FEAT-11`: the first save laid the keymap
+  out as a grid, with only the edited key changed.
