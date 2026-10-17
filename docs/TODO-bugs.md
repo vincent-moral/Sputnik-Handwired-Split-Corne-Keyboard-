@@ -2,4 +2,50 @@
 
 Things that are wrong today. Reference an entry by its ID (`BUG-N`).
 
-_None open._
+## BUG-4: A slip on the Low layer can switch the Bluetooth profile
+
+**Priority:** Low — it happened once (2026-10-17) and one key press
+(`BT_SEL 1`) fixes it. The user keeps the layout as is for now.
+
+**Complexity:** Low — moving five keys to a new layer.
+
+### Spec
+- On 2026-10-17 the Sputnik showed as connected on the home PC, but no
+  key typed. `BT_SEL 1` on the left half brought it back.
+- Why it looked connected (ZMK `ble.c` at `4dd95d7`): `zmk_ble_prof_select`
+  only changes which host gets the reports; the old host stays connected.
+- Likely cause, not proven: on Low (left thumb), the left home row holds
+  `BT_CLR` and `BT_SEL 0`–`4`, while Low's digits are on the right half.
+  Touching a left home-row key while typing digits switches the profile.
+  `BT_CLR` in the same row would erase the active profile's pairing.
+- Idea (2026-10-17, not adopted): put the BT keys on their own layer,
+  reached only while both Low and Raise are held (a ZMK conditional
+  layer). This changes the README's Bluetooth exception, so it needs the
+  user's approval. A smaller option: move only `BT_CLR` somewhere harder
+  to reach.
+
+### Implementation Plan
+_Not yet discussed._ Revisit if it happens again.
+
+## BUG-5: AltGr stayed held on the PC, cause unknown
+
+**Priority:** Low — seen once (2026-10-17), it cleared by itself.
+
+**Complexity:** Unknown until the cause is known.
+
+### Spec
+- On 2026-10-17, every keyboard on the home PC (the Sputnik and the
+  Corsair) typed as if AltGr were held. COSMIC keeps one modifier state
+  for all keyboards, so one keyboard's lost key release affects them all.
+- The journal shows the Sputnik reconnecting at 19:33:28, in the same
+  second as a failed lock-screen password, and again at 19:52:07.
+- Suspect: AltGr (right thumb, `&kp RALT`) held while the Bluetooth link
+  or the link between the halves dropped, so its release never reached
+  the PC. Not a profile switch (`BUG-4`): ZMK releases every key before
+  switching (`update_current_endpoint` in `endpoints.c` at `4dd95d7`).
+- If it happens again: tap the Sputnik's AltGr first, then the Corsair's,
+  and note which one clears it and whether the Sputnik had just reconnected
+  (`journalctl -b | grep -i clavier`).
+
+### Implementation Plan
+_Not yet discussed._
