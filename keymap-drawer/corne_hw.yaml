@@ -165,7 +165,7 @@ layers:
   - Copy
   - Paste
   - Redo
-  - {type: trans}
+  - {t: Term, s: nvim}
   - {type: held}
   - {type: trans}
   - {type: trans}

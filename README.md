@@ -21,6 +21,10 @@ The keymap is only changed through this repository: no ZMK Studio edits.
   becomes a modifier when the next key is on the other hand or a thumb, or
   when held past 280 ms. To repeat a home-row letter (e.g. `j` in vim), tap
   it, then hold it.
+- **Everything lives on the keyboard**, so it works plug and play on any
+  machine with an AZERTY layout: no OS or app configuration is needed.
+  A shortcut the keyboard can't produce on its own is tracked in the
+  backlog, until there are enough of them to choose one strategy for all.
 - **Never press two keys at the same time with the same hand.** Layers are held
   with a thumb, and their keys sit on the opposite hand. Accepted exceptions:
   - Bluetooth management on the low layer.
@@ -66,6 +70,9 @@ Added 2026-10-16, still a habit to build:
   stops the running program and Ctrl+V doesn't paste. They replace
   Ctrl+Shift+C/V, which the same-hand rule makes impossible otherwise
   (Ctrl and Shift are both right-hand home-row mods).
+- **LazyVim's terminal: `nvim` Term** (added 2026-10-17) opens it from
+  normal mode and hides it from inside. It replaces Ctrl+/, which needs
+  Shift on AZERTY: the key sends Ctrl+`_`, LazyVim's built-in alias.
 
 ## Credits
 

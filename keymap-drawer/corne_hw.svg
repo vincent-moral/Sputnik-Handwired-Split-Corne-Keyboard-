@@ -800,8 +800,10 @@ path.combo { stroke: #7f7f7f; }
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
 <text x="0" y="0" class="key tap">Redo</text>
 </g>
-<g transform="translate(810, 172)" class="key trans keypos-35">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+<g transform="translate(810, 172)" class="key keypos-35">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">Term</text>
+<text x="0" y="-26" class="key shifted">nvim</text>
 </g>
 <g transform="translate(240, 217)" class="key held keypos-36">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key held"/>

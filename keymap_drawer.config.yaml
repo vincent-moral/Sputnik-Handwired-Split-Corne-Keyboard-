@@ -88,6 +88,8 @@ parse_config:
     "&kp LC(LS(W))": Redo
     "&kp LC(LS(C))": {t: Copy, s: kitty}
     "&kp LC(LS(V))": {t: Paste, s: kitty}
+    # LazyVim's terminal toggle (FEAT-3): Ctrl+_ is its <C-_> alias of Ctrl+/
+    "&kp LC(N8)": {t: Term, s: nvim}
     # Bluetooth
     "&bt BT_CLR": BT clear
     "&bt BT_SEL 0": BT 0
