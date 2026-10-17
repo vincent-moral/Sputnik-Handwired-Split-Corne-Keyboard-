@@ -98,3 +98,20 @@ Things that weren't obvious:
   it correctly, and `:MarkdownPreview` shows it in the browser.
 - The editor test confirmed `FEAT-11`: the first save laid the keymap
   out as a grid, with only the edited key changed.
+
+## FEAT-3: LazyVim Ctrl+/ (toggle terminal) on AZERTY
+
+**Closed:** 2026-10-17
+
+Nav + bottom right (`&kp LC(N8)`) toggles LazyVim's terminal, from
+normal mode and from inside the terminal. Verified on the keyboard.
+
+Things that weren't obvious:
+
+- Ctrl+/ can't be sent from an AZERTY keyboard at all: `/` is Shift+`:`,
+  and kitty's keyboard protocol hands neovim `<C-S-:>`, not `<C-/>`.
+- LazyVim also maps the legacy alias `<C-_>`, and `_` is unshifted `8`
+  on AZERTY, so Ctrl+`8` reaches it as `<C-_>`. Look for an app's
+  alternate binding before calling a shortcut impossible.
+- It set the rule now in the README: everything lives on the keyboard,
+  nothing in app or OS config; shortcuts it can't handle get tracked.

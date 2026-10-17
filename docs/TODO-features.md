@@ -38,36 +38,6 @@ _Not yet discussed._
 - The user's niri `config.kdl` and any custom Dank Material Shell
   keybindings from the work PC.
 
-## FEAT-3: LazyVim Ctrl+/ (toggle terminal) on AZERTY
-
-**Priority:** Low — `/` needs Shift on AZERTY, so Ctrl+/ is a
-three-key chord.
-
-**Complexity:** Low — one nav key; no neovim or kitty change.
-
-### Spec
-- Rule set by the user (2026-10-17): everything lives on the keyboard,
-  plug and play; nothing in neovim or kitty config. Shortcuts the
-  keyboard can't handle get tracked for one common strategy later.
-- LazyVim maps `<C-/>` and its legacy alias `<C-_>` to the terminal
-  toggle, in normal and terminal mode (`lazyvim/config/keymaps.lua`
-  195–196, `plugins/util.lua` 26–27).
-- Tested 2026-10-17 in kitty: Ctrl+Shift+`:` (the AZERTY `/`) reaches
-  neovim as `<C-S-:>`, so it can't trigger `<C-/>`. Ctrl+`_` (`_` is
-  unshifted `8` on AZERTY) reaches it as `<C-_>` and toggles the
-  terminal.
-
-### Implementation Plan
-Approved 2026-10-17.
-1. **Done (2026-10-17):** `&kp LC(N8)` at position 35 of the nav layer
-   (bottom right, free); legend "nvim Term" in the drawing config; README
-   ground rule (everything on the keyboard) and a "how and when" note.
-2. **Done (2026-10-17):** pushed to `dev`; firmware build and draw job
-   green (only the Ubuntu 26 runner notice), no redraw commit needed;
-   `main` fast-forwarded to `e46a123`.
-3. Flash the left half; verify nav + bottom right opens LazyVim's
-   terminal and hides it again.
-
 ## FEAT-4: Workspace switching by number on niri and COSMIC
 
 **Priority:** Low until confirmed — the digits on the low layer are
