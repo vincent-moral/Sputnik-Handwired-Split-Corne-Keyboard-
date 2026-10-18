@@ -177,8 +177,8 @@ knows the base and number layers well, as of 2026-10-16), so it can still
 be redesigned freely.
 
 **Complexity:** Medium — the layer uses both hands, which needs a sticky
-raise under the same-hand rule; Raise's tap is taken by `FEAT-7`'s Mods
-layer, so it would need another key.
+key under the same-hand rule: the AltGr thumb's tap, since Raise's tap
+is `FEAT-7`'s Mods layer.
 
 **From Arsenik** (guide §4): its symbols layer, taken from
 Ergo-L, with AZERTY keycodes in Ækeynox's `aliases/azerty.h`.
@@ -189,12 +189,67 @@ Ergo-L, with AZERTY keycodes in Ækeynox's `aliases/azerty.h`.
   same-finger bigrams, designed with vim in mind.
 - Would replace today's raise layer and the symbols around the numpad on
   the low layer.
+- Source: Ækeynox `include/aekeynox/selenium.keymap` (`symbols_layer`) at
+  `3cadeed` (2026-10-08). Their default opens it with the right outer
+  thumb (here AltGr), as a sticky layer in one variant; on the layer the
+  left thumbs are a sticky Num key, Space and Enter.
+- The layer, as typed on AZERTY (3×10, outer columns not part of it):
+
+  ```
+  ^ < > $ %   @ & * ' `
+  { ( ) } =   \ + - / "
+  ~ [ ] _ #   | ! ; : ?
+  ```
+
+  Keycodes from Ækeynox's `aliases/azerty.h`, checked against this
+  Linux's xkb `fr` (2026-10-18): `^` `` ` `` `~` are plain with AltGr
+  (`RA(N9)`, `RA(N7)`, `RA(N2)`, as used today); `*` is the unshifted
+  key next to Enter (`BSLH`, new here), not the keypad `*`, so vim's
+  `*` search works.
+- Comparison with today (2026-10-18). Both type all 30 symbols:
+  - Today they're spread over four places: Raise (17, left hand), Low
+    around the numpad (`{ } & $ % ~ *`, right hand), the AZERTY base
+    (`' , ; : !`, plus Shift for `. / ?`), and Nav for the plain `^`
+    (the `i`+`o` combo stays the dead key). Every layer keeps its keys
+    on the hand opposite its thumb.
+  - Arsenik puts them on one layer, none needing Shift, brackets grouped
+    on the left (`{ ( ) }` home row, `[ ]` below), designed for code and
+    vim.
+  - Gains: one place for every symbol, `/` and `?` without Shift, Low
+    left with numbers and Bluetooth only.
+  - Costs: half the layer is on the same hand as the thumb that holds
+    it, so those keys need a sticky tap, and Raise's tap is the Mods
+    layer (`FEAT-7`). The Raise and Low symbols move (little muscle
+    memory yet). The base punctuation is unchanged either way.
+
+- The sticky key (user's choice, 2026-10-18): the AltGr thumb
+  (position 41), Arsenik's own place. Tap: sticky Symbols for one key;
+  hold: AltGr as today, as soon as another key is pressed (the nav
+  thumb's split, `BUG-3`). The user doesn't type with AltGr by hand.
+- Raise's hold becomes the Arsenik layer: its left half follows the
+  same-hand rule held; the sticky tap reaches both halves. Raise's tap
+  stays the Mods layer (`FEAT-7`).
 
 ### Implementation Plan
-_Not yet discussed._
+Proposed 2026-10-18, not yet approved.
+1. `config/corne_hw.keymap`:
+   - the raise layer becomes the 3×10 above (columns 1–10), keeping its
+     thumbs; outer columns transparent except Ctrl (12) and ⌫ (11),
+     which the user placed there;
+   - a hold-tap `mtsl` (hold-preferred, 150 ms,
+     `bindings = <&kp>, <&sl>`) on position 41 of every layer as
+     `&mtsl RALT 2`.
+2. Low keeps its symbols (`{ } & $ % ~`) while the new layer is learned.
+3. Drawing: legend for `BSLH` (`*`); `pixi run draw`.
+4. README: the raise notes, a "how and when" note (hold Raise for the
+   left half, tap AltGr for any one symbol), and the Arsenik credit.
+5. Local build in CI's image, then push to `dev`, check, fast-forward.
+6. Flash the left half; type all 30 symbols both ways; AltGr hold still
+   works; Raise tap still opens Mods.
+7. Around 2026-11-08: are Low's symbols still used? If not, remove them.
 
 ### Prerequisites
-- Study with the user: does it fit the README's ground rules?
+- Approve the plan.
 
 ## FEAT-13: Move the shield out of the deprecated `config/boards` folder
 
