@@ -42,7 +42,7 @@ layers:
   - ␣
   - ↵
   - {t: Mods, h: Raise}
-  - AltGr
+  - {t: Raise, h: AltGr, s: sticky}
   Low:
   - Tab
   - {type: trans}
@@ -85,50 +85,50 @@ layers:
   - ␣
   - ↵
   - '0'
-  - AltGr
+  - {t: Raise, h: AltGr, s: sticky}
   Raise:
-  - '`'
-  - '"'
-  - ''''
-  - '='
-  - (
-  - )
   - {type: trans}
-  - {type: trans}
-  - {type: trans}
-  - {type: trans}
-  - {type: trans}
-  - ⌫
-  - Ctrl
-  - '@'
-  - '['
-  - ']'
+  - {t: ^, s: plain}
   - <
   - '>'
-  - {type: trans}
-  - {type: trans}
-  - {type: trans}
-  - {type: trans}
-  - {type: trans}
-  - {type: trans}
+  - $
+  - '%'
+  - '@'
+  - '&'
+  - '*'
+  - ''''
+  - '`'
+  - ⌫
+  - Ctrl
+  - '{'
+  - (
+  - )
+  - '}'
+  - '='
   - \
-  - '#'
-  - _
   - +
   - '-'
+  - /
+  - '"'
+  - {type: trans}
+  - {type: trans}
+  - '~'
+  - '['
+  - ']'
+  - _
+  - '#'
   - '|'
-  - {type: trans}
-  - {type: trans}
-  - {type: trans}
-  - {type: trans}
-  - {type: trans}
+  - '!'
+  - ;
+  - ':'
+  - '?'
   - {type: trans}
   - Super
   - {type: trans}
   - ␣
   - ↵
   - {type: held}
-  - AltGr
+  - {t: Raise, h: AltGr, s: sticky}
   Nav:
   - {type: trans}
   - {type: trans}

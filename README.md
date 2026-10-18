@@ -52,7 +52,10 @@ tapped instead):
 - **Low** (left thumb): Bluetooth on the left; a numpad on the right. The
   digits are keypad keys: NumLock must be on (`NumLk` toggles it). `*` is
   the keypad `*` and works regardless of NumLock.
-- **Raise** (right thumb): symbols on the left.
+- **Raise** (right thumb): every symbol, on both hands, from Arsenik
+  (see below). Held, only its left half follows the same-hand rule; the
+  AltGr thumb's tap reaches the whole layer. Low keeps its symbols for
+  now (2026-10-18, to review around 2026-11-08).
 - **Mods** (right thumb, tapped alone): one-shot modifiers where the
   home-row mods are. See below.
 - **Nav** (left outer thumb, which is Super on a tap): arrows and edit
@@ -77,6 +80,19 @@ Added 2026-10-16, still a habit to build:
   normal mode and hides it from inside. It replaces Ctrl+/, which needs
   Shift on AZERTY: the key sends Ctrl+`_`, LazyVim's built-in alias.
 
+### Raise symbols: how and when to use it
+
+Added 2026-10-18, still a habit to build. All 30 programming symbols are
+on Raise, none needs Shift: brackets on the left (`{ ( ) }` on the home
+row, `[ ]` below), `/` and `?` without Shift.
+
+- **Left-hand symbols: hold Raise**, type them, as many as you want.
+- **Right-hand symbols (or any one): tap AltGr, then the key.** The tap
+  lasts for one key, so `->` is AltGr, `-`, then `>` with Raise held, or
+  AltGr again.
+- **Holding AltGr** is still AltGr, as soon as another key is pressed.
+- If no key follows the AltGr tap within 1 s, it lapses.
+
 ### Mods: how and when to use it
 
 Added 2026-10-18, still a habit to build. For shortcuts with **two or
@@ -100,8 +116,9 @@ the same-hand rule makes impossible with home-row mods alone.
   implementation [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox):
   the advice behind the home-row mod timing, and the timing of the nav thumb
   key (layer as soon as another key is pressed, Super only on a quick tap),
-  the single-key edit shortcuts on the nav layer, and the one-shot
-  modifiers of the Mods layer.
+  the single-key edit shortcuts on the nav layer, the one-shot
+  modifiers of the Mods layer, and the raise layer's symbols (Arsenik's
+  symbols layer, from Ergo-L, with Ækeynox's AZERTY keycodes).
 - [keymap-drawer](https://github.com/caksoylar/keymap-drawer), which draws
   the layers.
 - ZMK's [timeless home-row mods](https://zmk.dev/docs/keymaps/behaviors/hold-tap)

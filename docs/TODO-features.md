@@ -231,25 +231,24 @@ Ergo-L, with AZERTY keycodes in Ækeynox's `aliases/azerty.h`.
   stays the Mods layer (`FEAT-7`).
 
 ### Implementation Plan
-Proposed 2026-10-18, not yet approved.
-1. `config/corne_hw.keymap`:
+Approved 2026-10-18.
+1. **Done (2026-10-18):** `config/corne_hw.keymap`:
    - the raise layer becomes the 3×10 above (columns 1–10), keeping its
      thumbs; outer columns transparent except Ctrl (12) and ⌫ (11),
      which the user placed there;
    - a hold-tap `mtsl` (hold-preferred, 150 ms,
      `bindings = <&kp>, <&sl>`) on position 41 of every layer as
      `&mtsl RALT 2`.
-2. Low keeps its symbols (`{ } & $ % ~`) while the new layer is learned.
-3. Drawing: legend for `BSLH` (`*`); `pixi run draw`.
-4. README: the raise notes, a "how and when" note (hold Raise for the
+2. **Done (2026-10-18):** Low keeps its symbols (`{ } & $ % ~`) while the new layer is learned.
+3. **Done (2026-10-18):** drawing: legends for `BSLH` (`*`), `/`, `?`
+   and the AltGr thumb; `pixi run draw`.
+4. **Done (2026-10-18):** README: the raise notes, a "how and when" note (hold Raise for the
    left half, tap AltGr for any one symbol), and the Arsenik credit.
 5. Local build in CI's image, then push to `dev`, check, fast-forward.
 6. Flash the left half; type all 30 symbols both ways; AltGr hold still
    works; Raise tap still opens Mods.
 7. Around 2026-11-08: are Low's symbols still used? If not, remove them.
 
-### Prerequisites
-- Approve the plan.
 
 ## FEAT-13: Move the shield out of the deprecated `config/boards` folder
 

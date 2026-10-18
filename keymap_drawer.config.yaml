@@ -64,11 +64,15 @@ parse_config:
     KP_N8: "8"
     KP_N9: "9"
     KP_MULTIPLY: "*"
+    # Unshifted * next to Enter, not the keypad one, so vim's * search works (FEAT-10)
+    BSLH: "*"
   raw_binding_map:
     # Shift and AltGr symbols
     "&kp LS(SQT)": "%"
     "&kp LS(NUBS)": ">"
     "&kp LS(EQUAL)": "+"
+    "&kp LS(DOT)": "/"
+    "&kp LS(M)": "?"
     "&kp RA(N0)": "@"
     "&kp RA(N2)": "~"
     "&kp RA(N3)": "#"
@@ -96,6 +100,8 @@ parse_config:
     "&sk LALT": {t: Alt, s: sticky}
     "&sk LCTRL": {t: Ctrl, s: sticky}
     "&sk LSHFT": {t: Shift, s: sticky}
+    # AltGr thumb (FEAT-10): a tap makes the next key a raise symbol
+    "&mtsl RALT 2": {t: Raise, s: sticky, h: AltGr}
     # Bluetooth
     "&bt BT_CLR": BT clear
     "&bt BT_SEL 0": BT 0
