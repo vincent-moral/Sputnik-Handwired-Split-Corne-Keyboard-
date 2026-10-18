@@ -248,8 +248,9 @@ Approved 2026-10-18.
    `dev`, all five jobs green (only the Ubuntu 26 notice), warnings and
    sizes identical to the local build, no redraw commit; `main`
    fast-forwarded to `0f891c9`.
-6. Flash the left half; type all 30 symbols both ways; AltGr hold still
-   works; Raise tap still opens Mods.
+6. **Done (2026-10-18):** flashed and verified with the key-check page:
+   all 30 symbols, both ways; AltGr+e gives €; the AltGr tap lapses
+   after 1 s; Raise's tap still opens Mods.
 7. Around 2026-11-08: are Low's symbols still used? If not, remove them.
 
 
