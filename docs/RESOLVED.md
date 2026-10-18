@@ -115,3 +115,29 @@ Things that weren't obvious:
   alternate binding before calling a shortcut impossible.
 - It set the rule now in the README: everything lives on the keyboard,
   nothing in app or OS config; shortcuts it can't handle get tracked.
+
+## FEAT-7: Sticky modifiers and sticky layers
+
+**Closed:** 2026-10-18, together with `FEAT-1` (keys holding two
+modifiers at once), which it replaces.
+
+Tapping Raise opens a one-shot Mods layer of sticky modifiers; holding
+Raise is unchanged. Verified on the keyboard with a key-test page:
+Ctrl+Shift+S both ways, a modifier lapsing after 1 s, Raise still held
+for symbols, and kitty's Ctrl+Shift+T.
+
+Things that weren't obvious:
+
+- A layer of sticky modifiers that stays open while you stack them
+  makes its own keys untypeable: with the modifiers on the home row,
+  Ctrl+S would have been impossible (the user's question). ZMK's default
+  `&sl` closes on the first key, modifiers included, which is what's
+  wanted; each extra modifier takes one more Raise tap.
+- Mixing styles is the short path: one sticky modifier, then the other
+  as a home-row mod, as for a capital.
+- The compiler isn't on conda-forge, so pixi can't build ZMK, but CI's
+  own image (`zmkfirmware/zmk-build-arm`, pinned by digest) runs under
+  podman; the local build matched CI's warnings and firmware sizes to
+  the byte. Its warnings became `BUG-6` and `FEAT-13`.
+- Five layers no longer fit one A4 page: the cheatsheet is two pages.
+

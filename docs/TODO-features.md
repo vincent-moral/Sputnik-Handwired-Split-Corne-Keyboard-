@@ -2,43 +2,6 @@
 
 Capabilities to add that don't exist yet. Reference an entry by its ID (`FEAT-N`).
 
-## FEAT-1: Keys for shortcuts with two modifiers
-
-**Priority:** High — kitty (Ctrl+Shift for copy, paste, tabs, windows,
-font size), niri and COSMIC (Super+Ctrl / Super+Shift to move windows)
-use them daily, and none can be typed without breaking the same-hand rule.
-
-**Complexity:** Medium — the ZMK side is simple (a hold-tap whose hold is
-a modifier combination), but the right keys and combinations depend on
-the niri bindings, which aren't known yet.
-
-**Depends on** the niri config (see Prerequisites).
-
-### Spec
-- With home-row mods, a shortcut with two modifiers always makes one hand
-  hold two keys at once.
-- Proposed (2026-10-16): one key per hand that holds two modifiers at
-  once, so a two-modifier shortcut becomes one held key plus the key on
-  the other hand:
-  - bottom-left `⇧` (position 24, redundant with home-row Shift) holds
-    Ctrl+Shift;
-  - Print Screen (position 35) prints on tap and holds Ctrl+Shift;
-  - a Super+Ctrl and/or Super+Shift key placed the same way, once the
-    niri bindings are known.
-- Alternative from Arsenik: sticky modifiers (`FEAT-7`) solve the same
-  problem without new keys. Chosen 2026-10-18: this entry closes once
-  FEAT-7 is verified.
-- Rejected (2026-10-17, everything lives on the keyboard): remapping
-  kitty's copy and paste in `kitty.conf`. The nav layer has one-key
-  kitty Copy and Paste instead.
-
-### Implementation Plan
-_Not yet discussed._
-
-### Prerequisites
-- The user's niri `config.kdl` and any custom Dank Material Shell
-  keybindings from the work PC.
-
 ## FEAT-4: Workspace switching by number on niri and COSMIC
 
 **Priority:** Low until confirmed — the digits on the low layer are
@@ -48,7 +11,7 @@ the same-hand rule anyway.
 
 **Complexity:** _Not yet discussed._
 
-**Depends on** the niri config (`FEAT-1`'s Prerequisites).
+**Depends on** the niri config (see Prerequisites).
 
 ### Spec
 - Unconfirmed (2026-10-16): whether Super+keypad digit triggers niri's
@@ -59,6 +22,8 @@ the same-hand rule anyway.
 _Not yet discussed._
 
 ### Prerequisites
+- The user's niri `config.kdl` and any custom Dank Material Shell
+  keybindings from the work PC.
 - Does the user switch workspaces by number?
 
 ## FEAT-6: Home-row mods that only trigger with the other hand
@@ -135,69 +100,6 @@ Approved 2026-10-16.
 - Plan approved 2026-10-16. Holding `j`/`k`: tap-then-hold for now;
   hjkl arrows on the nav layer are deferred until the user has more
   experience with arrows on this keyboard.
-
-## FEAT-7: Sticky modifiers and sticky layers
-
-**Priority:** Medium — tapping a modifier or layer key, then the key,
-turns every chord into a sequence: the purest form of the same-hand rule.
-
-**Complexity:** Medium — ZMK's `&sk` and `&sl` exist; the work is
-deciding which keys become sticky and how they combine with the holds.
-
-**From Arsenik** (guide §4): sticky Shift and Sym on the thumbs,
-and Callum-style one-shot mods on a layer.
-
-### Spec
-- Study (2026-10-17/18): fits the ground rules. Every multi-modifier
-  shortcut becomes a sequence of taps, so no hand holds two keys. The
-  thumbs and every layer's opposite-hand home row are already used, so
-  the modifiers get their own one-shot layer.
-- **Tap Raise** (alone) opens a one-shot **Mods** layer; holding Raise
-  stays the raise layer. Raise's tap does nothing today, so no key moves.
-  Same tap/hold split as the nav thumb (`BUG-3`): the layer as soon as
-  another key is pressed, the tap only when Raise is tapped alone.
-- On Mods, the home rows hold sticky modifiers where the home-row mods
-  are (GUI, Alt, Ctrl, Shift on `q s d f` and `j k l m`); every other
-  key is transparent.
-- **The layer closes after one modifier** (user's question, 2026-10-18):
-  if it stayed open while stacking, `q s d f j k l m` would become
-  modifiers too, so Ctrl+S or Ctrl+Shift+F couldn't be typed. Each extra
-  modifier takes one more Raise tap.
-- How shortcuts are typed:
-  - one modifier: the home-row mod, as today (Ctrl+S: hold `k`, tap `s`);
-  - two: one sticky, the other as a home-row mod (Ctrl+Shift+S: tap
-    Raise, tap `k`, then hold `j` + tap `s`), or all sticky (Raise, `k`,
-    Raise, `j`, `s`) when both are on the letter's hand.
-- Timeout: ZMK's default 1000 ms for the layer and the modifiers (user's
-  choice, 2026-10-18; to raise if it's too short).
-- ZMK at `4dd95d7` (`behavior_sticky_key.c`, `sticky_key.dtsi`), read,
-  not yet tested: `&sk` has `ignore-modifiers`, so a second sticky
-  modifier doesn't use up the first; `&sl` has `quick-release` and no
-  `ignore-modifiers`, so the sticky modifier's press closes the layer at
-  once. A layer change sends no keycode, so tapping Raise again keeps
-  the pending modifier.
-- Replaces `FEAT-1`'s combined-modifier keys once verified.
-
-### Implementation Plan
-Approved 2026-10-18.
-1. **Done (2026-10-18):** `config/corne_hw.keymap`: a hold-tap `ltsl` (hold-preferred, 150 ms,
-   `bindings = <&mo>, <&sl>`, like `lthp`) on the Raise thumb
-   (position 40) as `&ltsl 2 4`; a fifth layer, Mods: `&sk LGUI`,
-   `LALT`, `LCTRL`, `LSHFT` at 13–16 and `&sk LSHFT`, `LCTRL`, `LALT`,
-   `LGUI` at 19–22, everything else `&trans`.
-2. **Done (2026-10-18):** drawing: "Mods" in the `draw` task's layer
-   names, "sticky" legends; the cheatsheet became two A4 pages (Base, Low,
-   Raise; Nav, Mods), since five layers no longer fit on one.
-3. **Done (2026-10-18):** README: a "how and when" note for the Mods layer; credit Arsenik's
-   one-shot modifiers (guide §4).
-4. **Done (2026-10-18):** pushed to `dev`; all five jobs green, the
-   only annotation the Ubuntu 26 runner notice; warnings and firmware
-   sizes identical to a local build; no redraw commit; `main`
-   fast-forwarded to `e909456`.
-5. Flash the left half; verify: Ctrl+S and Ctrl+Shift+S both ways
-   (kitty's Ctrl+Shift+T opens a tab), a sticky modifier lapses after
-   1 s, holding Raise still types symbols.
-6. Close `FEAT-1` (combined-modifier keys no longer needed).
 
 ## FEAT-8: One accent key (1dk) instead of the accent combos
 
