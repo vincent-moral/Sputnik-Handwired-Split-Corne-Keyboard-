@@ -190,7 +190,10 @@ Approved 2026-10-18.
    Raise; Nav, Mods), since five layers no longer fit on one.
 3. **Done (2026-10-18):** README: a "how and when" note for the Mods layer; credit Arsenik's
    one-shot modifiers (guide §4).
-4. Push to `dev`, check the build, fast-forward `main`.
+4. **Done (2026-10-18):** pushed to `dev`; all five jobs green, the
+   only annotation the Ubuntu 26 runner notice; warnings and firmware
+   sizes identical to a local build; no redraw commit; `main`
+   fast-forwarded to `e909456`.
 5. Flash the left half; verify: Ctrl+S and Ctrl+Shift+S both ways
    (kitty's Ctrl+Shift+T opens a tab), a sticky modifier lapses after
    1 s, holding Raise still types symbols.
