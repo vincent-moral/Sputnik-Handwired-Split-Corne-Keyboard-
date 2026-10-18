@@ -35,23 +35,26 @@ The keymap is only changed through this repository: no ZMK Studio edits.
 
 ## Layers
 
-![The four layers, as typed on the AZERTY OS](keymap-drawer/corne_hw.svg)
+![The five layers, as typed on the AZERTY OS](keymap-drawer/corne_hw.svg)
 
 The drawing is generated from the keymap: GitHub Actions
 redraws it after every keymap change, and `pixi run draw` does the same
 locally. Never edit it by hand. To print it: each run of the "Draw
-keymap" workflow on GitHub has `cheatsheet.pdf` (A4) to download, and
+keymap" workflow on GitHub has `cheatsheet.pdf` (two A4 pages) to download, and
 `pixi run cheatsheet` writes the same file to `keymap-drawer/` (not
 committed). Each key shows what the AZERTY OS types;
 a small legend below is the modifier or layer when held, and a red key is
-the thumb holding that layer.
+the thumb that opens that layer.
 
-Layers are held with a thumb, their keys on the other hand:
+Layers are held with a thumb, their keys on the other hand (Mods is
+tapped instead):
 
 - **Low** (left thumb): Bluetooth on the left; a numpad on the right. The
   digits are keypad keys: NumLock must be on (`NumLk` toggles it). `*` is
   the keypad `*` and works regardless of NumLock.
 - **Raise** (right thumb): symbols on the left.
+- **Mods** (right thumb, tapped alone): one-shot modifiers where the
+  home-row mods are. See below.
 - **Nav** (left outer thumb, which is Super on a tap): arrows and edit
   shortcuts on the right. `kitty` Copy / Paste are kitty's Ctrl+Shift+C /
   V. `plain ^` types right away (AltGr+9), for vim and regexes; the
@@ -74,6 +77,22 @@ Added 2026-10-16, still a habit to build:
   normal mode and hides it from inside. It replaces Ctrl+/, which needs
   Shift on AZERTY: the key sends Ctrl+`_`, LazyVim's built-in alias.
 
+### Mods: how and when to use it
+
+Added 2026-10-18, still a habit to build. For shortcuts with **two or
+more modifiers** (kitty's Ctrl+Shift+T, niri's Super+Shift+arrow), which
+the same-hand rule makes impossible with home-row mods alone.
+
+- **Tap Raise, tap a modifier** (`k` for Ctrl, `j` for Shift…): it
+  applies to the next key. The layer closes after that one tap, so the
+  next key is a normal letter, home row included.
+- **Then use the other modifier as a home-row mod**, as for a capital.
+  Ctrl+Shift+S: tap Raise, tap `k`, then hold `j` + tap `s`.
+- **Or tap Raise before each modifier** when they're on the letter's
+  hand: Ctrl+Shift+L is Raise, `k`, Raise, `j`, `l`.
+- **One modifier stays a home-row mod**: Ctrl+S is still hold `k`, tap `s`.
+- If no key follows within 1 s, the modifier lapses.
+
 ## Credits
 
 - [Arsenik](https://github.com/OneDeadKey/arsenik) and its split variant
@@ -81,7 +100,8 @@ Added 2026-10-16, still a habit to build:
   implementation [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox):
   the advice behind the home-row mod timing, and the timing of the nav thumb
   key (layer as soon as another key is pressed, Super only on a quick tap),
-  and the single-key edit shortcuts on the nav layer.
+  the single-key edit shortcuts on the nav layer, and the one-shot
+  modifiers of the Mods layer.
 - [keymap-drawer](https://github.com/caksoylar/keymap-drawer), which draws
   the layers.
 - ZMK's [timeless home-row mods](https://zmk.dev/docs/keymaps/behaviors/hold-tap)

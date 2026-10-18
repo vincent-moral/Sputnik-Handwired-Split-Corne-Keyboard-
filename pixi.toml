@@ -1,6 +1,6 @@
 # Pinned tools for this repo (R2). `pixi run draw` redraws the keymap
 # (FEAT-5); CI runs the same task. `pixi run cheatsheet` makes a
-# printable A4 PDF of it (not committed).
+# printable A4 PDF of it, two pages of layers (not committed).
 [workspace]
 name = "sputnik-corne-zmk"
 channels = ["conda-forge"]
@@ -14,5 +14,5 @@ librsvg = "2.62.*"
 keymap-drawer = "==0.23.0"
 
 [tasks]
-draw = { cmd = "mkdir -p keymap-drawer && keymap -c keymap_drawer.config.yaml parse -z config/corne_hw.keymap --layer-names Base Low Raise Nav > keymap-drawer/corne_hw.yaml && keymap -c keymap_drawer.config.yaml draw -j config/corne_hw.json keymap-drawer/corne_hw.yaml > keymap-drawer/corne_hw.svg" }
-cheatsheet = { cmd = "rsvg-convert -f pdf --page-width 210mm --page-height 297mm --left 17mm --top 10mm --width 176mm --keep-aspect-ratio keymap-drawer/corne_hw.svg -o keymap-drawer/cheatsheet.pdf", depends-on = ["draw"] }
+draw = { cmd = "mkdir -p keymap-drawer && keymap -c keymap_drawer.config.yaml parse -z config/corne_hw.keymap --layer-names Base Low Raise Nav Mods > keymap-drawer/corne_hw.yaml && keymap -c keymap_drawer.config.yaml draw -j config/corne_hw.json keymap-drawer/corne_hw.yaml > keymap-drawer/corne_hw.svg" }
+cheatsheet = { cmd = "keymap -c keymap_drawer.config.yaml draw -j config/corne_hw.json keymap-drawer/corne_hw.yaml -s Base Low Raise > keymap-drawer/cheatsheet-1.svg && keymap -c keymap_drawer.config.yaml draw -j config/corne_hw.json keymap-drawer/corne_hw.yaml -s Nav Mods > keymap-drawer/cheatsheet-2.svg && rsvg-convert -f pdf --page-width 210mm --page-height 297mm --left 17mm --top 10mm --width 176mm --keep-aspect-ratio keymap-drawer/cheatsheet-1.svg keymap-drawer/cheatsheet-2.svg -o keymap-drawer/cheatsheet.pdf", depends-on = ["draw"] }

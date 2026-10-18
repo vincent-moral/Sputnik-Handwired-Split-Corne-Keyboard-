@@ -90,6 +90,12 @@ parse_config:
     "&kp LC(LS(V))": {t: Paste, s: kitty}
     # LazyVim's terminal toggle (FEAT-3): Ctrl+_ is its <C-_> alias of Ctrl+/
     "&kp LC(N8)": {t: Term, s: nvim}
+    # One-shot modifiers on the Mods layer (FEAT-7); "sticky" on top, since
+    # the small bottom legend means "when held"
+    "&sk LGUI": {t: Super, s: sticky}
+    "&sk LALT": {t: Alt, s: sticky}
+    "&sk LCTRL": {t: Ctrl, s: sticky}
+    "&sk LSHFT": {t: Shift, s: sticky}
     # Bluetooth
     "&bt BT_CLR": BT clear
     "&bt BT_SEL 0": BT 0
@@ -98,7 +104,7 @@ parse_config:
     "&bt BT_SEL 3": BT 3
     "&bt BT_SEL 4": BT 4
 draw_config:
-  footer_text: "Small legend: when held · Red: thumb holding the layer · Blue: combo (both keys)"
+  footer_text: "Small legend: when held · Red: thumb that opens the layer · Blue: combo (both keys)"
   dark_mode: auto
   key_h: 60
   combo_w: 26

@@ -179,24 +179,22 @@ and Callum-style one-shot mods on a layer.
 - Replaces `FEAT-1`'s combined-modifier keys once verified.
 
 ### Implementation Plan
-Proposed 2026-10-18, not yet approved.
-1. `config/corne_hw.keymap`: a hold-tap `ltsl` (hold-preferred, 150 ms,
+Approved 2026-10-18.
+1. **Done (2026-10-18):** `config/corne_hw.keymap`: a hold-tap `ltsl` (hold-preferred, 150 ms,
    `bindings = <&mo>, <&sl>`, like `lthp`) on the Raise thumb
    (position 40) as `&ltsl 2 4`; a fifth layer, Mods: `&sk LGUI`,
    `LALT`, `LCTRL`, `LSHFT` at 13–16 and `&sk LSHFT`, `LCTRL`, `LALT`,
    `LGUI` at 19–22, everything else `&trans`.
-2. Drawing: add "Mods" to the `draw` task's layer names and legends for
-   the new bindings; `pixi run draw`.
-3. README: a "how and when" note for the Mods layer; credit Arsenik's
+2. **Done (2026-10-18):** drawing: "Mods" in the `draw` task's layer
+   names, "sticky" legends; the cheatsheet became two A4 pages (Base, Low,
+   Raise; Nav, Mods), since five layers no longer fit on one.
+3. **Done (2026-10-18):** README: a "how and when" note for the Mods layer; credit Arsenik's
    one-shot modifiers (guide §4).
 4. Push to `dev`, check the build, fast-forward `main`.
 5. Flash the left half; verify: Ctrl+S and Ctrl+Shift+S both ways
    (kitty's Ctrl+Shift+T opens a tab), a sticky modifier lapses after
    1 s, holding Raise still types symbols.
 6. Close `FEAT-1` (combined-modifier keys no longer needed).
-
-### Prerequisites
-- Approve the plan.
 
 ## FEAT-8: One accent key (1dk) instead of the accent combos
 
