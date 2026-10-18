@@ -244,7 +244,10 @@ Approved 2026-10-18.
    and the AltGr thumb; `pixi run draw`.
 4. **Done (2026-10-18):** README: the raise notes, a "how and when" note (hold Raise for the
    left half, tap AltGr for any one symbol), and the Arsenik credit.
-5. Local build in CI's image, then push to `dev`, check, fast-forward.
+5. **Done (2026-10-18):** local build in CI's image OK; pushed to
+   `dev`, all five jobs green (only the Ubuntu 26 notice), warnings and
+   sizes identical to the local build, no redraw commit; `main`
+   fast-forwarded to `0f891c9`.
 6. Flash the left half; type all 30 symbols both ways; AltGr hold still
    works; Raise tap still opens Mods.
 7. Around 2026-11-08: are Low's symbols still used? If not, remove them.
