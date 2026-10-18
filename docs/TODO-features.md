@@ -26,10 +26,11 @@ the niri bindings, which aren't known yet.
   - a Super+Ctrl and/or Super+Shift key placed the same way, once the
     niri bindings are known.
 - Alternative from Arsenik: sticky modifiers (`FEAT-7`) solve the same
-  problem without new keys.
-- App side, outside this repo: in `~/.config/kitty/kitty.conf`,
-  `map ctrl+c copy_or_interrupt` and `map ctrl+v paste_from_clipboard`
-  remove the need for Ctrl+Shift for copy and paste.
+  problem without new keys. Chosen 2026-10-18: this entry closes once
+  FEAT-7 is verified.
+- Rejected (2026-10-17, everything lives on the keyboard): remapping
+  kitty's copy and paste in `kitty.conf`. The nav layer has one-key
+  kitty Copy and Paste instead.
 
 ### Implementation Plan
 _Not yet discussed._
@@ -147,19 +148,55 @@ deciding which keys become sticky and how they combine with the holds.
 and Callum-style one-shot mods on a layer.
 
 ### Spec
-- Alternative to `FEAT-1`'s combined-modifier keys: Ctrl+Shift+C becomes
-  tap Ctrl, tap Shift, tap C; niri and COSMIC's Super+Shift+… the same.
-- A sticky raise key would make right-hand symbols reachable without
-  breaking the same-hand rule (tap raise, then any symbol), which gives
-  room for all symbols on one layer (`FEAT-10`).
-- ZMK defaults (`4dd95d7`): sticky keys release after 1000 ms;
-  Ækeynox adds `quick-release` to `&sk` to avoid false positives.
+- Study (2026-10-17/18): fits the ground rules. Every multi-modifier
+  shortcut becomes a sequence of taps, so no hand holds two keys. The
+  thumbs and every layer's opposite-hand home row are already used, so
+  the modifiers get their own one-shot layer.
+- **Tap Raise** (alone) opens a one-shot **Mods** layer; holding Raise
+  stays the raise layer. Raise's tap does nothing today, so no key moves.
+  Same tap/hold split as the nav thumb (`BUG-3`): the layer as soon as
+  another key is pressed, the tap only when Raise is tapped alone.
+- On Mods, the home rows hold sticky modifiers where the home-row mods
+  are (GUI, Alt, Ctrl, Shift on `q s d f` and `j k l m`); every other
+  key is transparent.
+- **The layer closes after one modifier** (user's question, 2026-10-18):
+  if it stayed open while stacking, `q s d f j k l m` would become
+  modifiers too, so Ctrl+S or Ctrl+Shift+F couldn't be typed. Each extra
+  modifier takes one more Raise tap.
+- How shortcuts are typed:
+  - one modifier: the home-row mod, as today (Ctrl+S: hold `k`, tap `s`);
+  - two: one sticky, the other as a home-row mod (Ctrl+Shift+S: tap
+    Raise, tap `k`, then hold `j` + tap `s`), or all sticky (Raise, `k`,
+    Raise, `j`, `s`) when both are on the letter's hand.
+- Timeout: ZMK's default 1000 ms for the layer and the modifiers (user's
+  choice, 2026-10-18; to raise if it's too short).
+- ZMK at `4dd95d7` (`behavior_sticky_key.c`, `sticky_key.dtsi`), read,
+  not yet tested: `&sk` has `ignore-modifiers`, so a second sticky
+  modifier doesn't use up the first; `&sl` has `quick-release` and no
+  `ignore-modifiers`, so the sticky modifier's press closes the layer at
+  once. A layer change sends no keycode, so tapping Raise again keeps
+  the pending modifier.
+- Replaces `FEAT-1`'s combined-modifier keys once verified.
 
 ### Implementation Plan
-_Not yet discussed._
+Proposed 2026-10-18, not yet approved.
+1. `config/corne_hw.keymap`: a hold-tap `ltsl` (hold-preferred, 150 ms,
+   `bindings = <&mo>, <&sl>`, like `lthp`) on the Raise thumb
+   (position 40) as `&ltsl 2 4`; a fifth layer, Mods: `&sk LGUI`,
+   `LALT`, `LCTRL`, `LSHFT` at 13–16 and `&sk LSHFT`, `LCTRL`, `LALT`,
+   `LGUI` at 19–22, everything else `&trans`.
+2. Drawing: add "Mods" to the `draw` task's layer names and legends for
+   the new bindings; `pixi run draw`.
+3. README: a "how and when" note for the Mods layer; credit Arsenik's
+   one-shot modifiers (guide §4).
+4. Push to `dev`, check the build, fast-forward `main`.
+5. Flash the left half; verify: Ctrl+S and Ctrl+Shift+S both ways
+   (kitty's Ctrl+Shift+T opens a tab), a sticky modifier lapses after
+   1 s, holding Raise still types symbols.
+6. Close `FEAT-1` (combined-modifier keys no longer needed).
 
 ### Prerequisites
-- Study with the user: does it fit the README's ground rules?
+- Approve the plan.
 
 ## FEAT-8: One accent key (1dk) instead of the accent combos
 
@@ -236,8 +273,9 @@ Approved 2026-10-16.
 knows the base and number layers well, as of 2026-10-16), so it can still
 be redesigned freely.
 
-**Complexity:** Medium — the layer uses both hands, which needs sticky
-raise (`FEAT-7`) under the same-hand rule.
+**Complexity:** Medium — the layer uses both hands, which needs a sticky
+raise under the same-hand rule; Raise's tap is taken by `FEAT-7`'s Mods
+layer, so it would need another key.
 
 **From Arsenik** (guide §4): its symbols layer, taken from
 Ergo-L, with AZERTY keycodes in Ækeynox's `aliases/azerty.h`.
