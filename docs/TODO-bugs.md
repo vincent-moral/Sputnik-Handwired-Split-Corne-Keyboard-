@@ -49,3 +49,24 @@ _Not yet discussed._ Revisit if it happens again.
 
 ### Implementation Plan
 _Not yet discussed._
+
+## BUG-6: The right half asks for USB keyboard support it can't have
+
+**Priority:** Low — a build warning only; the firmware works.
+
+**Complexity:** Low — likely one Kconfig block.
+
+### Spec
+- Every build of the right half warns (seen 2026-10-18, locally and in
+  CI run `39041569923`): `ZMK_USB ... was assigned the value 'y' but got
+  the value 'n'`.
+- `config/boards/shields/corne_hw_right/Kconfig.defconfig` sets
+  `ZMK_USB` to `y`, but the right half is the split peripheral: it sends
+  its keys to the left half, never to a computer, so ZMK turns USB off.
+- To check before changing it (R3): whether the right half still flashes
+  and charges over USB without it, and whether the left half needs the
+  line at all or gets it from the board.
+
+### Implementation Plan
+_Not yet discussed._
+

@@ -290,3 +290,21 @@ _Not yet discussed._
 
 ### Prerequisites
 - Study with the user: does it fit the README's ground rules?
+
+## FEAT-13: Move the shield out of the deprecated `config/boards` folder
+
+**Priority:** Low — a deprecation warning only (2026-10-18); it becomes
+urgent if a ZMK upgrade drops `config/boards`.
+
+**Complexity:** Medium — files move into a Zephyr module, and the build,
+the keymap-editor and the keymap drawing all read paths in `config/`.
+
+### Spec
+- Every build warns: "The `config/boards` folder is deprecated. Please
+  use a module instead." (ZMK `4dd95d7`, CI and local builds alike).
+- ZMK wants the shield (`corne_hw_left`, `corne_hw_right`) shipped as a
+  module, with the keymap and `.conf` staying in `config/`.
+
+### Implementation Plan
+_Not yet discussed._
+
