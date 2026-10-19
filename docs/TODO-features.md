@@ -255,7 +255,7 @@ Approved 2026-10-18.
    want no habit on them): remove Low's `{ } & $ % ~` and the keypad
    `*`, as `&none` so nothing is typed. Popular numpad layers rarely
    hold `*` (Miryoku: `= - . /`; Arsenik: `/ - , .`), and Raise has
-   `+ - * /`. Pushed with `FEAT-14`.
+   `+ - * /`. Pushed with `FEAT-14` (2026-10-19).
 
 
 ## FEAT-13: Move the shield out of the deprecated `config/boards` folder
@@ -302,8 +302,10 @@ Approved 2026-10-19.
 1. **Done (2026-10-19):** keymap: `&ltsl 2 2` on Raise, `&mtsl RALT 4` on AltGr; `ssl`/`ssk`
    behaviors at 1500 ms used by both and by the Mods layer; drawing,
    README, the key-check page.
-2. Local build, push to `dev` (with `FEAT-15`, `BUG-4`, `BUG-7` and
-   `FEAT-10` step 7), fast-forward.
+2. **Done (2026-10-19):** local build OK; pushed to `dev` with the other
+   day-one changes, all five jobs green (only the Ubuntu 26 notice),
+   warnings and sizes identical to the local build, no redraw commit;
+   `main` fast-forwarded to `c1c6248`.
 3. The user flashes on 2026-10-20 and checks with the key-check page.
 
 ## FEAT-15: The nav thumb without Super
@@ -329,7 +331,7 @@ Super (2026-10-19).
 Approved 2026-10-19.
 1. **Done (2026-10-19):** keymap: `&mo 3` on position 36 of the base layer; drop the unused
    `lthp`; README (nav, launcher note), drawing.
-2. Pushed with `FEAT-14`.
+2. **Done (2026-10-19):** pushed with `FEAT-14`.
 3. Verify: nav arrows come at once; Super+Space on niri; holding `m`
    alone opens COSMIC's launcher.
 
