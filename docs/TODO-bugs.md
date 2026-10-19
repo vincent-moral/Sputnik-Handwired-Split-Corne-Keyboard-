@@ -30,7 +30,7 @@ Things that are wrong today. Reference an entry by its ID (`BUG-N`).
 
 ### Implementation Plan
 Approved 2026-10-19.
-1. Keymap: a sixth layer, BT, with the BT keys where they are today
+1. **Done (2026-10-19):** keymap: a sixth layer, BT, with the BT keys where they are today
    (outer left home key, then `q s d f g`), opened by holding Low and
    Raise together (ZMK conditional layer: `if-layers` 1 and 2, checked
    in `zmk,conditional-layers.yaml` at `4dd95d7`); Low's BT keys become

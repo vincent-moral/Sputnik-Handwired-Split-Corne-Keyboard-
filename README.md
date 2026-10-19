@@ -27,7 +27,9 @@ The keymap is only changed through this repository: no ZMK Studio edits.
   backlog, until there are enough of them to choose one strategy for all.
 - **Never press two keys at the same time with the same hand.** Layers are held
   with a thumb, and their keys sit on the opposite hand. Accepted exceptions:
-  - Bluetooth management on the low layer.
+  - Bluetooth management: hold Low and Raise (both thumbs), then the
+    key on the left home row (since 2026-10-19; on Low alone before, a
+    slip switched profiles: `BUG-4`).
   - Modifier + arrow on the nav layer (selection, word jumps).
 - **Accented letters come from combos** on the base layer: press both keys
   together. The drawing shows each combo as a small key between its two
@@ -35,7 +37,7 @@ The keymap is only changed through this repository: no ZMK Studio edits.
 
 ## Layers
 
-![The five layers, as typed on the AZERTY OS](keymap-drawer/corne_hw.svg)
+![The six layers, as typed on the AZERTY OS](keymap-drawer/corne_hw.svg)
 
 The drawing is generated from the keymap: GitHub Actions
 redraws it after every keymap change, and `pixi run draw` does the same
@@ -49,15 +51,16 @@ the thumb that opens that layer.
 Layers are held with a thumb, their keys on the other hand (Mods is
 tapped instead):
 
-- **Low** (left thumb): Bluetooth on the left; a numpad on the right,
-  digits only: the symbols
-  that were around it are on Raise since 2026-10-19. The digits are
+- **Low** (left thumb): a numpad on the right, digits only (the symbols
+  that were around it are on Raise since 2026-10-19). The digits are
   keypad keys: NumLock must be on (`NumLk` toggles it).
 - **Raise** (right thumb): every symbol, on both hands, from Arsenik
   (see below). Held, only its left half follows the same-hand rule;
   Raise's own tap reaches the whole layer.
 - **Mods** (right outer thumb, AltGr, tapped alone): one-shot modifiers
   where the home-row mods are. See below.
+- **BT** (Low and Raise held together): Bluetooth profiles 0–4 and
+  `BT clear`, which erases the current profile's pairing.
 - **Nav** (left outer thumb, which has no tap since 2026-10-19: Super is
   on the home row): arrows and edit
   shortcuts on the right. `kitty` Copy / Paste are kitty's Ctrl+Shift+C /

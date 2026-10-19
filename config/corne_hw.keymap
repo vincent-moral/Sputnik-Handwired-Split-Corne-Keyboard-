@@ -192,7 +192,7 @@
 
         low_layer {
             bindings = <
-&kp TAB  &trans  &trans  &trans  &trans  &trans  &kp KP_NUM  &kp KP_N7  &kp KP_N8  &kp KP_N9  &none  &kp BSPC  &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &none  &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none  &kp LSHFT  &trans  &trans  &trans  &trans  &trans  &none  &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none  &kp LGUI  &trans  &kp SPACE  &kp RET  &kp KP_N0  &mtsl RALT 4
+&kp TAB  &trans  &trans  &trans  &trans  &trans  &kp KP_NUM  &kp KP_N7  &kp KP_N8  &kp KP_N9  &none  &kp BSPC  &trans  &trans  &trans  &trans  &trans  &trans  &none  &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none  &kp LSHFT  &trans  &trans  &trans  &trans  &trans  &none  &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none  &kp LGUI  &trans  &kp SPACE  &kp RET  &kp KP_N0  &mtsl RALT 4
             >;
         };
 
@@ -219,6 +219,29 @@
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &ssk LGUI  &ssk LALT  &ssk LCTRL  &ssk LSHFT  &trans  &trans  &ssk LSHFT  &ssk LCTRL  &ssk LALT  &ssk LGUI  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
+        };
+
+        /*
+         * Bluetooth (BUG-4), where it was on Low, but only while Low and
+         * Raise are both held (the conditional layer below), so a slip on
+         * Low can't switch or clear a profile.
+         */
+
+        bt_layer {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+    };
+
+    /* Low + Raise held together open the BT layer (BUG-4). */
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+
+        bt_low_raise {
+            if-layers = <1 2>;
+            then-layer = <5>;
         };
     };
 };
