@@ -311,15 +311,16 @@ path.combo { stroke: #7f7f7f; }
 </g>
 <g transform="translate(534, 224) rotate(-12.0)" class="key keypos-40">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<a href="#Mods">
-<text x="0" y="0" class="key tap layer-activator">Mods</text>
-</a><a href="#Raise">
-<text x="0" y="26" class="key hold layer-activator">Raise</text>
-</a></g>
-<g transform="translate(600, 217)" class="key keypos-41">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
 <a href="#Raise">
 <text x="0" y="0" class="key tap layer-activator">Raise</text>
+</a><a href="#Raise">
+<text x="0" y="26" class="key hold layer-activator">Raise</text>
+</a><text x="0" y="-26" class="key shifted">sticky</text>
+</g>
+<g transform="translate(600, 217)" class="key keypos-41">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<a href="#Mods">
+<text x="0" y="0" class="key tap layer-activator">Mods</text>
 </a><text x="0" y="26" class="key hold">AltGr</text>
 <text x="0" y="-26" class="key shifted">sticky</text>
 </g>
@@ -519,8 +520,8 @@ path.combo { stroke: #7f7f7f; }
 </g>
 <g transform="translate(600, 217)" class="key keypos-41">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<a href="#Raise">
-<text x="0" y="0" class="key tap layer-activator">Raise</text>
+<a href="#Mods">
+<text x="0" y="0" class="key tap layer-activator">Mods</text>
 </a><text x="0" y="26" class="key hold">AltGr</text>
 <text x="0" y="-26" class="key shifted">sticky</text>
 </g>
@@ -685,13 +686,13 @@ path.combo { stroke: #7f7f7f; }
 <rect rx="6" ry="6" x="-28" y="-43" width="56" height="86" class="key"/>
 <text x="0" y="0" class="key tap">↵</text>
 </g>
-<g transform="translate(534, 224) rotate(-12.0)" class="key held keypos-40">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key held"/>
+<g transform="translate(534, 224) rotate(-12.0)" class="key trans keypos-40">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
 </g>
 <g transform="translate(600, 217)" class="key keypos-41">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<a href="#Raise">
-<text x="0" y="0" class="key tap layer-activator">Raise</text>
+<a href="#Mods">
+<text x="0" y="0" class="key tap layer-activator">Mods</text>
 </a><text x="0" y="26" class="key hold">AltGr</text>
 <text x="0" y="-26" class="key shifted">sticky</text>
 </g>
@@ -989,8 +990,8 @@ path.combo { stroke: #7f7f7f; }
 <g transform="translate(465, 231) rotate(-24.0)" class="key trans keypos-39">
 <rect rx="6" ry="6" x="-28" y="-43" width="56" height="86" class="key trans"/>
 </g>
-<g transform="translate(534, 224) rotate(-12.0)" class="key held keypos-40">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key held"/>
+<g transform="translate(534, 224) rotate(-12.0)" class="key trans keypos-40">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
 </g>
 <g transform="translate(600, 217)" class="key trans keypos-41">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>

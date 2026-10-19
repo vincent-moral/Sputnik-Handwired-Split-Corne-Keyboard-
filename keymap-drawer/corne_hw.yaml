@@ -41,8 +41,8 @@ layers:
   - Low
   - ␣
   - ↵
-  - {t: Mods, h: Raise}
-  - {t: Raise, h: AltGr, s: sticky}
+  - {t: Raise, h: Raise, s: sticky}
+  - {t: Mods, h: AltGr, s: sticky}
   Low:
   - Tab
   - {type: trans}
@@ -85,7 +85,7 @@ layers:
   - ␣
   - ↵
   - '0'
-  - {t: Raise, h: AltGr, s: sticky}
+  - {t: Mods, h: AltGr, s: sticky}
   Raise:
   - {type: trans}
   - {t: ^, s: plain}
@@ -127,8 +127,8 @@ layers:
   - {type: trans}
   - ␣
   - ↵
-  - {type: held}
-  - {t: Raise, h: AltGr, s: sticky}
+  - {type: trans}
+  - {t: Mods, h: AltGr, s: sticky}
   Nav:
   - {type: trans}
   - {type: trans}
@@ -213,7 +213,7 @@ layers:
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  - {type: held}
+  - {type: trans}
   - {type: trans}
 combos:
 - p: [3, 4]

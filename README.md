@@ -53,11 +53,11 @@ tapped instead):
   digits are keypad keys: NumLock must be on (`NumLk` toggles it). `*` is
   the keypad `*` and works regardless of NumLock.
 - **Raise** (right thumb): every symbol, on both hands, from Arsenik
-  (see below). Held, only its left half follows the same-hand rule; the
-  AltGr thumb's tap reaches the whole layer. Low keeps its symbols for
+  (see below). Held, only its left half follows the same-hand rule;
+  Raise's own tap reaches the whole layer. Low keeps its symbols for
   now (2026-10-18, to review around 2026-11-08).
-- **Mods** (right thumb, tapped alone): one-shot modifiers where the
-  home-row mods are. See below.
+- **Mods** (right outer thumb, AltGr, tapped alone): one-shot modifiers
+  where the home-row mods are. See below.
 - **Nav** (left outer thumb, which is Super on a tap): arrows and edit
   shortcuts on the right. `kitty` Copy / Paste are kitty's Ctrl+Shift+C /
   V. `plain ^` types right away (AltGr+9), for vim and regexes; the
@@ -82,16 +82,17 @@ Added 2026-10-16, still a habit to build:
 
 ### Raise symbols: how and when to use it
 
-Added 2026-10-18, still a habit to build. All 30 programming symbols are
+Added 2026-10-18, still a habit to build. Each thumb does one kind of
+thing (2026-10-19): Raise is symbols, held or tapped; AltGr is
+modifiers, held or tapped. All 30 programming symbols are
 on Raise, none needs Shift: brackets on the left (`{ ( ) }` on the home
 row, `[ ]` below), `/` and `?` without Shift.
 
 - **Left-hand symbols: hold Raise**, type them, as many as you want.
-- **Right-hand symbols (or any one): tap AltGr, then the key.** The tap
-  lasts for one key, so `->` is AltGr, `-`, then `>` with Raise held, or
-  AltGr again.
-- **Holding AltGr** is still AltGr, as soon as another key is pressed.
-- If no key follows the AltGr tap within 1 s, it lapses.
+- **Right-hand symbols (or any one): tap Raise, then the key.** The tap
+  lasts for one key, so `->` is Raise tapped, `-`, then `>` with Raise
+  held, or Raise tapped again.
+- If no key follows the tap within 1.5 s, it lapses.
 
 ### Mods: how and when to use it
 
@@ -99,15 +100,16 @@ Added 2026-10-18, still a habit to build. For shortcuts with **two or
 more modifiers** (kitty's Ctrl+Shift+T, niri's Super+Shift+arrow), which
 the same-hand rule makes impossible with home-row mods alone.
 
-- **Tap Raise, tap a modifier** (`k` for Ctrl, `j` for Shift…): it
+- **Tap AltGr, tap a modifier** (`k` for Ctrl, `j` for Shift…): it
   applies to the next key. The layer closes after that one tap, so the
   next key is a normal letter, home row included.
 - **Then use the other modifier as a home-row mod**, as for a capital.
-  Ctrl+Shift+S: tap Raise, tap `k`, then hold `j` + tap `s`.
-- **Or tap Raise before each modifier** when they're on the letter's
-  hand: Ctrl+Shift+L is Raise, `k`, Raise, `j`, `l`.
+  Ctrl+Shift+S: tap AltGr, tap `k`, then hold `j` + tap `s`.
+- **Or tap AltGr before each modifier** when they're on the letter's
+  hand: Ctrl+Shift+L is AltGr, `k`, AltGr, `j`, `l`.
 - **One modifier stays a home-row mod**: Ctrl+S is still hold `k`, tap `s`.
-- If no key follows within 1 s, the modifier lapses.
+- **Holding AltGr** is still AltGr, as soon as another key is pressed.
+- If no key follows within 1.5 s, the modifier lapses.
 
 ## Credits
 

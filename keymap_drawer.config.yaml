@@ -96,12 +96,14 @@ parse_config:
     "&kp LC(N8)": {t: Term, s: nvim}
     # One-shot modifiers on the Mods layer (FEAT-7); "sticky" on top, since
     # the small bottom legend means "when held"
-    "&sk LGUI": {t: Super, s: sticky}
-    "&sk LALT": {t: Alt, s: sticky}
-    "&sk LCTRL": {t: Ctrl, s: sticky}
-    "&sk LSHFT": {t: Shift, s: sticky}
-    # AltGr thumb (FEAT-10): a tap makes the next key a raise symbol
-    "&mtsl RALT 2": {t: Raise, s: sticky, h: AltGr}
+    "&ssk LGUI": {t: Super, s: sticky}
+    "&ssk LALT": {t: Alt, s: sticky}
+    "&ssk LCTRL": {t: Ctrl, s: sticky}
+    "&ssk LSHFT": {t: Shift, s: sticky}
+    # Thumbs with a sticky tap (FEAT-14): Raise's tap is one raise symbol,
+    # AltGr's tap one modifier
+    "&ltsl 2 2": {t: Raise, s: sticky, h: Raise}
+    "&mtsl RALT 4": {t: Mods, s: sticky, h: AltGr}
     # Bluetooth
     "&bt BT_CLR": BT clear
     "&bt BT_SEL 0": BT 0

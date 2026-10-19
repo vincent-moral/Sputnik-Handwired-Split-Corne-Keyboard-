@@ -299,7 +299,7 @@ behaviors.
 
 ### Implementation Plan
 Approved 2026-10-19.
-1. Keymap: `&ltsl 2 2` on Raise, `&mtsl RALT 4` on AltGr; `ssl`/`ssk`
+1. **Done (2026-10-19):** keymap: `&ltsl 2 2` on Raise, `&mtsl RALT 4` on AltGr; `ssl`/`ssk`
    behaviors at 1500 ms used by both and by the Mods layer; drawing,
    README, the key-check page.
 2. Local build, push to `dev` (with `FEAT-15`, `BUG-4`, `BUG-7` and

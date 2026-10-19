@@ -25,8 +25,31 @@
         };
 
         /*
+         * ZMK's &sl and &sk, waiting 1.5 s for the next key instead of
+         * 1 s (FEAT-14). Copies here rather than overrides of &sl/&sk,
+         * which the keymap-editor might not keep.
+         */
+
+        ssl: slow_sticky_layer {
+            compatible = "zmk,behavior-sticky-key";
+            #binding-cells = <1>;
+            release-after-ms = <1500>;
+            bindings = <&mo>;
+            quick-release;
+        };
+
+        ssk: slow_sticky_key {
+            compatible = "zmk,behavior-sticky-key";
+            #binding-cells = <1>;
+            release-after-ms = <1500>;
+            bindings = <&kp>;
+            ignore-modifiers;
+        };
+
+        /*
          * Raise thumb: holding it is the raise layer; tapping it alone
-         * opens the one-shot Mods layer (FEAT-7). Same split as lthp.
+         * makes the next key a raise symbol, either hand (FEAT-10,
+         * FEAT-14). Same split as lthp.
          */
 
         ltsl: layer_tap_sticky_layer {
@@ -34,13 +57,13 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <150>;
-            bindings = <&mo>, <&sl>;
+            bindings = <&mo>, <&ssl>;
         };
 
         /*
          * AltGr thumb: holding it is AltGr as soon as another key is
-         * pressed; tapping it alone makes the next key a symbol from
-         * the raise layer, either hand (FEAT-10). Same split as lthp.
+         * pressed; tapping it alone opens the one-shot Mods layer
+         * (FEAT-7, FEAT-14). Same split as lthp.
          */
 
         mtsl: mod_tap_sticky_layer {
@@ -48,7 +71,7 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <150>;
-            bindings = <&kp>, <&sl>;
+            bindings = <&kp>, <&ssl>;
         };
 
         /* Left GUI, Alt, Ctrl */
@@ -169,19 +192,19 @@
 
         default_layer {
             bindings = <
-&kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T  &kp Y  &kp U  &kp I  &kp O  &kp P  &kp BSPC  &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hsl LSHFT F  &kp G  &kp H  &hsr LSHFT J  &hmr LCTRL K  &hmr LALT L  &hmr LGUI SEMI  &kp N4  &kp LSHFT  &kp Z  &kp X  &kp C  &kp V  &kp B  &kp N  &kp M  &kp COMMA  &kp DOT  &kp FSLH  &kp PRINTSCREEN  &lthp 3 LGUI  &mo 1  &kp SPACE  &kp RET  &ltsl 2 4  &mtsl RALT 2
+&kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T  &kp Y  &kp U  &kp I  &kp O  &kp P  &kp BSPC  &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hsl LSHFT F  &kp G  &kp H  &hsr LSHFT J  &hmr LCTRL K  &hmr LALT L  &hmr LGUI SEMI  &kp N4  &kp LSHFT  &kp Z  &kp X  &kp C  &kp V  &kp B  &kp N  &kp M  &kp COMMA  &kp DOT  &kp FSLH  &kp PRINTSCREEN  &lthp 3 LGUI  &mo 1  &kp SPACE  &kp RET  &ltsl 2 2  &mtsl RALT 4
             >;
         };
 
         low_layer {
             bindings = <
-&kp TAB  &trans  &trans  &trans  &trans  &trans  &kp KP_NUM  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_MULTIPLY  &kp BSPC  &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp RA(N4)  &kp KP_N4  &kp KP_N5  &kp KP_N6  &kp RA(EQUAL)  &kp RBKT  &kp LSHFT  &trans  &trans  &trans  &trans  &trans  &kp N1  &kp KP_N1  &kp KP_N2  &kp KP_N3  &kp LS(SQT)  &kp RA(N2)  &kp LGUI  &trans  &kp SPACE  &kp RET  &kp KP_N0  &mtsl RALT 2
+&kp TAB  &trans  &trans  &trans  &trans  &trans  &kp KP_NUM  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_MULTIPLY  &kp BSPC  &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp RA(N4)  &kp KP_N4  &kp KP_N5  &kp KP_N6  &kp RA(EQUAL)  &kp RBKT  &kp LSHFT  &trans  &trans  &trans  &trans  &trans  &kp N1  &kp KP_N1  &kp KP_N2  &kp KP_N3  &kp LS(SQT)  &kp RA(N2)  &kp LGUI  &trans  &kp SPACE  &kp RET  &kp KP_N0  &mtsl RALT 4
             >;
         };
 
         raise_layer {
             bindings = <
-&trans  &kp RA(N9)  &kp NUBS  &kp LS(NUBS)  &kp RBKT  &kp LS(SQT)  &kp RA(N0)  &kp N1  &kp BSLH  &kp N4  &kp RA(N7)  &kp BSPC  &kp LCTRL  &kp RA(N4)  &kp N5  &kp MINUS  &kp RA(EQUAL)  &kp EQUAL  &kp RA(N8)  &kp LS(EQUAL)  &kp N6  &kp LS(DOT)  &kp N3  &trans  &trans  &kp RA(N2)  &kp RA(N5)  &kp RA(MINUS)  &kp N8  &kp RA(N3)  &kp RA(N6)  &kp FSLH  &kp COMMA  &kp DOT  &kp LS(M)  &trans  &kp LGUI  &trans  &kp SPACE  &kp RET  &trans  &mtsl RALT 2
+&trans  &kp RA(N9)  &kp NUBS  &kp LS(NUBS)  &kp RBKT  &kp LS(SQT)  &kp RA(N0)  &kp N1  &kp BSLH  &kp N4  &kp RA(N7)  &kp BSPC  &kp LCTRL  &kp RA(N4)  &kp N5  &kp MINUS  &kp RA(EQUAL)  &kp EQUAL  &kp RA(N8)  &kp LS(EQUAL)  &kp N6  &kp LS(DOT)  &kp N3  &trans  &trans  &kp RA(N2)  &kp RA(N5)  &kp RA(MINUS)  &kp N8  &kp RA(N3)  &kp RA(N6)  &kp FSLH  &kp COMMA  &kp DOT  &kp LS(M)  &trans  &kp LGUI  &trans  &kp SPACE  &kp RET  &trans  &mtsl RALT 4
             >;
         };
 
@@ -192,14 +215,15 @@
         };
 
         /*
-         * One-shot modifiers (FEAT-7), opened by tapping Raise: each tap
-         * sets one modifier for the next key and closes the layer, so
-         * the home-row letters stay typeable. Tap Raise again to add one.
+         * One-shot modifiers (FEAT-7), opened by tapping AltGr (FEAT-14):
+         * each tap sets one modifier for the next key and closes the
+         * layer, so the home-row letters stay typeable. Tap AltGr again
+         * to add one.
          */
 
         mods_layer {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &sk LGUI  &sk LALT  &sk LCTRL  &sk LSHFT  &trans  &trans  &sk LSHFT  &sk LCTRL  &sk LALT  &sk LGUI  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &ssk LGUI  &ssk LALT  &ssk LCTRL  &ssk LSHFT  &trans  &trans  &ssk LSHFT  &ssk LCTRL  &ssk LALT  &ssk LGUI  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
     };
