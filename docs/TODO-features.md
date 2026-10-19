@@ -251,7 +251,11 @@ Approved 2026-10-18.
 6. **Done (2026-10-18):** flashed and verified with the key-check page:
    all 30 symbols, both ways; AltGr+e gives €; the AltGr tap lapses
    after 1 s; Raise's tap still opens Mods.
-7. Around 2026-11-08: are Low's symbols still used? If not, remove them.
+7. Brought forward (user, 2026-10-19: they reach for the duplicates and
+   want no habit on them): remove Low's `{ } & $ % ~` and the keypad
+   `*`, as `&none` so nothing is typed. Popular numpad layers rarely
+   hold `*` (Miryoku: `= - . /`; Arsenik: `/ - , .`), and Raise has
+   `+ - * /`. Pushed with `FEAT-14`.
 
 
 ## FEAT-13: Move the shield out of the deprecated `config/boards` folder
@@ -270,4 +274,62 @@ the keymap-editor and the keymap drawing all read paths in `config/`.
 
 ### Implementation Plan
 _Not yet discussed._
+
+## FEAT-14: Each sticky tap on the thumb that matches it
+
+**Priority:** High — after a day of use (2026-10-18) the user mixes up
+the two sticky taps, and is sometimes too slow for them.
+
+**Complexity:** Low — two thumb bindings and two custom sticky
+behaviors.
+
+### Spec
+- Today Raise's tap is the Mods layer (`FEAT-7`) and AltGr's tap is
+  sticky Symbols (`FEAT-10`): neighbouring keys, nothing tying each tap
+  to its key.
+- Swap them (user's choice, 2026-10-19), so each thumb does one kind of
+  thing: **Raise** holds symbols and its tap gives one sticky symbol;
+  **AltGr** holds AltGr and its tap gives one sticky modifier.
+- Sticky keys wait 1.5 s instead of ZMK's 1 s (user's choice,
+  2026-10-19), for both the layers and the modifiers. Custom copies of
+  `&sl` and `&sk` with `release-after-ms` 1500, keeping their defaults
+  (`quick-release` on the layer, `ignore-modifiers` on the modifiers):
+  a behavior override outside the root node might not survive the
+  keymap-editor, the `behaviors` node does (tested 2026-10-16).
+
+### Implementation Plan
+Approved 2026-10-19.
+1. Keymap: `&ltsl 2 2` on Raise, `&mtsl RALT 4` on AltGr; `ssl`/`ssk`
+   behaviors at 1500 ms used by both and by the Mods layer; drawing,
+   README, the key-check page.
+2. Local build, push to `dev` (with `FEAT-15`, `BUG-4`, `BUG-7` and
+   `FEAT-10` step 7), fast-forward.
+3. The user flashes on 2026-10-20 and checks with the key-check page.
+
+## FEAT-15: The nav thumb without Super
+
+**Priority:** Medium — the user wants no muscle memory on a redundant
+Super (2026-10-19).
+
+**Complexity:** Low — one binding.
+
+### Spec
+- The left outer thumb is Super on a tap and Nav when held (`BUG-3`).
+  Super is also on the home row (`q`, `m`), so the thumb's tap is a
+  second way to do the same thing.
+- The user taps Super alone for COSMIC's launcher; niri uses
+  Super+Space, which the user wants everywhere in the long run (DMS on
+  the personal PC one day).
+- The thumb becomes plain `&mo 3`: Nav comes at once, with no
+  tap/hold decision. Super+Space: hold `m`, tap Space (other hand).
+  Super alone on COSMIC: hold `m` past 280 ms and release it, which
+  sends Super alone (the home-row mod's hold, no other key) — to verify.
+
+### Implementation Plan
+Approved 2026-10-19.
+1. Keymap: `&mo 3` on position 36 of the base layer; drop the unused
+   `lthp`; README (nav, launcher note), drawing.
+2. Pushed with `FEAT-14`.
+3. Verify: nav arrows come at once; Super+Space on niri; holding `m`
+   alone opens COSMIC's launcher.
 

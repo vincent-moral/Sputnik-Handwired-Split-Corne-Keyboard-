@@ -24,8 +24,21 @@ Things that are wrong today. Reference an entry by its ID (`BUG-N`).
   user's approval. A smaller option: move only `BT_CLR` somewhere harder
   to reach.
 
+- Happened again (user, 2026-10-18): "when I am confused, I press the
+  BT keys by mistake". The user approved the layer idea (2026-10-19),
+  which changes the README's Bluetooth exception.
+
 ### Implementation Plan
-_Not yet discussed._ Revisit if it happens again.
+Approved 2026-10-19.
+1. Keymap: a sixth layer, BT, with the BT keys where they are today
+   (outer left home key, then `q s d f g`), opened by holding Low and
+   Raise together (ZMK conditional layer: `if-layers` 1 and 2, checked
+   in `zmk,conditional-layers.yaml` at `4dd95d7`); Low's BT keys become
+   transparent like the rest of its left half. README ground rule,
+   drawing.
+2. Pushed with `FEAT-14`.
+3. Verify: Low + a former BT key types its letter and keeps the
+   connection; Low + Raise + BT key of the current profile works.
 
 ## BUG-5: AltGr stayed held on the PC, cause unknown
 
@@ -69,4 +82,27 @@ _Not yet discussed._
 
 ### Implementation Plan
 _Not yet discussed._
+
+## BUG-7: Combos miss when typing fast
+
+**Priority:** Medium — the user gets `er` instead of `é` when typing
+fast (2026-10-18/19).
+
+**Complexity:** Low — one value per combo, but a trade-off.
+
+### Spec
+- The six accent combos use a 50 ms `timeout-ms`: both keys must go
+  down within it. Typing fast, the two presses drift further apart.
+- Raise it to 70 ms. The cost: a fast roll on the same pair (`er`, `ze`,
+  `az`, `xc`, `ui`, `io`, all common in French) is likelier to become
+  the accent instead. A combo only fires when both keys are down
+  together, so a roll that releases the first key first stays letters.
+  Watch for that, and tune.
+
+### Implementation Plan
+Approved 2026-10-19.
+1. Keymap: `timeout-ms` 70 on the six combos.
+2. Pushed with `FEAT-14`.
+3. Verify with the key-check page's French sentence, then a week of
+   use: do combos still miss? Does `é` appear for `er`?
 
