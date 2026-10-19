@@ -101,7 +101,9 @@ fast (2026-10-18/19).
 
 ### Implementation Plan
 Approved 2026-10-19.
-1. Keymap: `timeout-ms` 70 on the six combos.
+1. **Done (2026-10-19):** keymap: `timeout-ms` 70 on the six combos.
+   Checked in ZMK `combo.c` at `4dd95d7`: a key released while a combo
+   is pending replays the presses as letters (`position_state_up`).
 2. Pushed with `FEAT-14`.
 3. Verify with the key-check page's French sentence, then a week of
    use: do combos still miss? Does `é` appear for `er`?

@@ -117,13 +117,19 @@
         };
     };
 
+    /*
+     * Accent combos: both keys down within 70 ms (BUG-7: 50 ms missed
+     * them when typing fast). Releasing the first key before the second
+     * goes down keeps the letters, so most rolls stay letters.
+     */
+
     combos {
         compatible = "zmk,combos";
 
         /* Combo E + R = é */
 
         combo_e_aigu {
-            timeout-ms = <50>;
+            timeout-ms = <70>;
             key-positions = <3 4>;
             bindings = <&kp N2>;
             layers = <0>;
@@ -132,7 +138,7 @@
         /* Combo Z + E = è */
 
         combo_e_grave {
-            timeout-ms = <50>;
+            timeout-ms = <70>;
             key-positions = <2 3>;
             bindings = <&kp N7>;
             layers = <0>;
@@ -141,7 +147,7 @@
         /* Combo A + Z = à */
 
         combo_a_grave {
-            timeout-ms = <50>;
+            timeout-ms = <70>;
             key-positions = <1 2>;
             bindings = <&kp N0>;
             layers = <0>;
@@ -150,7 +156,7 @@
         /* Combo X + C = ç */
 
         combo_c_cedille {
-            timeout-ms = <50>;
+            timeout-ms = <70>;
             key-positions = <26 27>;
             bindings = <&kp N9>;
             layers = <0>;
@@ -159,7 +165,7 @@
         /* Combo U + I = ù */
 
         combo_u_grave {
-            timeout-ms = <50>;
+            timeout-ms = <70>;
             key-positions = <7 8>;
             bindings = <&kp SQT>;
             layers = <0>;
@@ -168,7 +174,7 @@
         /* Combo I + O = ^ */
 
         combo_circonflexe {
-            timeout-ms = <50>;
+            timeout-ms = <70>;
             key-positions = <8 9>;
             bindings = <&kp LBKT>;
             layers = <0>;
