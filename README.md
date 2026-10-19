@@ -58,7 +58,8 @@ tapped instead):
   now (2026-10-18, to review around 2026-11-08).
 - **Mods** (right outer thumb, AltGr, tapped alone): one-shot modifiers
   where the home-row mods are. See below.
-- **Nav** (left outer thumb, which is Super on a tap): arrows and edit
+- **Nav** (left outer thumb, which has no tap since 2026-10-19: Super is
+  on the home row): arrows and edit
   shortcuts on the right. `kitty` Copy / Paste are kitty's Ctrl+Shift+C /
   V. `plain ^` types right away (AltGr+9), for vim and regexes; the
   `i + o` combo stays the dead key.
@@ -79,6 +80,13 @@ Added 2026-10-16, still a habit to build:
 - **LazyVim's terminal: `nvim` Term** (added 2026-10-17) opens it from
   normal mode and hides it from inside. It replaces Ctrl+/, which needs
   Shift on AZERTY: the key sends Ctrl+`_`, LazyVim's built-in alias.
+
+### Launcher
+
+Since 2026-10-19 Super is only on the home row. **Super+Space** opens the
+launcher on niri and DMS: hold `m`, tap Space. COSMIC opens its launcher
+on Super alone: hold `m` until it turns into Super (about 0.3 s), then
+let go.
 
 ### Raise symbols: how and when to use it
 
@@ -116,8 +124,9 @@ the same-hand rule makes impossible with home-row mods alone.
 - [Arsenik](https://github.com/OneDeadKey/arsenik) and its split variant
   [Selenium](https://onedeadkey.github.io/selenium/), through their ZMK
   implementation [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox):
-  the advice behind the home-row mod timing, and the timing of the nav thumb
-  key (layer as soon as another key is pressed, Super only on a quick tap),
+  the advice behind the home-row mod timing, and the timing of the thumb
+  keys with a tap (the hold as soon as another key is pressed, the tap
+  only on a quick tap alone),
   the single-key edit shortcuts on the nav layer, the one-shot
   modifiers of the Mods layer, and the raise layer's symbols (Arsenik's
   symbols layer, from Ergo-L, with Ækeynox's AZERTY keycodes).

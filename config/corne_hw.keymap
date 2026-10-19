@@ -11,20 +11,6 @@
 
     behaviors {
         /*
-         * Thumb key with a layer and a tap: the layer comes as soon as
-         * another key is pressed, the tap only when tapped alone within
-         * 150 ms (BUG-3). No quick-tap-ms: tap then hold must give the layer.
-         */
-
-        lthp: layer_tap_hold_preferred {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <150>;
-            bindings = <&mo>, <&kp>;
-        };
-
-        /*
          * ZMK's &sl and &sk, waiting 1.5 s for the next key instead of
          * 1 s (FEAT-14). Copies here rather than overrides of &sl/&sk,
          * which the keymap-editor might not keep.
@@ -49,7 +35,9 @@
         /*
          * Raise thumb: holding it is the raise layer; tapping it alone
          * makes the next key a raise symbol, either hand (FEAT-10,
-         * FEAT-14). Same split as lthp.
+         * FEAT-14). The hold comes as soon as another key is pressed,
+         * the tap only when tapped alone within 150 ms (BUG-3). No
+         * quick-tap-ms: tap then hold must give the hold.
          */
 
         ltsl: layer_tap_sticky_layer {
@@ -63,7 +51,7 @@
         /*
          * AltGr thumb: holding it is AltGr as soon as another key is
          * pressed; tapping it alone opens the one-shot Mods layer
-         * (FEAT-7, FEAT-14). Same split as lthp.
+         * (FEAT-7, FEAT-14). Same tap/hold split as ltsl.
          */
 
         mtsl: mod_tap_sticky_layer {
@@ -192,7 +180,7 @@
 
         default_layer {
             bindings = <
-&kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T  &kp Y  &kp U  &kp I  &kp O  &kp P  &kp BSPC  &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hsl LSHFT F  &kp G  &kp H  &hsr LSHFT J  &hmr LCTRL K  &hmr LALT L  &hmr LGUI SEMI  &kp N4  &kp LSHFT  &kp Z  &kp X  &kp C  &kp V  &kp B  &kp N  &kp M  &kp COMMA  &kp DOT  &kp FSLH  &kp PRINTSCREEN  &lthp 3 LGUI  &mo 1  &kp SPACE  &kp RET  &ltsl 2 2  &mtsl RALT 4
+&kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T  &kp Y  &kp U  &kp I  &kp O  &kp P  &kp BSPC  &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hsl LSHFT F  &kp G  &kp H  &hsr LSHFT J  &hmr LCTRL K  &hmr LALT L  &hmr LGUI SEMI  &kp N4  &kp LSHFT  &kp Z  &kp X  &kp C  &kp V  &kp B  &kp N  &kp M  &kp COMMA  &kp DOT  &kp FSLH  &kp PRINTSCREEN  &mo 3  &mo 1  &kp SPACE  &kp RET  &ltsl 2 2  &mtsl RALT 4
             >;
         };
 

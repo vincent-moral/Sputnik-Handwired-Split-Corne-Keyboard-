@@ -327,7 +327,7 @@ Super (2026-10-19).
 
 ### Implementation Plan
 Approved 2026-10-19.
-1. Keymap: `&mo 3` on position 36 of the base layer; drop the unused
+1. **Done (2026-10-19):** keymap: `&mo 3` on position 36 of the base layer; drop the unused
    `lthp`; README (nav, launcher note), drawing.
 2. Pushed with `FEAT-14`.
 3. Verify: nav arrows come at once; Super+Space on niri; holding `m`

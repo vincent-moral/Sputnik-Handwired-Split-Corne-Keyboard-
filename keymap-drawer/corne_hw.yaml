@@ -37,7 +37,7 @@ layers:
   - ':'
   - '!'
   - PrtSc
-  - {t: Super, h: Nav}
+  - Nav
   - Low
   - ␣
   - ↵
