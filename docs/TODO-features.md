@@ -335,3 +335,36 @@ Approved 2026-10-19.
 3. Verify: nav arrows come at once; Super+Space on niri; holding `m`
    alone opens COSMIC's launcher.
 
+## FEAT-16: A sticky Accents key instead of the combos
+
+**Priority:** Low for now — to decide after a week with `BUG-7`'s 70 ms
+combos (around 2026-10-27). The user thinks it may beat the combos.
+
+**Complexity:** Medium — a sticky layer and a few macros are simple; the
+key to put it on is not (every thumb is taken, 2026-10-19).
+
+**From Lafayette** ([qwerty-lafayette.org](https://qwerty-lafayette.org/)),
+whose single dead key ★ types every French accent: the key pressed after
+★ chooses the accent. Lafayette itself is an OS layout (installed per
+computer, QWERTY letters), so only the idea fits the ground rules.
+
+### Spec
+- Tap ★, then a key: a one-shot Accents layer sending AZERTY keycodes,
+  so nothing changes on the computer. No simultaneous press, so no combo
+  timing (`BUG-7`), and no same-hand chord at all.
+- Proposed mapping (2026-10-19), most frequent accent on the easiest key:
+  ★ `e` é, ★ `z` (left of `e`) è, ★ `d` (under `e`) ê; ★ `a` à, ★ `q` â;
+  ★ `u` ù, ★ `j` û; ★ `i` î, ★ `k` ï; ★ `o` ô, ★ `l` ö; ★ `c` ç.
+  Circumflexes send AZERTY's `^` dead key then the vowel, as the `i`+`o`
+  combo does by hand.
+- Capitals (É, À…): AZERTY has no key for them, with combos or ★; a
+  separate question.
+- Would replace the six combos, or live beside them while learning.
+
+### Implementation Plan
+_Not yet discussed._
+
+### Prerequisites
+- A week with the 70 ms combos: are they good enough?
+- Which key ★ goes on.
+
