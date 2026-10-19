@@ -80,7 +80,7 @@ layers:
   - '3'
   - ''
   - ''
-  - Super
+  - ''
   - {type: held}
   - ␣
   - ↵
@@ -123,7 +123,7 @@ layers:
   - ':'
   - '?'
   - {type: trans}
-  - Super
+  - ''
   - {type: trans}
   - ␣
   - ↵

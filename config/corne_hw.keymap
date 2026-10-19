@@ -192,13 +192,13 @@
 
         low_layer {
             bindings = <
-&kp TAB  &trans  &trans  &trans  &trans  &trans  &kp KP_NUM  &kp KP_N7  &kp KP_N8  &kp KP_N9  &none  &kp BSPC  &trans  &trans  &trans  &trans  &trans  &trans  &none  &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none  &kp LSHFT  &trans  &trans  &trans  &trans  &trans  &none  &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none  &kp LGUI  &trans  &kp SPACE  &kp RET  &kp KP_N0  &mtsl RALT 4
+&kp TAB  &trans  &trans  &trans  &trans  &trans  &kp KP_NUM  &kp KP_N7  &kp KP_N8  &kp KP_N9  &none  &kp BSPC  &trans  &trans  &trans  &trans  &trans  &trans  &none  &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none  &kp LSHFT  &trans  &trans  &trans  &trans  &trans  &none  &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none  &none  &trans  &kp SPACE  &kp RET  &kp KP_N0  &mtsl RALT 4
             >;
         };
 
         raise_layer {
             bindings = <
-&trans  &kp RA(N9)  &kp NUBS  &kp LS(NUBS)  &kp RBKT  &kp LS(SQT)  &kp RA(N0)  &kp N1  &kp BSLH  &kp N4  &kp RA(N7)  &kp BSPC  &kp LCTRL  &kp RA(N4)  &kp N5  &kp MINUS  &kp RA(EQUAL)  &kp EQUAL  &kp RA(N8)  &kp LS(EQUAL)  &kp N6  &kp LS(DOT)  &kp N3  &trans  &trans  &kp RA(N2)  &kp RA(N5)  &kp RA(MINUS)  &kp N8  &kp RA(N3)  &kp RA(N6)  &kp FSLH  &kp COMMA  &kp DOT  &kp LS(M)  &trans  &kp LGUI  &trans  &kp SPACE  &kp RET  &trans  &mtsl RALT 4
+&trans  &kp RA(N9)  &kp NUBS  &kp LS(NUBS)  &kp RBKT  &kp LS(SQT)  &kp RA(N0)  &kp N1  &kp BSLH  &kp N4  &kp RA(N7)  &kp BSPC  &kp LCTRL  &kp RA(N4)  &kp N5  &kp MINUS  &kp RA(EQUAL)  &kp EQUAL  &kp RA(N8)  &kp LS(EQUAL)  &kp N6  &kp LS(DOT)  &kp N3  &trans  &trans  &kp RA(N2)  &kp RA(N5)  &kp RA(MINUS)  &kp N8  &kp RA(N3)  &kp RA(N6)  &kp FSLH  &kp COMMA  &kp DOT  &kp LS(M)  &trans  &none  &trans  &kp SPACE  &kp RET  &trans  &mtsl RALT 4
             >;
         };
 
