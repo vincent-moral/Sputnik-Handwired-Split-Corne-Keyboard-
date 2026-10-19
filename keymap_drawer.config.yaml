@@ -63,7 +63,6 @@ parse_config:
     KP_N7: "7"
     KP_N8: "8"
     KP_N9: "9"
-    KP_MULTIPLY: "*"
     # Unshifted * next to Enter, not the keypad one, so vim's * search works (FEAT-10)
     BSLH: "*"
   raw_binding_map:

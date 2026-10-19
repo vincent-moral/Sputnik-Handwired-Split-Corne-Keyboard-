@@ -49,13 +49,13 @@ the thumb that opens that layer.
 Layers are held with a thumb, their keys on the other hand (Mods is
 tapped instead):
 
-- **Low** (left thumb): Bluetooth on the left; a numpad on the right. The
-  digits are keypad keys: NumLock must be on (`NumLk` toggles it). `*` is
-  the keypad `*` and works regardless of NumLock.
+- **Low** (left thumb): Bluetooth on the left; a numpad on the right,
+  digits only: the symbols
+  that were around it are on Raise since 2026-10-19. The digits are
+  keypad keys: NumLock must be on (`NumLk` toggles it).
 - **Raise** (right thumb): every symbol, on both hands, from Arsenik
   (see below). Held, only its left half follows the same-hand rule;
-  Raise's own tap reaches the whole layer. Low keeps its symbols for
-  now (2026-10-18, to review around 2026-11-08).
+  Raise's own tap reaches the whole layer.
 - **Mods** (right outer thumb, AltGr, tapped alone): one-shot modifiers
   where the home-row mods are. See below.
 - **Nav** (left outer thumb, which has no tap since 2026-10-19: Super is

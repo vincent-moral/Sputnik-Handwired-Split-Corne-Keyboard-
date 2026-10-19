@@ -54,7 +54,7 @@ layers:
   - '7'
   - '8'
   - '9'
-  - '*'
+  - ''
   - ⌫
   - BT clear
   - BT 0
@@ -62,24 +62,24 @@ layers:
   - BT 2
   - BT 3
   - BT 4
-  - '{'
+  - ''
   - '4'
   - '5'
   - '6'
-  - '}'
-  - $
+  - ''
+  - ''
   - Shift
   - {type: trans}
   - {type: trans}
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  - '&'
+  - ''
   - '1'
   - '2'
   - '3'
-  - '%'
-  - '~'
+  - ''
+  - ''
   - Super
   - {type: held}
   - ␣

@@ -251,7 +251,7 @@ Approved 2026-10-18.
 6. **Done (2026-10-18):** flashed and verified with the key-check page:
    all 30 symbols, both ways; AltGr+e gives €; the AltGr tap lapses
    after 1 s; Raise's tap still opens Mods.
-7. Brought forward (user, 2026-10-19: they reach for the duplicates and
+7. **Done (2026-10-19):** brought forward (user, 2026-10-19: they reach for the duplicates and
    want no habit on them): remove Low's `{ } & $ % ~` and the keypad
    `*`, as `&none` so nothing is typed. Popular numpad layers rarely
    hold `*` (Miryoku: `= - . /`; Arsenik: `/ - , .`), and Raise has
