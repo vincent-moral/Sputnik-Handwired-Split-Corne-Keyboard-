@@ -141,3 +141,66 @@ Things that weren't obvious:
   the byte. Its warnings became `BUG-6` and `FEAT-13`.
 - Five layers no longer fit one A4 page: the cheatsheet is two pages.
 
+## FEAT-10: Arsenik's symbols layer for the raise layer
+
+**Closed:** 2026-10-20
+
+Raise holds all 30 programming symbols (Arsenik's layer, from Ergo-L),
+none needing Shift; its tap gives one symbol from either hand (since
+`FEAT-14`). Low's duplicate symbols were removed. Verified on the
+keyboard with the key-check page.
+
+Things that weren't obvious:
+
+- Ækeynox picks AZERTY keycodes per OS: on this Linux `` ` `` and `~`
+  are plain with AltGr, but the user's work PC types `` ` `` as a dead key
+  (2026-10-20, `BUG-8`). Check symbols on every computer, not one.
+- `*` comes from the key next to Enter (`BSLH`), not the keypad: vim's
+  `*` search needs the real character.
+- Keeping duplicates "while learning" backfired: the user kept reaching
+  for the old ones, and asked for them gone after one day.
+
+## FEAT-14: Each sticky tap on the thumb that matches it
+
+**Closed:** 2026-10-20
+
+Raise is symbols, held or tapped; AltGr is modifiers, held or tapped.
+Sticky keys wait 1.5 s. Verified on the keyboard.
+
+Things that weren't obvious:
+
+- Two sticky taps on neighbouring thumbs got mixed up within a day. One
+  kind of thing per thumb, whether tapped or held, fixed it.
+- The `&sl`/`&sk` timeout is changed with copies (`ssl`, `ssk`) in the
+  `behaviors` node rather than overrides outside the root node, which
+  the keymap-editor might not keep.
+- A `raw_binding_map` entry in `keymap_drawer.config.yaml` replaces the
+  parsed binding: the layers those thumbs open lost their red "opens the
+  layer" mark until 2026-10-20. The draw task now adds the "sticky"
+  label after parsing instead.
+
+## FEAT-15: The nav thumb without Super
+
+**Closed:** 2026-10-20
+
+The left outer thumb is plain Nav, instantly; Super is only on the home
+row. Verified: Super+Space opens niri's launcher (hold `m`, tap Space),
+and `m` held alone sends Super alone, which COSMIC's launcher wants.
+
+## BUG-4: A slip on the Low layer could switch the Bluetooth profile
+
+**Closed:** 2026-10-20
+
+The BT keys live on a layer that only opens while Low and Raise are both
+held (a ZMK conditional layer). Verified: Low alone keeps the connection;
+Low + Raise switch profiles.
+
+Things that weren't obvious:
+
+- After a profile switch, ZMK stays connected to the old host but stops
+  sending it keys (`zmk_ble_prof_select` in `ble.c` at `4dd95d7`): the PC
+  showed the keyboard as connected while nothing typed.
+- An accepted exception to the same-hand rule (Bluetooth on Low) still
+  cost two accidents in three days. Moving it behind both thumbs keeps
+  the keys where they were.
+

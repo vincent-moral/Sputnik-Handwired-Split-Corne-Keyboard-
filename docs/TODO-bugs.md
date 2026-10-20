@@ -2,44 +2,6 @@
 
 Things that are wrong today. Reference an entry by its ID (`BUG-N`).
 
-## BUG-4: A slip on the Low layer can switch the Bluetooth profile
-
-**Priority:** Low — it happened once (2026-10-17) and one key press
-(`BT_SEL 1`) fixes it. The user keeps the layout as is for now.
-
-**Complexity:** Low — moving five keys to a new layer.
-
-### Spec
-- On 2026-10-17 the Sputnik showed as connected on the home PC, but no
-  key typed. `BT_SEL 1` on the left half brought it back.
-- Why it looked connected (ZMK `ble.c` at `4dd95d7`): `zmk_ble_prof_select`
-  only changes which host gets the reports; the old host stays connected.
-- Likely cause, not proven: on Low (left thumb), the left home row holds
-  `BT_CLR` and `BT_SEL 0`–`4`, while Low's digits are on the right half.
-  Touching a left home-row key while typing digits switches the profile.
-  `BT_CLR` in the same row would erase the active profile's pairing.
-- Idea (2026-10-17, not adopted): put the BT keys on their own layer,
-  reached only while both Low and Raise are held (a ZMK conditional
-  layer). This changes the README's Bluetooth exception, so it needs the
-  user's approval. A smaller option: move only `BT_CLR` somewhere harder
-  to reach.
-
-- Happened again (user, 2026-10-18): "when I am confused, I press the
-  BT keys by mistake". The user approved the layer idea (2026-10-19),
-  which changes the README's Bluetooth exception.
-
-### Implementation Plan
-Approved 2026-10-19.
-1. **Done (2026-10-19):** keymap: a sixth layer, BT, with the BT keys where they are today
-   (outer left home key, then `q s d f g`), opened by holding Low and
-   Raise together (ZMK conditional layer: `if-layers` 1 and 2, checked
-   in `zmk,conditional-layers.yaml` at `4dd95d7`); Low's BT keys become
-   transparent like the rest of its left half. README ground rule,
-   drawing.
-2. **Done (2026-10-19):** pushed with `FEAT-14`.
-3. Verify: Low + a former BT key types its letter and keeps the
-   connection; Low + Raise + BT key of the current profile works.
-
 ## BUG-5: AltGr stayed held on the PC, cause unknown
 
 **Priority:** Low — seen once (2026-10-17), it cleared by itself.
@@ -105,6 +67,29 @@ Approved 2026-10-19.
    Checked in ZMK `combo.c` at `4dd95d7`: a key released while a combo
    is pending replays the presses as letters (`position_state_up`).
 2. **Done (2026-10-19):** pushed with `FEAT-14`.
-3. Verify with the key-check page's French sentence, then a week of
-   use: do combos still miss? Does `é` appear for `er`?
+3. **Done (2026-10-20):** verified: accents at full speed work, but
+   fast rolls now fire combos by accident, which bothered the user most
+   that day. Superseded by `FEAT-16` (the user's choice, 2026-10-20):
+   this entry closes when the combos are replaced.
+
+## BUG-8: `` ` `` is a dead key on the work PC
+
+**Priority:** Medium — breaks plug and play: the same key types `` ` `` at
+home and waits for a second key at work (seen 2026-10-20).
+
+**Complexity:** _Not yet discussed._
+
+### Spec
+- Raise's `` ` `` sends AltGr+7 (`RA(N7)`). On the home PC's xkb `fr`
+  (basic) that is a plain `grave`; on the work PC (niri) it arrives as a
+  dead key, so `` ` `` needs another key after it.
+- Other symbols may differ the same way (`~` is AltGr+2): check them on
+  the work PC.
+
+### Implementation Plan
+_Not yet discussed._
+
+### Prerequisites
+- The work PC's layout: niri's `config.kdl`, `input` → `keyboard` →
+  `xkb` (layout, variant, options).
 
