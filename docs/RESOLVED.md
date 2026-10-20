@@ -247,3 +247,20 @@ Things that weren't obvious:
   podman needs setuid helpers a pixi package can't install.
 - On 2026-10-20 the build jobs ran on Ubuntu 24.04, not 26 yet. The
   firmware didn't change: it compiles in the pinned container either way.
+
+## BUG-6: The right half asked for USB keyboard support it can't have
+
+**Closed:** 2026-10-20
+
+`CONFIG_ZMK_USB=n` in the right half's own conf
+(`boards/shields/corne_hw/corne_hw_right.conf`). Verified: the warning
+is gone locally and in CI, and the firmware is byte-identical, so the
+keyboard can't behave differently.
+
+Things that weren't obvious:
+
+- The `y` came from ZMK's nice!nano board defconfig, not from this repo:
+  ZMK's own Corne on a nice!nano would warn the same way.
+- A `Kconfig.defconfig` default loses to a board's `CONFIG_…=y`
+  assignment, so our `def_bool n` never did anything. A `.conf` file
+  merged after the board's defaults does override it.

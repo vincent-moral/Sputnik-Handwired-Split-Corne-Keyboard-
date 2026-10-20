@@ -206,7 +206,8 @@ Asked for by the user, 2026-10-20.
    a module like CI. Local build: the warning is gone, and all three
    `.uf2` files are byte-identical to the build before the move (only
    the order of two Kconfig lines and the module's own flag differ).
-2. Push to `dev`: CI must load the module, with no deprecation warning.
+2. **Done (2026-10-20):** pushed to `dev`: CI loads the shield from the
+   module, no deprecation warning, sizes identical.
 3. After the push to `main`: the user opens the keymap-editor once to
    check it still loads the keymap.
 

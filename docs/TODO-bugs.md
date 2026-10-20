@@ -25,35 +25,6 @@ Things that are wrong today. Reference an entry by its ID (`BUG-N`).
 ### Implementation Plan
 _Not yet discussed._
 
-## BUG-6: The right half asks for USB keyboard support it can't have
-
-**Priority:** Low — a build warning only; the firmware works.
-
-**Complexity:** Low — likely one Kconfig block.
-
-### Spec
-- Every build of the right half warns (seen 2026-10-18, locally and in
-  CI run `39041569923`): `ZMK_USB ... was assigned the value 'y' but got
-  the value 'n'`.
-- The `y` comes from ZMK's nice!nano board (`CONFIG_ZMK_USB=y` in its
-  defconfig at `4dd95d7`; checked 2026-10-20, correcting an earlier note
-  that blamed our Kconfig, which already sets `n` for the right half).
-  The right half is the split peripheral: it sends its keys to the left
-  half, never to a computer, so ZMK turns USB off.
-- To check before changing it (R3): whether the right half still flashes
-  and charges over USB without it, and whether the left half needs the
-  line at all or gets it from the board.
-
-### Implementation Plan
-Asked for by the user, 2026-10-20.
-1. **Done (2026-10-20):** `CONFIG_ZMK_USB=n` in
-   `boards/shields/corne_hw/corne_hw_right.conf`, which Zephyr merges
-   after the board's defaults; the two `ZMK_USB` defaults in
-   `Kconfig.defconfig` go, since the board's value overrode both. The
-   left half gets USB from the board. Local build: warning gone, all
-   three `.uf2` byte-identical, so flashing and charging can't change.
-2. Push to `dev`: the warning must be gone in CI too; then close.
-
 ## BUG-8: `` ` `` is a dead key on the work PC
 
 **Priority:** Medium — breaks plug and play: the same key types `` ` `` at
