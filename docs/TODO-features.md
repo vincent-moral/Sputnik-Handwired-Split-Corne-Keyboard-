@@ -231,7 +231,9 @@ Approved 2026-10-20.
    dead-key vowels, checked in `zmk,behavior-macro-one-param.yaml` at
    `4dd95d7`); the combos removed. Drawing, cheatsheet pages, README
    (ground rule, layer note, "how and when"), the key-check page.
-2. Local build, push to `dev`, fast-forward.
+2. **Done (2026-10-20):** local build OK; pushed to `dev`, all five jobs
+   green (only the Ubuntu 26 notice), warnings and sizes identical to the
+   local build, no redraw commit; `main` fast-forwarded to `a657bc9`.
 3. The user flashes and checks every accent and that fast rolls stay
    letters; then close `BUG-7` and this entry.
 
