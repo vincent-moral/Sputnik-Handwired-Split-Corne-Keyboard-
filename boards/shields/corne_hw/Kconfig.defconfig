@@ -9,9 +9,6 @@ config ZMK_SPLIT_BLE
 config ZMK_SPLIT_ROLE_CENTRAL
 	def_bool y
 
-config ZMK_USB
-	def_bool y
-
 endif
 
 
@@ -25,9 +22,6 @@ config ZMK_SPLIT_BLE
 
 config ZMK_SPLIT_ROLE_PERIPHERAL
 	def_bool y
-
-config ZMK_USB
-	def_bool n
 
 endif
 

@@ -45,7 +45,14 @@ _Not yet discussed._
   line at all or gets it from the board.
 
 ### Implementation Plan
-_Not yet discussed._
+Asked for by the user, 2026-10-20.
+1. **Done (2026-10-20):** `CONFIG_ZMK_USB=n` in
+   `boards/shields/corne_hw/corne_hw_right.conf`, which Zephyr merges
+   after the board's defaults; the two `ZMK_USB` defaults in
+   `Kconfig.defconfig` go, since the board's value overrode both. The
+   left half gets USB from the board. Local build: warning gone, all
+   three `.uf2` byte-identical, so flashing and charging can't change.
+2. Push to `dev`: the warning must be gone in CI too; then close.
 
 ## BUG-8: `` ` `` is a dead key on the work PC
 
