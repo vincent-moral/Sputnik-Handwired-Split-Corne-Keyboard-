@@ -45,33 +45,6 @@ _Not yet discussed._
 ### Implementation Plan
 _Not yet discussed._
 
-## BUG-7: Combos miss when typing fast
-
-**Priority:** Medium — the user gets `er` instead of `é` when typing
-fast (2026-10-18/19).
-
-**Complexity:** Low — one value per combo, but a trade-off.
-
-### Spec
-- The six accent combos use a 50 ms `timeout-ms`: both keys must go
-  down within it. Typing fast, the two presses drift further apart.
-- Raise it to 70 ms. The cost: a fast roll on the same pair (`er`, `ze`,
-  `az`, `xc`, `ui`, `io`, all common in French) is likelier to become
-  the accent instead. A combo only fires when both keys are down
-  together, so a roll that releases the first key first stays letters.
-  Watch for that, and tune.
-
-### Implementation Plan
-Approved 2026-10-19.
-1. **Done (2026-10-19):** keymap: `timeout-ms` 70 on the six combos.
-   Checked in ZMK `combo.c` at `4dd95d7`: a key released while a combo
-   is pending replays the presses as letters (`position_state_up`).
-2. **Done (2026-10-19):** pushed with `FEAT-14`.
-3. **Done (2026-10-20):** verified: accents at full speed work, but
-   fast rolls now fire combos by accident, which bothered the user most
-   that day. Superseded by `FEAT-16` (the user's choice, 2026-10-20):
-   this entry closes when the combos are replaced.
-
 ## BUG-8: `` ` `` is a dead key on the work PC
 
 **Priority:** Medium — breaks plug and play: the same key types `` ` `` at

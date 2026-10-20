@@ -204,3 +204,46 @@ Things that weren't obvious:
   cost two accidents in three days. Moving it behind both thumbs keeps
   the keys where they were.
 
+
+## FEAT-16: A sticky Accents key instead of the combos
+
+**Closed:** 2026-10-20, together with `BUG-7` (combos missing, then
+firing by accident, when typing fast), which it replaces.
+
+Tapping Low opens a one-shot Accents layer: tap Low, then a letter.
+The six accent combos are gone. Verified on the keyboard with the
+key-check page: every accent, the `^` and `¨` dead-key vowels, the tap
+lapsing after 1.5 s, Low still held for digits, Low + Raise still
+reaching Bluetooth, fast rolls staying letters, two clean sentences.
+
+Things that weren't obvious:
+
+- A combo's timeout has no right value for fast typing: at 50 ms
+  accents were missed (`er` for `é`), at 70 ms fast rolls on the same
+  pairs became accents. Only a sequence (one key, then the next) fixes
+  both.
+- The idea came from Lafayette's single dead key, but Lafayette is an OS
+  layout. The firmware sends AZERTY keycodes after the tap, so nothing
+  is installed on the computer.
+- A dead-key vowel (ê, ë…) is one `zmk,behavior-macro-one-param` macro
+  per dead key, with the vowel as its parameter, rather than one macro
+  per letter.
+
+## FEAT-17: Keep the local build and the drawing audit in the repo
+
+**Closed:** 2026-10-20
+
+`pixi run build` builds every target in CI's container before a push;
+`pixi run audit` checks every legend in the drawing against what AZERTY
+types, and CI runs it before committing a drawing. First push: audit 0
+problems in CI, firmware sizes identical to the local build.
+
+Things that weren't obvious:
+
+- Scripts kept outside the repo (Claude's scratchpad) were wiped three
+  times in three days: anything a workflow step relies on lives in git.
+- The layout files come from pixi (`xkeyboard-config`), so the audit
+  checks the same `fr` (basic) in CI and locally. podman can't: rootless
+  podman needs setuid helpers a pixi package can't install.
+- On 2026-10-20 the build jobs ran on Ubuntu 24.04, not 26 yet. The
+  firmware didn't change: it compiles in the pinned container either way.
