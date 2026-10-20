@@ -35,9 +35,11 @@ _Not yet discussed._
 - Every build of the right half warns (seen 2026-10-18, locally and in
   CI run `39041569923`): `ZMK_USB ... was assigned the value 'y' but got
   the value 'n'`.
-- `config/boards/shields/corne_hw_right/Kconfig.defconfig` sets
-  `ZMK_USB` to `y`, but the right half is the split peripheral: it sends
-  its keys to the left half, never to a computer, so ZMK turns USB off.
+- The `y` comes from ZMK's nice!nano board (`CONFIG_ZMK_USB=y` in its
+  defconfig at `4dd95d7`; checked 2026-10-20, correcting an earlier note
+  that blamed our Kconfig, which already sets `n` for the right half).
+  The right half is the split peripheral: it sends its keys to the left
+  half, never to a computer, so ZMK turns USB off.
 - To check before changing it (R3): whether the right half still flashes
   and charges over USB without it, and whether the left half needs the
   line at all or gets it from the board.
