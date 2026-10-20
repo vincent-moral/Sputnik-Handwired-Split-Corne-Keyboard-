@@ -189,11 +189,11 @@ _Not yet discussed._
 
 ## FEAT-16: A sticky Accents key instead of the combos
 
-**Priority:** Low for now — to decide after a week with `BUG-7`'s 70 ms
-combos (around 2026-10-27). The user thinks it may beat the combos.
+**Priority:** High — the 70 ms combos (`BUG-7`) fire on fast rolls, which
+bothered the user most on 2026-10-20; they chose this instead.
 
-**Complexity:** Medium — a sticky layer and a few macros are simple; the
-key to put it on is not (every thumb is taken, 2026-10-19).
+**Complexity:** Medium — a sticky layer, two one-parameter macros, and
+the combos removed.
 
 **From Lafayette** ([qwerty-lafayette.org](https://qwerty-lafayette.org/)),
 whose single dead key ★ types every French accent: the key pressed after
@@ -209,13 +209,23 @@ computer, QWERTY letters), so only the idea fits the ground rules.
   ★ `u` ù, ★ `j` û; ★ `i` î, ★ `k` ï; ★ `o` ô, ★ `l` ö; ★ `c` ç.
   Circumflexes send AZERTY's `^` dead key then the vowel, as the `i`+`o`
   combo does by hand.
-- Capitals (É, À…): AZERTY has no key for them, with combos or ★; a
-  separate question.
-- Would replace the six combos, or live beside them while learning.
+- Capitals (É, À…) and œ: AZERTY has no key for them; left out for now
+  (user, 2026-10-20).
+- ë on ★ `s` and ü on ★ `h` (user, 2026-10-20), with the `¨` dead key
+  (Shift + the `^` dead key on AZERTY).
+- ★ is **Low's tap** (user, 2026-10-20; to move if it feels wrong): the
+  same tap/hold split as Raise, so every layer thumb holds its layer and
+  taps one key from it. Low comes as soon as another key is pressed.
+- **All six combos go** (user, 2026-10-20), `i`+`o` (`^` dead key)
+  included: ★ covers the circumflex vowels and Raise has the plain `^`.
 
 ### Implementation Plan
-_Not yet discussed._
-
-### Prerequisites
-- A week with the 70 ms combos: are they good enough?
-- Which key ★ goes on.
+Approved 2026-10-20.
+1. **Done (2026-10-20):** keymap: `&ltsl 1 6` on Low; a seventh layer, Accents, with the
+   mapping above (`&kp` for é è à ù ç, macros `circ`/`trema` for the
+   dead-key vowels, checked in `zmk,behavior-macro-one-param.yaml` at
+   `4dd95d7`); the combos removed. Drawing, cheatsheet pages, README
+   (ground rule, layer note, "how and when"), the key-check page.
+2. Local build, push to `dev`, fast-forward.
+3. The user flashes and checks every accent and that fast rolls stay
+   letters; then close `BUG-7` and this entry.

@@ -98,7 +98,9 @@ keymap ([`BUG-1`](RESOLVED.md#bug-1-zmk-and-its-build-workflow-floated-on-main))
 Before relying on how ZMK, the OS layout or an app handles a key,
 confirm it in the docs or source, or test it on the keyboard. Examples
 of traps here: QWERTY keycodes typed through an AZERTY layout, dead
-keys (`^` from the combo), keypad digits versus number-row digits.
+keys (AZERTY's `^` and `¨`, which the Accents layer sends before a vowel;
+`` ` `` is plain at home but a dead key on the work PC: `BUG-8`), keypad
+digits versus number-row digits.
 
 ### R4. Comments and docs explain why, and stay true
 Comments say why a key is where it is. A behavior change updates the

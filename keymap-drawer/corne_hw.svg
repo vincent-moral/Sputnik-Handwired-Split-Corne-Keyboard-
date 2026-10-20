@@ -1,4 +1,4 @@
-<svg width="900" height="2097" viewBox="0 0 900 2097" class="keymap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="900" height="2437" viewBox="0 0 900 2437" class="keymap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <style>/* inherit to force styles through use tags */
 svg path {
     fill: inherit;
@@ -297,9 +297,12 @@ path.combo { stroke: #7f7f7f; }
 </a></g>
 <g transform="translate(306, 224) rotate(12.0)" class="key keypos-37">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<a href="#Low">
-<text x="0" y="0" class="key tap layer-activator">Low</text>
-</a></g>
+<a href="#Accents">
+<text x="0" y="0" class="key tap layer-activator">Accents</text>
+</a><a href="#Low">
+<text x="0" y="26" class="key hold layer-activator">Low</text>
+</a><text x="0" y="-26" class="key shifted">sticky</text>
+</g>
 <g transform="translate(375, 231) rotate(24.0)" class="key keypos-38">
 <rect rx="6" ry="6" x="-28" y="-43" width="56" height="86" class="key"/>
 <text x="0" y="0" class="key tap">␣</text>
@@ -322,30 +325,6 @@ path.combo { stroke: #7f7f7f; }
 <text x="0" y="0" class="key tap layer-activator">Mods</text>
 </a><text x="0" y="26" class="key hold">AltGr</text>
 <text x="0" y="-26" class="key shifted">sticky</text>
-</g>
-<g class="combo combopos-0">
-<rect rx="6" ry="6" x="227" y="23" width="26" height="22" class="combo"/>
-<text x="240" y="34" class="combo tap">é</text>
-</g>
-<g class="combo combopos-1">
-<rect rx="6" ry="6" x="167" y="23" width="26" height="22" class="combo"/>
-<text x="180" y="34" class="combo tap">è</text>
-</g>
-<g class="combo combopos-2">
-<rect rx="6" ry="6" x="107" y="34" width="26" height="22" class="combo"/>
-<text x="120" y="45" class="combo tap">à</text>
-</g>
-<g class="combo combopos-3">
-<rect rx="6" ry="6" x="167" y="143" width="26" height="22" class="combo"/>
-<text x="180" y="154" class="combo tap">ç</text>
-</g>
-<g class="combo combopos-4">
-<rect rx="6" ry="6" x="587" y="23" width="26" height="22" class="combo"/>
-<text x="600" y="34" class="combo tap">ù</text>
-</g>
-<g class="combo combopos-5">
-<rect rx="6" ry="6" x="647" y="23" width="26" height="22" class="combo"/>
-<text x="660" y="34" class="combo tap">^</text>
 </g>
 </g>
 </g>
@@ -1119,4 +1098,149 @@ path.combo { stroke: #7f7f7f; }
 </g>
 </g>
 </g>
-<text x="870.0" y="2069.0" class="footer">Small legend: when held · Red: thumb that opens the layer · Blue: combo (both keys)</text></svg>
+<g transform="translate(30, 2041)" class="layer-Accents">
+<text x="0" y="28" class="label" id="Accents">Accents:</text>
+<g transform="translate(0, 56)">
+<g transform="translate(30, 52)" class="key trans keypos-0">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(90, 52)" class="key keypos-1">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">à</text>
+</g>
+<g transform="translate(150, 37)" class="key keypos-2">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">è</text>
+</g>
+<g transform="translate(210, 30)" class="key keypos-3">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">é</text>
+</g>
+<g transform="translate(270, 37)" class="key trans keypos-4">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(330, 44)" class="key trans keypos-5">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(510, 44)" class="key trans keypos-6">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(570, 37)" class="key keypos-7">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">ù</text>
+</g>
+<g transform="translate(630, 30)" class="key keypos-8">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">î</text>
+</g>
+<g transform="translate(690, 37)" class="key keypos-9">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">ô</text>
+</g>
+<g transform="translate(750, 52)" class="key trans keypos-10">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(810, 52)" class="key trans keypos-11">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(30, 112)" class="key trans keypos-12">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(90, 112)" class="key keypos-13">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">â</text>
+</g>
+<g transform="translate(150, 97)" class="key keypos-14">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">ë</text>
+</g>
+<g transform="translate(210, 90)" class="key keypos-15">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">ê</text>
+</g>
+<g transform="translate(270, 97)" class="key trans keypos-16">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(330, 104)" class="key trans keypos-17">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(510, 104)" class="key keypos-18">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">ü</text>
+</g>
+<g transform="translate(570, 97)" class="key keypos-19">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">û</text>
+</g>
+<g transform="translate(630, 90)" class="key keypos-20">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">ï</text>
+</g>
+<g transform="translate(690, 97)" class="key keypos-21">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">ö</text>
+</g>
+<g transform="translate(750, 112)" class="key trans keypos-22">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(810, 112)" class="key trans keypos-23">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(30, 172)" class="key trans keypos-24">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(90, 172)" class="key trans keypos-25">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(150, 157)" class="key trans keypos-26">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(210, 150)" class="key keypos-27">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
+<text x="0" y="0" class="key tap">ç</text>
+</g>
+<g transform="translate(270, 157)" class="key trans keypos-28">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(330, 164)" class="key trans keypos-29">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(510, 164)" class="key trans keypos-30">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(570, 157)" class="key trans keypos-31">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(630, 150)" class="key trans keypos-32">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(690, 157)" class="key trans keypos-33">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(750, 172)" class="key trans keypos-34">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(810, 172)" class="key trans keypos-35">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(240, 217)" class="key trans keypos-36">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(306, 224) rotate(12.0)" class="key held keypos-37">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key held"/>
+</g>
+<g transform="translate(375, 231) rotate(24.0)" class="key trans keypos-38">
+<rect rx="6" ry="6" x="-28" y="-43" width="56" height="86" class="key trans"/>
+</g>
+<g transform="translate(465, 231) rotate(-24.0)" class="key trans keypos-39">
+<rect rx="6" ry="6" x="-28" y="-43" width="56" height="86" class="key trans"/>
+</g>
+<g transform="translate(534, 224) rotate(-12.0)" class="key trans keypos-40">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+<g transform="translate(600, 217)" class="key trans keypos-41">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
+</g>
+</g>
+</g>
+<text x="870.0" y="2409.0" class="footer">Small legend: when held · Red: thumb that opens the layer</text></svg>

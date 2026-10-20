@@ -102,6 +102,16 @@ parse_config:
     # The two thumbs with a sticky tap (FEAT-14) get no entry here: an entry
     # replaces the parsed binding and the layers they open lose their red
     # thumb. pixi.toml's draw task adds their "sticky" label after parsing.
+    # Accents layer (FEAT-16): AZERTY's dead key, then the vowel
+    "&circ E": ê
+    "&circ Q": â
+    "&circ I": î
+    "&circ O": ô
+    "&circ U": û
+    "&trema E": ë
+    "&trema I": ï
+    "&trema O": ö
+    "&trema U": ü
     # Bluetooth
     "&bt BT_CLR": BT clear
     "&bt BT_SEL 0": BT 0
@@ -110,8 +120,6 @@ parse_config:
     "&bt BT_SEL 3": BT 3
     "&bt BT_SEL 4": BT 4
 draw_config:
-  footer_text: "Small legend: when held · Red: thumb that opens the layer · Blue: combo (both keys)"
+  footer_text: "Small legend: when held · Red: thumb that opens the layer"
   dark_mode: auto
   key_h: 60
-  combo_w: 26
-  combo_h: 22

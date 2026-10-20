@@ -38,7 +38,7 @@ layers:
   - '!'
   - PrtSc
   - Nav
-  - Low
+  - {t: Accents, h: Low, s: sticky}
   - ␣
   - ↵
   - {t: Raise, h: Raise, s: sticky}
@@ -258,22 +258,46 @@ layers:
   - {type: trans}
   - {type: held}
   - {type: trans}
-combos:
-- p: [3, 4]
-  k: é
-  l: [Base]
-- p: [2, 3]
-  k: è
-  l: [Base]
-- p: [1, 2]
-  k: à
-  l: [Base]
-- p: [26, 27]
-  k: ç
-  l: [Base]
-- p: [7, 8]
-  k: ù
-  l: [Base]
-- p: [8, 9]
-  k: ^
-  l: [Base]
+  Accents:
+  - {type: trans}
+  - à
+  - è
+  - é
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - ù
+  - î
+  - ô
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - â
+  - ë
+  - ê
+  - {type: trans}
+  - {type: trans}
+  - ü
+  - û
+  - ï
+  - ö
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - ç
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: held}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}

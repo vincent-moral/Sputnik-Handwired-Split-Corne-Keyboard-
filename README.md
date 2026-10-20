@@ -31,13 +31,13 @@ The keymap is only changed through this repository: no ZMK Studio edits.
     key on the left home row (since 2026-10-19; on Low alone before, a
     slip switched profiles: `BUG-4`).
   - Modifier + arrow on the nav layer (selection, word jumps).
-- **Accented letters come from combos** on the base layer: press both keys
-  together. The drawing shows each combo as a small key between its two
-  keys (à, è, é, ç, ù, and `^`, the dead key for ê, î, ô).
+- **Accented letters come from the Accents key** (since 2026-10-20): tap
+  Low, then a letter. One key at a time, so nothing is pressed together
+  (the combos before it fired by accident on fast rolls: `BUG-7`).
 
 ## Layers
 
-![The six layers, as typed on the AZERTY OS](keymap-drawer/corne_hw.svg)
+![The seven layers, as typed on the AZERTY OS](keymap-drawer/corne_hw.svg)
 
 The drawing is generated from the keymap: GitHub Actions
 redraws it after every keymap change, and `pixi run draw` does the same
@@ -57,6 +57,7 @@ tapped instead):
 - **Raise** (right thumb): every symbol, on both hands, from Arsenik
   (see below). Held, only its left half follows the same-hand rule;
   Raise's own tap reaches the whole layer.
+- **Accents** (Low, tapped alone): one accented letter. See below.
 - **Mods** (right outer thumb, AltGr, tapped alone): one-shot modifiers
   where the home-row mods are. See below.
 - **BT** (Low and Raise held together): Bluetooth profiles 0–4 and
@@ -64,8 +65,23 @@ tapped instead):
 - **Nav** (left outer thumb, which has no tap since 2026-10-19: Super is
   on the home row): arrows and edit
   shortcuts on the right. `kitty` Copy / Paste are kitty's Ctrl+Shift+C /
-  V. `plain ^` types right away (AltGr+9), for vim and regexes; the
-  `i + o` combo stays the dead key.
+  V. `plain ^` types right away (AltGr+9), for vim and regexes.
+
+### Accents: how and when to use it
+
+Added 2026-10-20, inspired by Lafayette's single dead key, still a habit
+to build. **Tap Low, then the key**, and the layer closes again:
+
+| Tap Low, then | `e` | `z` | `d` | `s` | `a` | `q` | `u` | `j` | `h` | `i` | `k` | `o` | `l` | `c` |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Types | é | è | ê | ë | à | â | ù | û | ü | î | ï | ô | ö | ç |
+
+- The vowel's own key gives the most common accent (é, à, ù, î, ô); the
+  key beside or under it gives the others.
+- ê â î ô û and ë ï ö ü are AZERTY's dead key then the vowel, sent for you.
+- Holding Low is still the numpad, as soon as another key is pressed.
+- If no key follows the tap within 1.5 s, it lapses.
+- Not covered yet: capitals (É, À…) and œ.
 
 ### Nav: how and when to use it
 
@@ -133,6 +149,9 @@ the same-hand rule makes impossible with home-row mods alone.
   the single-key edit shortcuts on the nav layer, the one-shot
   modifiers of the Mods layer, and the raise layer's symbols (Arsenik's
   symbols layer, from Ergo-L, with Ækeynox's AZERTY keycodes).
+- [Lafayette](https://qwerty-lafayette.org/): the idea of a single key
+  that types every French accent (its ★ dead key), done in the firmware
+  for AZERTY.
 - [keymap-drawer](https://github.com/caksoylar/keymap-drawer), which draws
   the layers.
 - ZMK's [timeless home-row mods](https://zmk.dev/docs/keymaps/behaviors/hold-tap)
