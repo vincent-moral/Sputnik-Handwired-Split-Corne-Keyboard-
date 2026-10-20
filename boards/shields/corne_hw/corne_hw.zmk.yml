@@ -1,0 +1,12 @@
+file_format: "1"
+id: corne_hw
+name: Corne HW
+type: shield
+url: https://github.com/vincent-moral/Sputnik-Handwired-Split-Corne-Keyboard-
+requires: []
+features:
+  - keys
+  - display
+siblings:
+  - corne_hw_left
+  - corne_hw_right

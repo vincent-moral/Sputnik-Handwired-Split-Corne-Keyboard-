@@ -1,0 +1,7 @@
+# Makes this repo a ZMK module holding the shield (FEAT-13): ZMK
+# deprecated shields in config/boards. ZMK's build workflow sees this
+# file and adds the repo as a module; config/ keeps the keymap.
+name: zmk-keyboard-corne-hw
+build:
+  settings:
+    board_root: .

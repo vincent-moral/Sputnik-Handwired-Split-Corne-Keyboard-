@@ -5,6 +5,8 @@ keyboard only gets what GitHub builds. Mirrors ZMK's
 build-user-config.yml at the commit pinned in config/west.yml: same
 container image (pinned by digest, R2), every target in build.yaml, then
 prints each target's warnings and sizes to compare with the CI log.
+Like CI, adds the repo as a ZMK module when zephyr/module.yml exists:
+that is where the shield lives (FEAT-13).
 
 Needs podman from the system (rootless podman relies on setuid helpers a
 pixi package can't provide). The ZMK and Zephyr download (a few minutes
@@ -41,6 +43,7 @@ def main():
     # A fresh copy of config/ each time, so the build sees the working tree.
     shutil.rmtree(os.path.join(WORKSPACE, "config"), ignore_errors=True)
     shutil.copytree("config", os.path.join(WORKSPACE, "config"))
+    module = " -DZMK_EXTRA_MODULES=/module" if os.path.exists("zephyr/module.yml") else ""
     builds = "\n".join(
         f'build {name} {shield} {" ".join(args)}' for name, shield, args in targets())
     script = f"""set -euo pipefail
@@ -51,7 +54,7 @@ mkdir -p out
 build() {{
   local name=$1 shield=$2; shift 2
   if west build -p -s zmk/app -d "build/$name" "$@" -- -DZMK_CONFIG=/ws/config \\
-       -DSHIELD="$shield" > "build-$name.log" 2>&1; then
+       -DSHIELD="$shield"{module} > "build-$name.log" 2>&1; then
     cp "build/$name/zephyr/zmk.uf2" "out/$name.uf2"; echo "$name: OK"
   else
     echo "$name: FAILED"; tail -40 "build-$name.log"; failed=1
@@ -62,7 +65,8 @@ failed=0
 exit $failed
 """
     ws = os.path.abspath(WORKSPACE)
-    run = subprocess.run(["podman", "run", "--rm", "--userns=keep-id", "-v", f"{ws}:/ws", "-w", "/ws",
+    run = subprocess.run(["podman", "run", "--rm", "--userns=keep-id", "-v", f"{ws}:/ws",
+                          "-v", f"{os.getcwd()}:/module:ro", "-w", "/ws",
                           IMAGE, "bash", "-c", script])
     # The lines worth comparing with the CI log.
     wanted = re.compile(r"^(warning|CMake Dep|.*warning:|.*error:)|FLASH:|RAM:")
