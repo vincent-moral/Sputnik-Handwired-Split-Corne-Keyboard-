@@ -17,13 +17,18 @@ the same-hand rule anyway.
 - Unconfirmed (2026-10-16): whether Super+keypad digit triggers niri's
   and COSMIC's workspace shortcuts on an AZERTY layout. Super+U/I and
   Super+PgUp/PgDn are the alternatives.
+- Work config read on 2026-10-20 (`config.kdl`): the bindings are in
+  `include "dms/binds.kdl"`, not yet seen. Its own binds: Alt+Tab and
+  Alt+Shift+Tab (fine with the right Alt, `l`), Alt+`` ` `` and
+  Alt+Shift+`` ` `` — on AZERTY `` ` `` only exists as AltGr+7: whether niri
+  matches Alt+AltGr+7 is untested, a binding to track.
 
 ### Implementation Plan
 _Not yet discussed._
 
 ### Prerequisites
-- The user's niri `config.kdl` and any custom Dank Material Shell
-  keybindings from the work PC.
+- `~/.config/niri/dms/binds.kdl` from the work PC (the user brings it on
+  2026-10-22).
 - Does the user switch workspaces by number?
 
 ## FEAT-6: Home-row mods that only trigger with the other hand
@@ -229,3 +234,46 @@ Approved 2026-10-20.
 2. Local build, push to `dev`, fast-forward.
 3. The user flashes and checks every accent and that fast rolls stay
    letters; then close `BUG-7` and this entry.
+
+## FEAT-17: Keep the local build and the drawing audit in the repo
+
+**Priority:** Medium — both scripts live in Claude's scratchpad, which was
+wiped three times between 2026-10-18 and 2026-10-20; each time they had to
+be rewritten before a push.
+
+**Complexity:** Low — two scripts and two pixi tasks; CI for the audit.
+
+### Spec
+- **Local build:** builds both halves in ZMK's CI image
+  (`zmkfirmware/zmk-build-arm`, pinned by digest) with podman, mirroring
+  `build-user-config.yml` at `4dd95d7`, and prints warnings and sizes to
+  compare with CI. A pre-push check, never firmware to flash (the user
+  flashes only what GitHub builds). podman is a system tool, not from pixi.
+- **Drawing audit:** for every binding, works out what xkb `fr` (basic)
+  types, accent macros included, and compares it with the drawing's
+  legend; 76 legends, 0 mismatches on 2026-10-20. Worth running in the
+  draw workflow, so a wrong legend fails CI instead of reaching the README.
+- The audit reads `/usr/share/X11/xkb/symbols`: in CI that needs the
+  `xkb-data` package, or a copy of the `fr` file pinned in the repo (R2).
+
+### Implementation Plan
+_Not yet discussed._
+
+## FEAT-18: Low's digits without NumLock
+
+**Priority:** Low — works on both PCs today (NumLock on at startup:
+niri's `numlock` at work, 2026-10-20), but breaks plug and play on any
+computer where NumLock is off: the digits become arrows and Home/End.
+
+**Complexity:** Low to change, but a trade-off.
+
+### Spec
+- Low sends keypad digits (`KP_N1`…), which need NumLock.
+- Alternative: number-row digits, which AZERTY types with Shift
+  (`LS(N1)`…), whatever NumLock says. Cost: every digit sends Shift, so a
+  digit inside a shortcut, or an app reading Shift, behaves differently;
+  keypad digits were the original choice for that reason (R3).
+
+### Implementation Plan
+_Not yet discussed._
+

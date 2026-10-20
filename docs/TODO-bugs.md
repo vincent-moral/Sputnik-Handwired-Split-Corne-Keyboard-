@@ -90,6 +90,7 @@ home and waits for a second key at work (seen 2026-10-20).
 _Not yet discussed._
 
 ### Prerequisites
-- The work PC's layout: niri's `config.kdl`, `input` → `keyboard` →
-  `xkb` (layout, variant, options).
+- The work PC's layout: niri's `xkb` block is empty there (read
+  2026-10-20), so it comes from `org.freedesktop.locale1`:
+  `localectl status` on the work PC (the user brings it on 2026-10-22).
 
