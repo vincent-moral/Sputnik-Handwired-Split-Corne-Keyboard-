@@ -1,6 +1,8 @@
 # Pinned tools for this repo (R2). `pixi run draw` redraws the keymap
 # (FEAT-5); CI runs the same task. `pixi run cheatsheet` makes a
 # printable A4 PDF of it, two pages of layers (not committed).
+# `pixi run audit` and `pixi run build` check a change before it's pushed
+# (FEAT-17).
 [workspace]
 name = "sputnik-corne-zmk"
 channels = ["conda-forge"]
@@ -9,10 +11,16 @@ platforms = ["linux-64"]
 [dependencies]
 python = "3.12.*"
 librsvg = "2.62.*"
+xkeyboard-config = "2.48.*"
 
 [pypi-dependencies]
 keymap-drawer = "==0.23.0"
 
 [tasks]
 draw = { cmd = "mkdir -p keymap-drawer && keymap -c keymap_drawer.config.yaml parse -z config/corne_hw.keymap --layer-names Base Low Raise Nav Mods BT Accents | sed -e 's/{t: Raise, h: Raise}/{t: Raise, h: Raise, s: sticky}/' -e 's/{t: Mods, h: AltGr}/{t: Mods, h: AltGr, s: sticky}/' -e 's/{t: Accents, h: Low}/{t: Accents, h: Low, s: sticky}/' > keymap-drawer/corne_hw.yaml && keymap -c keymap_drawer.config.yaml draw -j config/corne_hw.json keymap-drawer/corne_hw.yaml > keymap-drawer/corne_hw.svg" }
+# Checks the drawing's legends against what AZERTY types, and that each
+# layer marks its opening thumb (FEAT-17); CI runs it after drawing.
+audit = { cmd = "python tools/audit_drawing.py", depends-on = ["draw"] }
+# Builds the firmware locally in CI's image, before a push to dev (FEAT-17).
+build = "python tools/zmk_build.py"
 cheatsheet = { cmd = "keymap -c keymap_drawer.config.yaml draw -j config/corne_hw.json keymap-drawer/corne_hw.yaml -s Base Low Raise > keymap-drawer/cheatsheet-1.svg && keymap -c keymap_drawer.config.yaml draw -j config/corne_hw.json keymap-drawer/corne_hw.yaml -s Nav Mods BT Accents > keymap-drawer/cheatsheet-2.svg && rsvg-convert -f pdf --page-width 210mm --page-height 297mm --left 17mm --top 10mm --width 176mm --keep-aspect-ratio keymap-drawer/cheatsheet-1.svg keymap-drawer/cheatsheet-2.svg -o keymap-drawer/cheatsheet.pdf", depends-on = ["draw"] }

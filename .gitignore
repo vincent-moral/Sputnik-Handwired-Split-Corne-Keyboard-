@@ -1,2 +1,5 @@
 .pixi/
 keymap-drawer/cheatsheet*
+# Local firmware builds (FEAT-17): ZMK, Zephyr and the build output
+.zmk/
+__pycache__/

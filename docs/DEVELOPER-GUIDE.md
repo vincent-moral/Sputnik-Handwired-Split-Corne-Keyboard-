@@ -16,13 +16,17 @@ check every change against them.
 2. **Change locally, as small atomic commits**, one logical change each.
    The README's layer drawing is generated, never edited by hand: run
    `pixi run draw` and commit the redrawn `keymap-drawer/` files **in the
-   same commit** as the keymap change (R1). GitHub Actions redraws it
+   same commit** as the keymap change (R1). `pixi run audit` redraws and
+   checks every legend against what AZERTY types; CI runs it too. GitHub Actions redraws it
    after every keymap push as a safety net. A new way of doing something
    also gets a short "how and when to use it" note under its layer: the
    user has to build the habit, and the README is where they look it up.
 3. **Push only with explicit approval.** A push to `main` makes GitHub
    Actions build new firmware. Nothing changes on the keyboard until the
    user flashes it, but a broken build blocks every later change.
+   - Before pushing firmware, `pixi run build` builds every target
+     locally in CI's container (podman needed): a failing build never
+     reaches GitHub. Its `.uf2` files are never flashed.
    - Firmware changes go to a `dev` branch first. Once its build is
      green (every job and annotation read), fast-forward `main` to it and
      delete `dev`. If the drawing workflow added a "redraw the keymap"

@@ -255,11 +255,24 @@ be rewritten before a push.
   types, accent macros included, and compares it with the drawing's
   legend; 76 legends, 0 mismatches on 2026-10-20. Worth running in the
   draw workflow, so a wrong legend fails CI instead of reaching the README.
-- The audit reads `/usr/share/X11/xkb/symbols`: in CI that needs the
-  `xkb-data` package, or a copy of the `fr` file pinned in the repo (R2).
+- The audit reads the layout from pixi's `xkeyboard-config` (2.48,
+  pinned in `pixi.lock`): its `fr` (basic) is identical to the home PC's
+  2.41 (checked 2026-10-20). podman stays a system tool: rootless podman
+  needs setuid helpers (`newuidmap`) a pixi package can't install.
+- The audit also checks that each layer but Base marks its opening thumb,
+  the mistake of 2026-10-19 (`FEAT-14`'s drawing fix).
 
 ### Implementation Plan
-_Not yet discussed._
+Asked for by the user, 2026-10-20.
+1. **Done (2026-10-20):** `tools/audit_drawing.py` (`pixi run audit`),
+   tested on purpose with a wrong legend and a missing thumb: both
+   reported, exit 1.
+2. **Done (2026-10-20):** `tools/zmk_build.py` (`pixi run build`): every
+   target in `build.yaml`, workspace in `.zmk/` (git-ignored). First run:
+   all three targets OK, sizes and warnings identical to CI's.
+3. **Done (2026-10-20):** `draw.yml` runs the audit before committing the
+   drawing; `build.yml` ignores `tools/`; the developer guide.
+4. Push: the drawing workflow must stay green with the audit.
 
 ## FEAT-18: Low's digits without NumLock
 

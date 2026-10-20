@@ -5,6 +5,7 @@ name: Draw keymap
 # to the pushed branch. Commits pushed with GITHUB_TOKEN start no other
 # workflow, so the drawing commit doesn't rebuild the firmware. The A4
 # cheatsheet PDF is attached to the run, never committed.
+# The audit (tools/audit_drawing.py) checks the drawing first.
 on:
   push:
     branches: [main, dev]
@@ -14,6 +15,7 @@ on:
       - 'keymap_drawer.config.yaml'
       - 'pixi.toml'
       - 'pixi.lock'
+      - 'tools/audit_drawing.py'
       - '.github/workflows/draw.yml'
   workflow_dispatch:
 
@@ -35,6 +37,9 @@ jobs:
           locked: true
       # Redraws the SVG, then makes the PDF from it.
       - run: pixi run cheatsheet
+      # Fails before anything is committed if a legend doesn't type what it
+      # shows, or a layer lost its opening thumb (FEAT-17).
+      - run: pixi run audit
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           path: keymap-drawer/cheatsheet.pdf
