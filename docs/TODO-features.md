@@ -175,42 +175,6 @@ Approved 2026-10-16.
 4. Around 2026-11-06: is it used? If not, remove it rather than keep
    unused keys.
 
-## FEAT-13: Move the shield out of the deprecated `config/boards` folder
-
-**Priority:** Low — a deprecation warning only (2026-10-18); it becomes
-urgent if a ZMK upgrade drops `config/boards`.
-
-**Complexity:** Medium — files move into a Zephyr module, and the build,
-the keymap-editor and the keymap drawing all read paths in `config/`.
-
-### Spec
-- Every build warns: "The `config/boards` folder is deprecated. Please
-  use a module instead." (ZMK `4dd95d7`, CI and local builds alike).
-- ZMK wants the shield (`corne_hw_left`, `corne_hw_right`) shipped as a
-  module, with the keymap and `.conf` staying in `config/`.
-- The repo itself becomes the module, as in ZMK's
-  `unified-zmk-config-template`: `zephyr/module.yml` at the root, and
-  ZMK's build workflow (at `4dd95d7`) adds the repo as a module when that
-  file exists. One shield folder, `boards/shields/corne_hw/`, laid out
-  like ZMK's in-tree Corne: both overlays, `corne_hw.dtsi`, one
-  `Kconfig.shield` and `Kconfig.defconfig` for both halves, and
-  `corne_hw.zmk.yml` (ZMK's metadata format) instead of the two
-  `shield.yaml`, which nothing read.
-- `config/` keeps the keymap, `corne_hw.conf`, `west.yml` and
-  `corne_hw.json`, so the keymap-editor and the drawing read the same
-  paths. The firmware must not change at all.
-
-### Implementation Plan
-Asked for by the user, 2026-10-20.
-1. **Done (2026-10-20):** files moved; `pixi run build` adds the repo as
-   a module like CI. Local build: the warning is gone, and all three
-   `.uf2` files are byte-identical to the build before the move (only
-   the order of two Kconfig lines and the module's own flag differ).
-2. **Done (2026-10-20):** pushed to `dev`: CI loads the shield from the
-   module, no deprecation warning, sizes identical.
-3. After the push to `main`: the user opens the keymap-editor once to
-   check it still loads the keymap.
-
 ## FEAT-18: Low's digits without NumLock
 
 **Priority:** Low — works on both PCs today (NumLock on at startup:

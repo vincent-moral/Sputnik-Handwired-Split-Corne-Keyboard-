@@ -264,3 +264,22 @@ Things that weren't obvious:
 - A `Kconfig.defconfig` default loses to a board's `CONFIG_…=y`
   assignment, so our `def_bool n` never did anything. A `.conf` file
   merged after the board's defaults does override it.
+
+## FEAT-13: The shield as a module, out of `config/boards`
+
+**Closed:** 2026-10-20
+
+The repo is a ZMK module (`zephyr/module.yml`), and the shield lives in
+`boards/shields/corne_hw/`, laid out like ZMK's own Corne. `config/`
+keeps the keymap, the `.conf`, `west.yml` and the editor's layout file.
+Verified: no deprecation warning locally or in CI, the three `.uf2`
+byte-identical to before the move, and the keymap-editor still loads the
+keymap.
+
+Things that weren't obvious:
+
+- ZMK's build workflow switches to module mode on its own when
+  `zephyr/module.yml` exists: no workflow change was needed.
+- Comparing `.uf2` hashes before and after is the strongest check for a
+  change that shouldn't touch the firmware; it also closed `BUG-6`
+  without a keyboard test.
