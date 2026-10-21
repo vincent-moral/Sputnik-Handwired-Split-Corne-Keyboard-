@@ -134,7 +134,12 @@ text.label, text.footer { stroke: black; }
 text.trans { fill: #7e8184; }
 path.combo { stroke: #7f7f7f; }
 
-}</style>
+}
+rect.key, rect.combo { stroke: #6a737d; stroke-width: 2.5; }
+@media (prefers-color-scheme: dark) {
+  rect.key, rect.combo { stroke: #8b949e; }
+}
+</style>
 <g transform="translate(30, 0)" class="layer-Base">
 <text x="0" y="28" class="label" id="Base">Base:</text>
 <g transform="translate(0, 56)">

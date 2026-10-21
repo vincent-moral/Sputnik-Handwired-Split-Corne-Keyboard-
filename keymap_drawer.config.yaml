@@ -122,4 +122,12 @@ parse_config:
 draw_config:
   footer_text: "Small legend: when held · Red: thumb that opens the layer"
   dark_mode: auto
+  # Thicker, darker key edges: the cheatsheet shrinks the drawing to A4
+  # width, where the default 1px light grey nearly vanishes on paper
+  # (user, 2026-10-21). Dark mode keeps its own colour.
+  svg_extra_style: |
+    rect.key, rect.combo { stroke: #6a737d; stroke-width: 2.5; }
+    @media (prefers-color-scheme: dark) {
+      rect.key, rect.combo { stroke: #8b949e; }
+    }
   key_h: 60
