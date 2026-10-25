@@ -53,15 +53,17 @@
         /*
          * Raise and Low thumbs: holding one is its layer; tapping it
          * alone makes the next key one from a layer, either hand: a raise
-         * symbol (FEAT-10, FEAT-14), an accent from Low (FEAT-16). The hold comes as soon as another key is pressed,
-         * the tap only when tapped alone within 150 ms (BUG-3). No
+         * symbol (FEAT-10, FEAT-14), an accent from Low (FEAT-16).
+         * Balanced (BUG-9): the hold once another key is pressed and
+         * released, or past 150 ms; a fast roll that lets go of the
+         * thumb first is the tap, so it still gives the accent. No
          * quick-tap-ms: tap then hold must give the hold.
          */
 
         ltsl: layer_tap_sticky_layer {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "hold-preferred";
+            flavor = "balanced";
             tapping-term-ms = <150>;
             bindings = <&mo>, <&ssl>;
         };
@@ -69,7 +71,8 @@
         /*
          * AltGr thumb: holding it is AltGr as soon as another key is
          * pressed; tapping it alone opens the one-shot Mods layer
-         * (FEAT-7, FEAT-14). Same tap/hold split as ltsl.
+         * (FEAT-7, FEAT-14). Hold-preferred, unlike ltsl since BUG-9:
+         * AltGr is never held by hand, so a roll has nothing to lose.
          */
 
         mtsl: mod_tap_sticky_layer {

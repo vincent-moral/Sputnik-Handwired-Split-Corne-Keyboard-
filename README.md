@@ -79,7 +79,9 @@ to build. **Tap Low, then the key**, and the layer closes again:
 - The vowel's own key gives the most common accent (é, à, ù, î, ô); the
   key beside or under it gives the others.
 - ê â î ô û and ë ï ö ü are AZERTY's dead key then the vowel, sent for you.
-- Holding Low is still the numpad, as soon as another key is pressed.
+- Typing fast is fine (since 2026-10-25, `BUG-9`): what counts is that
+  Low comes up before the letter does.
+- Holding Low is still the numpad: keep it down until the digit is up.
 - If no key follows the tap within 1.5 s, it lapses.
 - Not covered yet: capitals (É, À…) and œ.
 
@@ -120,6 +122,7 @@ row, `[ ]` below), `/` and `?` without Shift.
   lasts for one key, so `->` is Raise tapped, `-`, then `>` with Raise
   held, or Raise tapped again.
 - If no key follows the tap within 1.5 s, it lapses.
+- A fast roll (Raise up just before the key) types the symbol too.
 
 ### Mods: how and when to use it
 
@@ -143,9 +146,8 @@ the same-hand rule makes impossible with home-row mods alone.
 - [Arsenik](https://github.com/OneDeadKey/arsenik) and its split variant
   [Selenium](https://onedeadkey.github.io/selenium/), through their ZMK
   implementation [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox):
-  the advice behind the home-row mod timing, and the timing of the thumb
-  keys with a tap (the hold as soon as another key is pressed, the tap
-  only on a quick tap alone),
+  the advice behind the home-row mod timing, and the 150 ms of the thumb
+  keys with a tap,
   the single-key edit shortcuts on the nav layer, the one-shot
   modifiers of the Mods layer, and the raise layer's symbols (Arsenik's
   symbols layer, from Ergo-L, with Ækeynox's AZERTY keycodes).
