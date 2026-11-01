@@ -283,3 +283,23 @@ Things that weren't obvious:
 - Comparing `.uf2` hashes before and after is the strongest check for a
   change that shouldn't touch the firmware; it also closed `BUG-6`
   without a keyboard test.
+
+## BUG-9: A fast tap of Low, then a letter, missed the accent
+
+**Closed:** 2026-11-01
+
+Low and Raise are balanced hold-taps (150 ms): a roll that lets go of
+the thumb first is the tap. Verified by about a week of daily use: "feels
+good so far" (user, 2026-11-01). The user ran the key-check page but
+didn't report its results.
+
+Things that weren't obvious:
+
+- The miss looked like a timeout problem, but the 1.5 s sticky timeout
+  only matters when slow. Typing fast, the letter goes down before the
+  thumb is up, and hold-preferred calls that the hold.
+- It reverses `BUG-3`'s lesson for these thumbs: hold-preferred suits a
+  thumb that is only held (Nav). A thumb that is also tapped before a
+  letter needs the release order to decide.
+- On Raise the tap and the hold open the same layer, so balanced cost
+  nothing there.
