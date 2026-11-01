@@ -101,6 +101,15 @@ Approved 2026-10-16.
    from the first tap's *press* (`behavior_hold_tap.c` at `4dd95d7`); if
    it stays awkward, raise it to about 250 on `hmr`/`hsr`.
 
+   - Reported 2026-11-01: typing fast, a capital often comes out as two
+     letters, e.g. `fi` for `I` (Shift on `f`). With `balanced` and
+     `hold-trigger-on-release`, Shift needs `i` to be released while `f`
+     is still down, or `f` held past 280 ms; letting go of `f` first
+     makes it the tap. The fast roll `f`→`i` (afin, fin, profiter)
+     looks the same by key order, so only how long `f` was held before
+     `i` can tell them apart: a shorter `tapping-term-ms` on
+     `hsl`/`hsr` is the candidate, to measure before choosing a value.
+
 ### Prerequisites
 - Plan approved 2026-10-16. Holding `j`/`k`: tap-then-hold for now;
   hjkl arrows on the nav layer are deferred until the user has more
