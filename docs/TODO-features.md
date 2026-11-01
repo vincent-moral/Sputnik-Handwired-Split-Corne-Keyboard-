@@ -108,7 +108,8 @@ Approved 2026-10-16.
      makes it the tap. The fast roll `f`→`i` (afin, fin, profiter)
      looks the same by key order, so only how long `f` was held before
      `i` can tell them apart: a shorter `tapping-term-ms` on
-     `hsl`/`hsr` is the candidate, to measure before choosing a value.
+     `hsl`/`hsr` is the candidate, to measure before choosing a value
+     (how: `FEAT-19`).
 
 ### Prerequisites
 - Plan approved 2026-10-16. Holding `j`/`k`: tap-then-hold for now;
@@ -202,3 +203,100 @@ computer where NumLock is off: the digits become arrows and Home/End.
 ### Implementation Plan
 _Not yet discussed._
 
+
+## FEAT-19: Study: measuring typing per key, and the firmware's decisions
+
+**Priority:** Low — a study; nothing is broken. Its first use would be
+`FEAT-6`'s missed capitals (`fi` for `I`).
+
+**Complexity:** Varies with the option — from one build target to weeks
+of work (a ZMK module plus a trainer).
+
+### Spec
+Study only (2026-11-01): **the user has taken no decision.** The aim is
+to know which keys are missed or slow, and which are performant, to
+judge the layout; and to tune the hold-taps from real timings.
+
+Findings so far:
+- **No computer-side tool sees real key timing on this keyboard**
+  (browser page, keybr, Monkeytype, a Rust app alike). While a hold-tap
+  is undecided, ZMK holds back the keys pressed meanwhile and sends them
+  after its decision (`behavior_hold_tap.c` at `4dd95d7`): `f` then `i`
+  reach the computer together, the real hold time already lost. Only
+  the keyboard sees it.
+- **Monkeytype**: a full trainer. As far as known (not checked in its
+  code), its export and API give totals per test, not per key. It sees
+  characters only.
+- **keybr.com** (`aradzie/keybr.com`, AGPL-3.0, read 2026-11-01): per-key
+  speed and accuracy are its core, with lessons on the weakest keys and
+  an AZERTY French layout. It models one character per PC key (Shift,
+  AltGr, dead keys): no layers, no hold-taps, no key-up timing.
+  - Its issue #260: users with home-row mods report those letters
+    recorded at about half their speed, which fits the point above.
+  - Upstream: layouts and languages get merged (most of the last 40
+    merged PRs); a Corne geometry PR (#640, 2026-10-08) and an HHKB one
+    (#608, May) wait without review; the maintainer kept issue #36
+    (typos on the keyboard after a lesson) for themselves and said wrong
+    key presses aren't recorded. Layers and key-up timing are unlikely
+    to be accepted.
+  - A fork: about 70 TypeScript packages, Node 26, a server and a
+    database; every core change is a rebase on an active upstream. The
+    user's homelab could host it (deployment would belong to
+    `homelab-iac`) and would hold the data in a database a script can
+    read.
+- **ZMK's USB debug log** (snippet `zmk-usb-logging`, at `4dd95d7`):
+  no code in the firmware, one more build target. The hold-tap logs
+  each `new undecided hold_tap`, each `capturing <position>
+  pressed/released`, and `decided tap/hold` with its flavor and moment,
+  timed by the keyboard. Needs the left half on USB during a session,
+  then the normal firmware back. Unchecked: whether it coexists with
+  the Studio snippet on the same USB serial.
+- **A measurement layer** (every key a plain `&kp`, toggled from BT):
+  real press/release times reach the computer, but not the firmware's
+  decisions; the USB log gives both.
+- **A Rust trainer, alone**: a terminal one needs kitty's keyboard
+  protocol to see key releases, and an install per computer; compiled
+  to WebAssembly it sees what a browser page sees. It rebuilds what
+  keybr does, and adds nothing to the measurement problem.
+
+#### Final analysis: a live trainer in Rust and a ZMK telemetry module
+- **Module**: C code in this repo, which is a ZMK module since
+  `FEAT-13`, so no ZMK fork. It would subscribe to ZMK's events
+  (`zmk_position_state_changed`, which carries a timestamp;
+  `zmk_keycode_state_changed`; `zmk_layer_state_changed`) and stream
+  compact records: physical key down/up, what was sent, the layer.
+  Hold-tap decisions aren't events: they would be inferred from
+  position versus output, or need a patch to ZMK.
+- **Timing**: left-half keys are timed at the scan; right-half keys
+  when they reach the left half (`split/central.c`: `k_uptime_get()`
+  on arrival), so they carry the split link's delay.
+- **Transport**: USB (serial or raw HID) or a custom Bluetooth service.
+  A native Rust app can use all three (crates such as `serialport`,
+  `hidapi`, `btleplug`), which removes the browser's limits (Web HID,
+  Web Serial and Web Bluetooth are Chrome-only).
+- **Trainer**: Rust, with the per-key stats and lessons keybr has, plus
+  what only this setup sees: physical key, layer, hold time, rolls,
+  firmware decisions. Typing data stays local.
+- **Costs and risks**:
+  - The module depends on ZMK internals that change between versions:
+    each ZMK upgrade (pinned, R2) may need it fixed.
+  - A keystroke stream is a keylogger in the keyboard: off by default,
+    on only for a session (for example from the BT layer), USB rather
+    than Bluetooth.
+  - The trainer is installed per computer (the work PC included).
+  - Weeks of work, most of it rebuilding keybr's trainer.
+- **Compared**: the USB debug log answers the timing questions with no
+  code in the firmware; this option adds live feedback while typing
+  and a trainer built for this keyboard.
+
+### Implementation Plan
+_Not yet discussed._
+
+### Prerequisites
+- Which needs come first? **Practice** (user, 2026-11-01): the existing
+  trainers as they are. A custom trainer comes back on the table only if
+  per-key stats and hold-tap tuning turn out to be wanted.
+- Can the work PC reach the homelab? **Yes**, through Cloudflare
+  (user, 2026-11-01); an app without its own login would need an
+  authentication layer in front (e.g. Authelia).
+- Does keybr's profile let you download your data? The user checks.
