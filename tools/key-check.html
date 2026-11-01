@@ -1,0 +1,537 @@
+<!--
+  The key-check page (published as the user's pinned artifact
+  "Sputnik Key Check"): a typing-tutor screen to verify a new firmware on
+  the keyboard, with drills. Kept in the repo because the scratchpad copy
+  was wiped twice (FEAT-17's lesson).
+  Its LAYERS table is a hand copy of config/corne_hw.keymap as typed on
+  AZERTY: update it with any keymap change it checks. The checklist is
+  rewritten for each firmware to verify.
+-->
+<title>Sputnik Key Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: a typing-tutor screen. The first viewport holds the task card
+   (one check, one symbol, one accent or one sentence at a time) and,
+   right under it, the Corne drawn with the layer the task needs: the keys
+   to press are outlined, every key lights as it arrives. Overview, report
+   and log sit below the fold. */
+:root {
+  --bg: #eef0f3; --panel: #ffffff; --fg: #1d2330; --muted: #5d6676;
+  --line: #d9dde4; --cap: #f7f8fa; --cap-edge: #c3c9d3; --dim: #a3abb8;
+  --accent: #2563c9; --accent-soft: #dbe6fb;
+  --press: #e8a317; --press-glow: rgba(232,163,23,.45);
+  --ok: #2f8a4c; --ok-bg: #e3f3e8; --bad: #b3372f; --bad-bg: #f8e3e1; --hold: #fbe3e3;
+  --mono: "IBM Plex Mono", ui-monospace, "DejaVu Sans Mono", monospace;
+  --sans: "IBM Plex Sans", system-ui, "DejaVu Sans", sans-serif;
+  --u: clamp(30px, 5.6vw, 52px);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12151b; --panel: #1b1f27; --fg: #e4e7ec; --muted: #9aa3b2;
+  --line: #2c323d; --cap: #232833; --cap-edge: #3a414f; --dim: #5d6676;
+  --accent: #6d9cf0; --accent-soft: #23314d;
+  --press: #f2b53a; --press-glow: rgba(242,181,58,.4);
+  --ok: #5cc27e; --ok-bg: #1d3326; --bad: #ef7d73; --bad-bg: #3a2220; --hold: #3d2628; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #12151b; --panel: #1b1f27; --fg: #e4e7ec; --muted: #9aa3b2;
+  --line: #2c323d; --cap: #232833; --cap-edge: #3a414f; --dim: #5d6676;
+  --accent: #6d9cf0; --accent-soft: #23314d;
+  --press: #f2b53a; --press-glow: rgba(242,181,58,.4);
+  --ok: #5cc27e; --ok-bg: #1d3326; --bad: #ef7d73; --bad-bg: #3a2220; --hold: #3d2628; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 15px/1.45 var(--sans);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 14px 40px; }
+main { max-width: 900px; margin: 0 auto; display: grid; gap: 12px; }
+h1 { font: 600 1.05rem/1.2 var(--mono); margin: 0; }
+h2 { font: 600 .74rem/1 var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 10px; }
+p { margin: 0; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+button { font: inherit; color: inherit; }
+button:focus-visible, textarea:focus-visible, .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.bar .grow { flex: 1; }
+#focus { display: flex; gap: 8px; align-items: center; font-size: .82rem; color: var(--muted); }
+#focus .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bad); flex: none; }
+#focus.on .dot { background: var(--ok); }
+.tabs { display: flex; gap: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 3px; flex-wrap: wrap; }
+.tabs button { background: none; border: 0; border-radius: 6px; padding: 4px 12px; cursor: pointer; font-weight: 600; font-size: .88rem; color: var(--muted); }
+.tabs button[aria-selected="true"] { background: var(--accent-soft); color: var(--fg); }
+.mods { display: flex; gap: 4px; }
+.mods span { font: 600 .72rem var(--mono); padding: 2px 7px; border-radius: 5px; border: 1px solid var(--cap-edge); color: var(--dim); }
+.mods span.on { background: var(--press); border-color: var(--press); color: #1d2330; }
+
+.task { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 18px; align-items: start; min-height: 132px; }
+.task .tag { font: 600 .74rem var(--mono); color: var(--accent); }
+.task .title { font: 600 1.3rem/1.25 var(--sans); margin-top: 2px; text-wrap: balance; }
+.task .how { color: var(--muted); margin-top: 6px; max-width: 62ch; }
+.steps { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; font: .9rem var(--mono); }
+.steps .k1 { padding: 3px 9px; border-radius: 6px; background: var(--cap); border: 1px solid var(--cap-edge); border-bottom-width: 3px; font-weight: 600; }
+.steps .arrow { color: var(--muted); }
+.steps .res { padding: 3px 9px; border-radius: 6px; background: var(--accent-soft); font-weight: 600; }
+.side { display: grid; gap: 8px; justify-items: end; }
+.badge { font: 600 .72rem var(--sans); text-transform: uppercase; letter-spacing: .06em; padding: 4px 10px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.badge.wait { color: var(--accent); border-color: var(--accent); }
+.badge.pass { color: var(--ok); border-color: var(--ok); background: var(--ok-bg); }
+.badge.fail { color: var(--bad); border-color: var(--bad); background: var(--bad-bg); }
+.btns { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.btn { background: var(--cap); border: 1px solid var(--cap-edge); border-radius: 7px; padding: 4px 12px; cursor: pointer; font-size: .85rem; white-space: nowrap; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.progress { font: .8rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.big { font: 600 3rem/1 var(--mono); width: 92px; height: 92px; display: grid; place-items: center; border-radius: 14px; flex: none;
+  background: var(--cap); border: 1px solid var(--cap-edge); border-bottom-width: 5px; }
+.big.hit { background: var(--ok-bg); border-color: var(--ok); }
+.stats { display: flex; flex-wrap: wrap; gap: 14px; font: .82rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; margin-top: 8px; }
+.stats b { color: var(--fg); }
+.sentence { font: 600 1.12rem/1.55 var(--mono); margin-top: 4px; }
+.sentence .ok { color: var(--ok); } .sentence .bad { color: var(--bad); text-decoration: underline; }
+.sentence .next { box-shadow: 0 2px 0 var(--accent); }
+textarea { width: 100%; box-sizing: border-box; font: 1rem/1.45 var(--mono); color: var(--fg); background: var(--bg);
+  border: 1px solid var(--cap-edge); border-radius: 8px; padding: 8px 10px; resize: none; height: 2.6em; margin-top: 8px; }
+
+.kbhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; }
+.layers { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { font: 600 .78rem var(--sans); padding: 3px 10px; border-radius: 99px; border: 1px solid var(--line); background: none; cursor: pointer; color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--fg); color: var(--panel); border-color: var(--fg); }
+.kbwrap { overflow-x: auto; }
+.kb { position: relative; margin: 0 auto; }
+.key { position: absolute; width: calc(var(--u) - 5px); height: calc(var(--u) - 5px); border-radius: 8px;
+  background: var(--cap); border: 1px solid var(--cap-edge); border-bottom-width: 3px; box-sizing: border-box;
+  display: grid; place-items: center; text-align: center; transition: background .12s, box-shadow .12s; }
+.key .t { font: 600 calc(var(--u) * .3)/1 var(--mono); }
+.key .t.long { font: 600 calc(var(--u) * .2)/1.05 var(--sans); }
+.key .h { position: absolute; bottom: 2px; left: 0; right: 0; font: calc(var(--u) * .17)/1 var(--sans); color: var(--muted); }
+.key .s { position: absolute; top: 2px; left: 0; right: 0; font: calc(var(--u) * .16)/1 var(--sans); color: var(--accent); }
+.key.dim .t { color: var(--dim); font-weight: 400; }
+.key.none { background: transparent; border-style: dashed; }
+.key.held { background: var(--hold); }
+.key.target { box-shadow: 0 0 0 3px var(--accent); z-index: 1; }
+.key.done { background: var(--ok-bg); border-color: var(--ok); }
+.key.press { background: var(--press); border-color: var(--press); box-shadow: 0 0 0 4px var(--press-glow); z-index: 2; }
+.key.press .t, .key.press .h { color: #1d2330; }
+.kbnote { font-size: .78rem; color: var(--muted); margin-top: 8px; text-align: center; }
+
+.lower { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.ov { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: .85rem; }
+.ov li { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; padding: 3px 6px; border-radius: 6px; cursor: pointer; }
+.ov li.cur { background: var(--accent-soft); }
+.ov .mark { font: 600 .8rem var(--mono); }
+.ov .pass { color: var(--ok); } .ov .fail { color: var(--bad); } .ov .todo { color: var(--dim); }
+pre { margin: 0; font: .78rem/1.45 var(--mono); background: var(--cap); border: 1px solid var(--line); border-radius: 8px; padding: 10px; white-space: pre-wrap; max-height: 240px; overflow: auto; }
+.logwrap { overflow: auto; max-height: 200px; }
+table { width: 100%; border-collapse: collapse; font: .78rem var(--mono); font-variant-numeric: tabular-nums; }
+td, th { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font: 600 .68rem var(--sans); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+td.gap, th.gap { text-align: right; }
+tr.mod td, tr.example td { color: var(--muted); }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+@media (prefers-reduced-motion: reduce) { .key { transition: none; } }
+@media (max-width: 700px) { .task { grid-template-columns: minmax(0, 1fr); } .side { justify-items: start; } .btns { justify-content: flex-start; } .lower { grid-template-columns: minmax(0, 1fr); } }
+</style>
+
+<main>
+  <div class="bar">
+    <h1>Sputnik key check</h1>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" id="tab-checks" aria-selected="true">Checklist</button>
+      <button type="button" role="tab" id="tab-acc" aria-selected="false">Accents</button>
+      <button type="button" role="tab" id="tab-sym" aria-selected="false">Symbols</button>
+      <button type="button" role="tab" id="tab-txt" aria-selected="false">Sentences</button>
+    </div>
+    <span class="grow"></span>
+    <div class="mods" aria-label="Modifiers held"><span id="m-Control">Ctrl</span><span id="m-Shift">Shift</span><span id="m-Alt">Alt</span><span id="m-AltGraph">AltGr</span><span id="m-Meta">Super</span></div>
+    <div id="focus"><span class="dot"></span><span id="focusText">Click the page, then type</span></div>
+  </div>
+
+  <section class="panel task" id="task" aria-live="polite"></section>
+
+  <section class="panel">
+    <div class="kbhead">
+      <div class="layers" id="layers"></div>
+      <span class="progress" id="lastkey">last key: –</span>
+    </div>
+    <div class="kbwrap"><div class="kb" id="kb"></div></div>
+    <p class="kbnote">Outlined: the keys for this task. Lit: the key that just arrived. Thumbs that only switch layers
+      send nothing to the computer, so they never light. Faded letters fall through from the base layer.</p>
+  </section>
+
+  <div class="lower">
+    <section class="panel">
+      <h2>All checks</h2>
+      <ol class="ov" id="ov"></ol>
+    </section>
+    <section class="panel" style="display:grid;gap:8px;align-content:start">
+      <div class="row"><h2 style="margin:0">Results to paste into Claude</h2><button type="button" class="btn" id="copy">Copy</button></div>
+      <pre id="report"></pre>
+    </section>
+  </div>
+
+  <section class="panel">
+    <div class="row"><h2>Event log</h2><button type="button" class="btn" id="clear">Clear</button></div>
+    <div class="logwrap"><table>
+      <thead><tr><th>Key</th><th>Typed</th><th>Key code</th><th class="gap">Since previous</th></tr></thead>
+      <tbody id="log"><tr class="example"><td>Dead</td><td>Dead</td><td>BracketLeft</td><td class="gap">example</td></tr></tbody>
+    </table></div>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+                set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+
+// ---- the keymap (config/corne_hw.keymap, 2026-10-25), as typed on AZERTY ----
+// Positions 0-11 top row, 12-23 home row, 24-35 bottom row, 36-41 thumbs.
+// null: transparent (shows the base legend faded). "": nothing. H: the thumb that opens the layer.
+const T = null, H = { held: true };
+const BASE = ["Tab","A","Z","E","R","T","Y","U","I","O","P","⌫",
+  "Esc",["Q","Super"],["S","Alt"],["D","Ctrl"],["F","Shift"],"G","H",["J","Shift"],["K","Ctrl"],["L","Alt"],["M","Super"],"'",
+  "Shift","W","X","C","V","B","N",",",";",":","!","PrtSc",
+  ["","Nav"],["Acc","Low","tap"],"Space","Enter",["Sym","Raise","tap"],["Mods","AltGr","tap"]];
+const ACCENTS = { "é": 3, "è": 2, "ê": 15, "ë": 14, "à": 1, "â": 13, "ù": 7, "û": 19, "ü": 18, "î": 8, "ï": 20, "ô": 9, "ö": 21, "ç": 27 };
+const accLayer = Array(42).fill(T); Object.entries(ACCENTS).forEach(([ch, p]) => accLayer[p] = ch); accLayer[37] = H;
+const LAYERS = {
+  Base: BASE,
+  Accents: accLayer,
+  Low: ["Tab",T,T,T,T,T,"NumLk","7","8","9","","⌫", T,T,T,T,T,T,"","4","5","6","","",
+        "Shift",T,T,T,T,T,"","1","2","3","","", "",H,"Space","Enter","0",["Mods","AltGr","tap"]],
+  Raise: [T,"^","<",">","$","%","@","&","*","'","`","⌫", "Ctrl","{","(",")","}","=","\\","+","-","/",'"',T,
+          T,"~","[","]","_","#","|","!",";",":","?",T, "",T,"Space","Enter",H,["Mods","AltGr","tap"]],
+  Nav: [T,T,T,T,T,T,"PgUp","Home","↑","End","^","Del", T,T,T,T,T,T,"PgDn","←","↓","→",["Copy","","kitty"],["Paste","","kitty"],
+        T,T,T,T,T,T,"Undo","Cut","Copy","Paste","Redo",["Term","","nvim"], H,T,T,T,T,T],
+  Mods: [T,T,T,T,T,T,T,T,T,T,T,T, T,["Super","","sticky"],["Alt","","sticky"],["Ctrl","","sticky"],["Shift","","sticky"],T,
+         T,["Shift","","sticky"],["Ctrl","","sticky"],["Alt","","sticky"],["Super","","sticky"],T,
+         T,T,T,T,T,T,T,T,T,T,T,T, T,T,T,T,T,H],
+  BT: [T,T,T,T,T,T,T,T,T,T,T,T, "BT clr","BT 0","BT 1","BT 2","BT 3","BT 4",T,T,T,T,T,T,
+       T,T,T,T,T,T,T,T,T,T,T,T, T,H,T,T,H,T],
+};
+const OPENS = { Base: "", Accents: "tap Low", Low: "hold Low", Raise: "hold Raise, or tap it for one key",
+                Nav: "hold the left outer thumb", Mods: "tap AltGr", BT: "hold Low and Raise together" };
+
+// What each key sends, to light the key that sent an event: [layer, pos, event.code, AltGr, Shift, Ctrl].
+const SENDS = [];
+const add = (layer, pos, code, ag = false, sh = false, ct = false) => SENDS.push({ layer, pos, code, ag, sh, ct });
+"Tab KeyQ KeyW KeyE KeyR KeyT KeyY KeyU KeyI KeyO KeyP Backspace".split(" ").forEach((c, i) => add("Base", i, c));
+"Escape KeyA KeyS KeyD KeyF KeyG KeyH KeyJ KeyK KeyL Semicolon Digit4".split(" ").forEach((c, i) => add("Base", 12 + i, c));
+"ShiftLeft KeyZ KeyX KeyC KeyV KeyB KeyN KeyM Comma Period Slash PrintScreen".split(" ").forEach((c, i) => add("Base", 24 + i, c));
+add("Base", 38, "Space"); add("Base", 39, "Enter"); add("Base", 41, "AltRight");
+[[15,"ControlLeft"],[20,"ControlLeft"],[16,"ShiftLeft"],[19,"ShiftLeft"],[14,"AltLeft"],[21,"AltLeft"],[13,"MetaLeft"],[22,"MetaLeft"]]
+  .forEach(([p, c]) => add("Base", p, c));
+[[6,"NumLock"],[7,"Numpad7"],[8,"Numpad8"],[9,"Numpad9"],[19,"Numpad4"],[20,"Numpad5"],[21,"Numpad6"],
+ [31,"Numpad1"],[32,"Numpad2"],[33,"Numpad3"],[40,"Numpad0"]].forEach(([p, c]) => add("Low", p, c));
+[[1,"Digit9",1],[2,"IntlBackslash"],[3,"IntlBackslash",0,1],[4,"BracketRight"],[5,"Quote",0,1],[6,"Digit0",1],[7,"Digit1"],
+ [8,"Backslash"],[9,"Digit4"],[10,"Digit7",1],[12,"ControlLeft"],[13,"Digit4",1],[14,"Digit5"],[15,"Minus"],[16,"Equal",1],
+ [17,"Equal"],[18,"Digit8",1],[19,"Equal",0,1],[20,"Digit6"],[21,"Period",0,1],[22,"Digit3"],[25,"Digit2",1],[26,"Digit5",1],
+ [27,"Minus",1],[28,"Digit8"],[29,"Digit3",1],[30,"Digit6",1],[31,"Slash"],[32,"Comma"],[33,"Period"],[34,"KeyM",0,1]]
+  .forEach(([p, c, ag, sh]) => add("Raise", p, c, !!ag, !!sh));
+[[6,"PageUp"],[7,"Home"],[8,"ArrowUp"],[9,"End"],[10,"Digit9",1],[11,"Delete"],[18,"PageDown"],[19,"ArrowLeft"],
+ [20,"ArrowDown"],[21,"ArrowRight"],[22,"KeyC",0,1,1],[23,"KeyV",0,1,1],[30,"KeyW",0,0,1],[31,"KeyX",0,0,1],
+ [32,"KeyC",0,0,1],[33,"KeyV",0,0,1],[34,"KeyW",0,1,1],[35,"Digit8",0,0,1]].forEach(([p, c, ag, sh, ct]) => add("Nav", p, c, !!ag, !!sh, !!ct));
+// A dead key (AltGr+7 is a dead ` on some layouts, BUG-8) arrives as key "Dead": name it from its code.
+const DEAD_AS = { "Digit7+ag": "`", "Digit2+ag": "~", "Digit9+ag": "^", "BracketLeft": "^", "BracketLeft+sh": "¨" };
+const deadName = (ev, m) => DEAD_AS[ev.code + (m.AltGraph ? "+ag" : "") + (m.Shift ? "+sh" : "")];
+
+// ---- drawing ----
+const COLY = [.375, .375, .125, 0, .125, .25];   // Corne column stagger, in key units
+const keyEls = [];
+let shown = "Base";
+const unit = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--u")) || 48;
+function geom(i) {
+  const u = unit();
+  if (i < 36) {
+    const r = Math.floor(i / 12), c = i % 12, half = c < 6 ? 0 : 1, cc = half ? 11 - c : c;
+    return { x: (c + (half ? 1.2 : 0)) * u, y: (r + COLY[cc]) * u };
+  }
+  const X = [3, 4, 5, 7.2, 8.2, 9.2], inner = i === 38 || i === 39;
+  return { x: X[i - 36] * u, y: (inner ? 3.62 : 3.45) * u };
+}
+function buildKb() {
+  const kb = $("kb"), u = unit(); kb.innerHTML = "";
+  kb.style.width = `${13.2 * u}px`; kb.style.height = `${4.7 * u}px`;
+  for (let i = 0; i < 42; i++) {
+    const g = geom(i), el = document.createElement("div");
+    el.className = "key"; el.style.left = `${g.x}px`; el.style.top = `${g.y}px`;
+    kb.appendChild(el); keyEls[i] = el;
+  }
+  paint();
+}
+let targets = new Set(), doneSet = new Set();
+function paint() {
+  for (let i = 0; i < 42; i++) {
+    let v = LAYERS[shown][i], dim = false;
+    if (v === null) { v = BASE[i]; dim = true; }
+    const el = keyEls[i]; el.className = "key";
+    let t = "", h = "", s = "";
+    if (v && v.held) { el.classList.add("held"); h = shown === "Accents" ? "tap" : "held"; }
+    else if (Array.isArray(v)) { [t, h, s] = [v[0], v[1] || "", v[2] || ""]; }
+    else t = v;
+    if (v === "") el.classList.add("none");
+    if (dim) { el.classList.add("dim"); if (!t) t = h; h = ""; s = ""; }
+    if (targets.has(i)) el.classList.add("target");
+    if (doneSet.has(i) && !dim) el.classList.add("done");
+    el.innerHTML = `${s ? `<span class="s">${esc(s)}</span>` : ""}<span class="t${String(t).length > 2 ? " long" : ""}">${esc(t)}</span>${h ? `<span class="h">${esc(h)}</span>` : ""}`;
+  }
+  $("layers").innerHTML = Object.keys(LAYERS).map(l =>
+    `<button type="button" class="chip" aria-pressed="${l === shown}" data-l="${l}" title="${esc(OPENS[l])}">${l}</button>`).join("");
+}
+$("layers").addEventListener("click", ev => { const b = ev.target.closest("[data-l]"); if (b) { shown = b.dataset.l; paint(); } });
+function flash(i) { const el = keyEls[i]; if (!el) return; el.classList.add("press"); setTimeout(() => el.classList.remove("press"), 260); }
+function lightFor(ev, mods) {
+  if (ev.key in ACCENTS) { flash(ACCENTS[ev.key]); return; }
+  let c = SENDS.filter(s => s.code === ev.code);
+  const exact = c.filter(s => s.ag === !!mods.AltGraph && s.sh === !!mods.Shift && s.ct === !!mods.Control);
+  if (exact.length) c = exact;
+  const onShown = c.filter(s => s.layer === shown), base = c.filter(s => s.layer === "Base");
+  (onShown.length ? onShown : base.length ? base : c).forEach(s => flash(s.pos));
+}
+
+// ---- drills (accents and symbols share the logic) ----
+function drill(chars) {
+  return { chars, seen: new Set(), missed: new Map(), target: chars[0], shownAt: 0, streak: 0, misses: 0, last: "–", skipped: 0 };
+}
+const SYM_POS = {}; LAYERS.Raise.forEach((v, i) => { if (typeof v === "string" && v.length === 1 && v !== "⌫") SYM_POS[v] = i; });
+const D = { acc: drill(Object.keys(ACCENTS)), sym: drill(Object.keys(SYM_POS)) };
+function pick(d) {
+  const fresh = d.chars.filter(s => !d.seen.has(s));
+  const weak = [...d.missed.entries()].filter(([, n]) => n > 0).map(([s]) => s);
+  const pool = fresh.length ? fresh : weak.length && Math.random() < .6 ? weak : d.chars;
+  let n; do { n = pool[Math.floor(Math.random() * pool.length)]; } while (pool.length > 1 && n === d.target);
+  d.target = n; d.shownAt = performance.now();
+}
+pick(D.acc); pick(D.sym);
+function drillKey(d, ch) {
+  if (!d.chars.includes(ch)) return;
+  d.seen.add(ch);
+  if (ch === d.target) {
+    d.streak++; d.last = `${Math.round(performance.now() - d.shownAt)} ms`;
+    if (d.missed.has(ch)) d.missed.set(ch, Math.max(0, d.missed.get(ch) - 1));
+    $("big")?.classList.add("hit"); setTimeout(() => { pick(d); renderTask(); }, 250);
+  } else { d.streak = 0; d.misses++; d.missed.set(d.target, (d.missed.get(d.target) || 0) + 1); renderTask(); }
+  if (D.acc.seen.size === D.acc.chars.length && !res.allacc) { res.allacc = "pass"; store.set(RES, res); }
+}
+
+// ---- checklist (BUG-9: Low and Raise are balanced hold-taps) ----
+// A roll: the thumb goes down, the key goes down before the thumb is up, the
+// thumb comes up first. Balanced makes that the tap; hold-preferred made it the hold.
+const CHECKS = [
+  { g: "BUG-9", id: "rolle", title: "A fast roll: Low, then e", layer: "Accents", keys: [37, 3],
+    steps: ["Low down", "e down", "Low up first", "=é"], how: "Overlap them on purpose, as when typing fast. Before the fix this gave a plain e.",
+    ok: e => e.key === "é" },
+  { g: "BUG-9", id: "rolli", title: "A fast roll on the right: Low, then i", layer: "Accents", keys: [37, 8],
+    steps: ["Low down", "i down", "Low up first", "=î"], how: "The right side is the numpad when Low is held: before the fix this gave 8.",
+    ok: e => e.key === "î" },
+  { g: "BUG-9", id: "rollsym", title: "A fast roll: Raise, then j", layer: "Raise", keys: [40, 19],
+    steps: ["Raise down", "j down", "Raise up first", "=+"], how: "Tap or hold, Raise gives the same symbol: this one should always work.",
+    ok: e => e.key === "+" },
+  { g: "BUG-9", id: "digits", title: "Low held still types digits", layer: "Low", keys: [37, 7, 8, 9],
+    steps: ["hold Low", "u i o", "let go of Low", "=789"], how: "Keep Low down until the last digit is up (NumLock on). Passes on the 9.",
+    ok: e => e.code === "Numpad9" },
+  { g: "BUG-9", id: "digitsfast", title: "Digits at full speed", layer: "Low", keys: [37, 31, 32, 33, 40],
+    steps: ["hold Low", "type 2026, 1230 fast", "=only digits"], how: "Your call: watch for an accent instead of a digit, especially the last one before you let go." },
+  { g: "BUG-9", id: "symheld", title: "Raise held, several symbols", layer: "Raise", keys: [40, 14, 15],
+    steps: ["hold Raise", "s d s d", "=()()"], how: "Holding Raise is unchanged: as many symbols as you want.",
+    ok: e => e.key === ")" },
+  { g: "BUG-9", id: "slow", title: "Tap Low slowly, then e", layer: "Accents", keys: [37, 3],
+    steps: ["tap Low", "pause", "e", "=é"], how: "The usual way still works: Low fully up, then the letter.", ok: e => e.key === "é" },
+  { g: "BUG-9", id: "lapse", title: "The tap still lapses after 1.5 s", layer: "Base", keys: [37, 3],
+    steps: ["tap Low", "wait 2 s", "e", "=e"], how: "Past 1.5 s the tap is forgotten: a plain e.",
+    ok: e => e.key === "e" && !e.anyMod && e.idle >= 1600 },
+  { g: "BUG-9", id: "bt", title: "Low + Raise still reach Bluetooth", layer: "BT", keys: [37, 40, 17],
+    steps: ["hold Low + Raise", "g (BT 4)", "=typing stops", "again, your BT key", "=back"],
+    how: "Both thumbs changed: check holding both still opens BT. Never tap BT clr (outer left)." },
+  { g: "BUG-9", id: "sentences", title: "Two clean sentences, fast", layer: "Accents", keys: [37],
+    steps: ["Sentences tab", "2 clean"], how: "As fast as you can, accents from the Low tap. Passes by itself.", auto: true },
+  { g: "FEAT-16", id: "allacc", title: "Every accent", layer: "Accents", keys: Object.values(ACCENTS),
+    steps: ["Accents tab", "all 14 green"], how: "Passes by itself once the Accents drill has seen all 14.", auto: true },
+];
+const RES = "res-1025";
+const res = store.get(RES, {});
+let cur = Math.max(0, CHECKS.findIndex(c => !res[c.id]));
+const auto = c => !!(c.ok || c.up || c.auto);
+
+// ---- sentences ----
+const SENTENCES = [
+  "Où est le château ? Déjà, à la fenêtre, ça brûle très vite.",
+  "Le garçon a été très ému à côté de sa mère, là où il naît.",
+  "Ça sera prêt à huit heures : pâtes, crème brûlée et thé à la pêche.",
+  "Noël, Hélène préfère le théâtre où l'on joue à guichets fermés.",
+  "L'été, j'ai réparé la fenêtre élevée près de l'église.",
+];
+const ACC = /[éèêëàâùûüîïôöç]/;
+let si = 0, txTries = 0, txClean = 0, txMiss = 0, txText = "";
+
+// ---- the task card ----
+let mode = store.get("mode", "checks");
+const MODES = ["checks", "acc", "sym", "txt"];
+function drillCard(d, kind) {
+  const left = kind === "sym" ? SYM_POS[d.target] % 12 < 6 : true;
+  const title = kind === "acc" ? "Tap Low, then the key" : left ? "Left hand: hold Raise, or tap it" : "Right hand: tap Raise, then the key";
+  return `<div style="display:flex;gap:18px;align-items:center">
+      <div class="big" id="big">${esc(d.target)}</div>
+      <div><div class="tag">${kind === "acc" ? "Accents drill" : "Symbols drill"}</div>
+        <div class="title">${title}</div>
+        <div class="stats"><span>covered <b>${d.seen.size}/${d.chars.length}</b></span><span>streak <b>${d.streak}</b></span>
+          <span>last <b>${d.last}</b></span><span>misses <b>${d.misses}</b></span><span>skipped <b>${d.skipped}</b></span></div></div></div>
+    <div class="side"><div class="btns"><button type="button" class="btn" data-a="skip">Skip</button><button type="button" class="btn" data-a="reset">Start over</button></div></div>`;
+}
+function renderTask() {
+  const task = $("task");
+  if (mode === "checks") {
+    const c = CHECKS[cur], r = res[c.id];
+    shown = c.layer; targets = new Set(c.keys); doneSet = new Set();
+    const badge = r === "pass" ? `<span class="badge pass">Works</span>` : r === "fail" ? `<span class="badge fail">Doesn't work</span>`
+      : auto(c) ? `<span class="badge wait">Waiting for the keys</span>` : `<span class="badge">Your call</span>`;
+    const steps = c.steps.map((s, i) => (i ? `<span class="arrow">${s.startsWith("=") ? "→" : "·"}</span>` : "") +
+      (s.startsWith("=") ? `<span class="res">${esc(s.slice(1))}</span>` : `<span class="k1">${esc(s)}</span>`)).join("");
+    task.innerHTML = `<div>
+        <div class="tag">${c.g} · check ${cur + 1} of ${CHECKS.length}</div>
+        <div class="title">${esc(c.title)}</div>
+        <div class="steps">${steps}</div>
+        <p class="how">${esc(c.how)}</p></div>
+      <div class="side">${badge}
+        <div class="btns"><button type="button" class="btn" data-a="pass">Works</button><button type="button" class="btn" data-a="fail">Doesn't</button></div>
+        <div class="btns"><button type="button" class="btn" data-a="prev">‹ Back</button><button type="button" class="btn primary" data-a="next">Next ›</button></div></div>`;
+  } else if (mode === "acc" || mode === "sym") {
+    const d = D[mode], pos = mode === "acc" ? ACCENTS : SYM_POS;
+    shown = mode === "acc" ? "Accents" : "Raise";
+    targets = new Set([pos[d.target]]); doneSet = new Set([...d.seen].map(s => pos[s]));
+    task.innerHTML = drillCard(d, mode);
+  } else {
+    shown = "Accents"; targets = new Set(); doneSet = new Set();
+    task.innerHTML = `<div style="grid-column:1/-1">
+        <div class="row"><span class="tag">Sentences · type as fast as you can, Enter to check</span>
+          <span class="stats" style="margin:0"><span>attempts <b>${txTries}</b></span><span>clean <b>${txClean}</b></span><span>accents missed <b>${txMiss}</b></span></span></div>
+        <p class="sentence" id="sentence"></p>
+        <textarea id="txt" spellcheck="false" autocomplete="off" aria-label="Type the sentence here">${esc(txText)}</textarea></div>`;
+    const ta = $("txt");
+    ta.addEventListener("input", () => { txText = ta.value; diff(); });
+    ta.addEventListener("keydown", ev => { if (ev.key === "Enter") { ev.preventDefault(); checkSentence(); } });
+    diff(); setTimeout(() => ta.focus(), 0);
+  }
+  paint(); renderOverview(); renderReport();
+}
+function diff() {
+  const want = SENTENCES[si], got = txText, el = $("sentence"); if (!el) return;
+  el.innerHTML = [...want].map((ch, i) => i > got.length ? esc(ch) : i === got.length ? `<span class="next">${esc(ch)}</span>`
+    : `<span class="${got[i] === ch ? "ok" : "bad"}">${esc(ch)}</span>`).join("");
+}
+function checkSentence() {
+  const want = SENTENCES[si]; txTries++;
+  let m = 0; [...want].forEach((ch, i) => { if (ACC.test(ch) && txText[i] !== ch) m++; });
+  txMiss += m; if (txText === want) txClean++;
+  si = (si + 1) % SENTENCES.length; txText = "";
+  if (txClean >= 2 && !res.sentences) { res.sentences = "pass"; store.set(RES, res); }
+  renderTask();
+}
+$("task").addEventListener("click", ev => {
+  const a = ev.target.closest("[data-a]")?.dataset.a; if (!a) return;
+  const d = D[mode];
+  if (a === "pass" || a === "fail") { res[CHECKS[cur].id] = a; store.set(RES, res); advance(); }
+  else if (a === "next") advance();
+  else if (a === "prev") { cur = (cur - 1 + CHECKS.length) % CHECKS.length; renderTask(); }
+  else if (a === "skip" && d) { d.seen.add(d.target); d.skipped++; pick(d); renderTask(); }
+  else if (a === "reset" && d) { D[mode] = drill(d.chars); pick(D[mode]); renderTask(); }
+});
+function advance() {
+  const n = CHECKS.findIndex((c, i) => i > cur && !res[c.id]), any = CHECKS.findIndex(c => !res[c.id]);
+  cur = n >= 0 ? n : any >= 0 ? any : (cur + 1) % CHECKS.length;
+  renderTask();
+}
+function renderOverview() {
+  $("ov").innerHTML = CHECKS.map((c, i) => {
+    const r = res[c.id], m = r === "pass" ? ["pass", "✓"] : r === "fail" ? ["fail", "✗"] : ["todo", "·"];
+    return `<li data-i="${i}" class="${mode === "checks" && i === cur ? "cur" : ""}"><span class="mark ${m[0]}">${m[1]}</span>
+      <span>${esc(c.title)}</span><span class="progress">${c.g}</span></li>`; }).join("");
+}
+$("ov").addEventListener("click", ev => { const li = ev.target.closest("[data-i]"); if (!li) return;
+  cur = +li.dataset.i; delete res[CHECKS[cur].id]; store.set(RES, res); setMode("checks"); });
+function renderReport() {
+  const lines = ["Sputnik firmware 2026-10-25 (BUG-9 balanced Low and Raise), key check results:"];
+  for (const c of CHECKS) lines.push(`${c.g} ${c.title}: ${res[c.id] === "pass" ? "works" : res[c.id] === "fail" ? "DOESN'T WORK" : "not checked"}`);
+  for (const [k, n] of [["acc", "Accents drill"], ["sym", "Symbols drill"]]) {
+    const d = D[k]; lines.push(`${n}: ${d.seen.size - d.skipped}/${d.chars.length} typed, ${d.skipped} skipped, ${d.misses} misses.`);
+  }
+  lines.push(`Sentences: ${txTries} attempts, ${txClean} clean, ${txMiss} accents missed.`);
+  $("report").textContent = lines.join("\n");
+}
+$("copy").addEventListener("click", () => {
+  const sel = () => { const r = document.createRange(); r.selectNodeContents($("report")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+  try { navigator.clipboard.writeText($("report").textContent).then(() => { $("copy").textContent = "Copied"; setTimeout(() => $("copy").textContent = "Copy", 1500); }, sel); }
+  catch (e) { sel(); }
+});
+function setMode(m) {
+  mode = m; store.set("mode", m);
+  for (const t of MODES) $("tab-" + t).setAttribute("aria-selected", t === m);
+  renderTask();
+}
+MODES.forEach(t => $("tab-" + t).addEventListener("click", () => setMode(t)));
+
+// ---- keys ----
+const MODS = { Control: "Ctrl", Shift: "Shift", Alt: "Alt", AltGraph: "AltGr", Meta: "Super", OS: "Super" };
+const ORDER = ["Control", "Shift", "Alt", "AltGraph", "Meta"];
+const down = {};
+let prevT = null, examples = true, lastLapse = null;
+function chips(ev) { for (const k of ORDER) $("m-" + k).classList.toggle("on", ev.getModifierState(k) || !!down[k] || (k === "Meta" && !!down.OS)); }
+function addRow(cells, cls, t) {
+  if (examples) { $("log").innerHTML = ""; examples = false; }
+  const gap = prevT == null ? "" : `${Math.round(t - prevT)} ms`; prevT = t;
+  const tr = document.createElement("tr"); if (cls) tr.className = cls;
+  tr.innerHTML = cells.map(c => `<td>${c}</td>`).join("") + `<td class="gap">${gap}</td>`;
+  $("log").prepend(tr); while ($("log").rows.length > 80) $("log").deleteRow(-1);
+}
+function tryAuto(e) {
+  if (mode !== "checks") return;
+  const c = CHECKS[cur]; if (res[c.id] || !c.ok || !c.ok(e)) return;
+  res[c.id] = "pass"; store.set(RES, res); renderTask(); setTimeout(advance, 900);
+}
+window.addEventListener("keydown", ev => {
+  const inBox = ev.target && ev.target.id === "txt";
+  if (!inBox) ev.preventDefault();
+  const t = ev.timeStamp;
+  const mods = {}; for (const k of ORDER) mods[k] = ev.getModifierState(k);
+  if (ev.key in MODS) {
+    if (!ev.repeat) { for (const k in down) down[k].other = true; down[ev.key] = { t, other: false };
+      addRow([`${MODS[ev.key]} down`, "", ev.code], "mod", t); lightFor(ev, {}); }
+    chips(ev); return;
+  }
+  const idle = prevT == null ? Infinity : t - prevT;
+  for (const k in down) down[k].other = true;
+  const dead = ev.key === "Dead" ? deadName(ev, mods) : null;
+  const key = dead || ev.key;
+  const sym = key.length === 1 && !mods.Control && !mods.Alt && !mods.Meta;
+  const name = sym ? [] : ORDER.filter(k => mods[k] && k !== "AltGraph").map(k => MODS[k]);
+  const label = key.length === 1 && !sym ? key.toUpperCase() : key;
+  const e = { code: ev.code, key, mods, anyMod: !sym && name.length > 0, idle };
+  $("lastkey").textContent = `last key: ${[...name, label].join(" + ")}${dead ? " (dead key)" : ""}`;
+  addRow([esc([...name, label].join(" + ")) + (dead ? " (dead)" : ""), esc(ev.key), ev.code], "", t);
+  lightFor(ev, mods);
+  // a dead key the keyboard sends as the first half of an accent isn't a symbol typed on purpose
+  const accentHalf = dead && ev.code === "BracketLeft";
+  if (sym && !inBox && !accentHalf && (mode === "acc" || mode === "sym")) drillKey(D[mode], key);
+  tryAuto(e);
+  lastLapse = null;
+  chips(ev);
+});
+window.addEventListener("keyup", ev => {
+  if (!(ev.target && ev.target.id === "txt")) ev.preventDefault();
+  if (ev.key in MODS && down[ev.key]) {
+    const d = down[ev.key], t = ev.timeStamp, held = Math.round(t - d.t);
+    addRow([`${MODS[ev.key]} up, held ${held} ms${d.other ? "" : ", alone"}`, "", ev.code], "mod", t);
+    delete down[ev.key];
+  }
+  chips(ev);
+});
+function focusState() {
+  const on = document.hasFocus(); $("focus").classList.toggle("on", on);
+  $("focusText").textContent = on ? "Listening" : "Click the page, then type";
+}
+window.addEventListener("focus", focusState);
+window.addEventListener("blur", () => { for (const k in down) delete down[k];
+  ORDER.forEach(k => $("m-" + k).classList.remove("on")); focusState(); });
+$("clear").addEventListener("click", () => { $("log").innerHTML = ""; prevT = null; examples = false; });
+let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(buildKb, 120); });
+
+buildKb(); setMode(MODES.includes(mode) ? mode : "checks"); focusState();
+</script>

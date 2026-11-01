@@ -41,7 +41,9 @@ check every change against them.
    compiles.
 5. **Verify on the keyboard** after flashing: type every changed key on
    the AZERTY OS and check the character it produces. Close the entry
-   only after that.
+   only after that. `tools/key-check.html` is the page for it, published
+   as the user's pinned "Sputnik Key Check" artifact: rewrite its
+   checklist for the firmware to verify, and republish it from there.
 6. **Close the loop in the same session:** mark plan steps **Done**,
    then delete the entry, or move it to `docs/RESOLVED.md` if the
    resolution taught something non-obvious.
