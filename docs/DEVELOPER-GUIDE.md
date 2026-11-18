@@ -87,6 +87,25 @@ check every change against them.
 - A mistake caught before pushing is squashed into the commit it fixes,
   not added as a follow-up. Pushed history is never rewritten.
 
+### Handoffs
+
+When a session ends with work in flight (or grows too long),
+`docs/HANDOFF.md` carries it to the next one. It is temporary: delete it
+once its items are closed. It links to backlog entries rather than
+restating them (R1), and always has these five sections:
+
+1. **Goal:** what the work is for, in one or two sentences.
+2. **Problems we're solving:** the backlog IDs involved, why each
+   matters and where it stands.
+3. **Main files:** the files being changed or checked, as paths.
+4. **What failed:** dead ends, wrong assumptions and mistakes, so the
+   next session doesn't repeat them. Lessons that outlive the handoff
+   also go into a rule, an entry, or `RESOLVED.md`.
+5. **Plan:** the next steps in order, each with how to verify it.
+
+What waits on the user, working agreements and a ready-to-paste first
+prompt follow.
+
 ## 2. Rules
 
 ### R1. One source of truth per fact
@@ -140,7 +159,17 @@ by [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox).
 
 ## 5. For AI assistants
 
-- Read this guide, then the backlog, before assuming something is new.
+- Read this guide, `docs/HANDOFF.md` (if present), then the backlog,
+  before assuming something is new.
 - Follow §1's authorization rules exactly: prepare, explain, ask.
 - Keep the user's decisions: don't move a key they placed, or change an
   accepted exception, without saying so explicitly.
+- Repo skills in `.claude/skills/` encode the recurring procedures:
+  `keymap-change` (§1 steps 1-2), `ship-firmware` (steps 3-4),
+  `key-check` (step 5), `close-entry` (step 6) and `handoff` (before a
+  compaction or the end of a session). They follow this guide; if they
+  disagree, the guide wins and the skill gets fixed in the same commit
+  (R4). `AGENTS.md` points other agents here.
+- When the same multi-step procedure has been done by hand two or three
+  times, propose a new repo skill (or a pixi task, if it needs no
+  judgment). Don't create one without the user's agreement.
