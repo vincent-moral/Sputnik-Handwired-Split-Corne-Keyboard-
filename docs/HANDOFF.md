@@ -9,12 +9,17 @@ below are closed. The authoritative state is the TODO files,
 
 The keyboard is the user's daily driver and the firmware is stable
 (BUG-9's balanced Low and Raise, flashed 2026-10-25). They're practising
-on keybr and Monkeytype now. What's left is small items that wait on
-the user, and two studies that only come back if the practice asks for
-them.
+on keybr and Monkeytype now. Next: the same keymap on the Halcyon Corne
+that will replace the Sputnik (FEAT-20), ready before the keyboard
+arrives. The rest is small items that wait on the user, and two studies
+that only come back if the practice asks for them.
 
 ## Problems we're solving
 
+- **FEAT-20** ([entry](TODO-features.md#feat-20-firmware-for-the-halcyon-corne-from-the-same-keymap)):
+  plan approved 2026-11-18, nothing coded. Waits on the user's fork of
+  `splitkb/zmk` (plan step 1); steps 2–9 need no keyboard, step 10
+  does. Every question in it is answered.
 - **FEAT-9** ([entry](TODO-features.md#feat-9-single-key-shortcuts-on-the-nav-layer)):
   step 4, the review "is it used?", was due around 2026-11-06 and is
   **overdue**. Ask the user; if unused, remove the keys (a firmware
@@ -37,6 +42,11 @@ them.
 
 ## Main files
 
+- `docs/TODO-features.md`: FEAT-20, added 2026-11-18. Its plan lists
+  every file it touches: `config/west.yml`, `build.yml`,
+  `config/halcyon_corne.keymap` and `.conf` (new), `build.yaml`,
+  `tools/zmk_build.py`, README, guide, `keymap-change` and
+  `ship-firmware` skills.
 - `config/corne_hw.keymap`: `hsl`/`hsr` (FEAT-6 timing), `ltsl`/`mtsl`
   (BUG-9), the nav layer (FEAT-9).
 - `tools/key-check.html`: the verification page (pinned artifact
@@ -67,27 +77,42 @@ them.
   (`path: index.html`) if the file is ever behind.
 - **zsh treats `=====` as a command** (`=` expansion) in an echo. Use
   `---` as a separator.
+- **FEAT-20 was written from a claude.ai session linked to the
+  computer, without a shell on it** (2026-11-18): files can be read
+  and written there, but git, pixi and podman can't run, so the user
+  commits. Writing a file back twice under the same staged name saved
+  the older copy, silently, twice: give each write-back a new staged
+  file name, then check the size on disk.
+- **splitkb's fork branch gets rebased** (FEAT-20): never pin a commit
+  that only lives there. Pin the user's copy of it.
 
 ## Plan
 
 1. Ask about FEAT-9's use (overdue). If unused: remove the keys with
    `keymap-change`, then `ship-firmware`; if used, close it with
    `close-entry`.
-2. When the user brings the work-PC dumps: BUG-8, then FEAT-4. Check:
+2. FEAT-20, once the user has forked `splitkb/zmk`: plan steps 2–9 in
+   order, each with the check its step names. Step 2 alone first, and
+   compare the Sputnik's build warnings with the last build before
+   adding the Halcyon. Check the fork first:
+   `git ls-remote <fork URL> 'main+halcyon-fixes'` shows `80cf18d`.
+3. When the user brings the work-PC dumps: BUG-8, then FEAT-4. Check:
    `localectl status` shows the layout and variant; `binds.kdl` lists
    the workspace bindings.
-3. When the user reports on keybr's export: update FEAT-19's
+4. When the user reports on keybr's export: update FEAT-19's
    Prerequisites, nothing else.
-4. FEAT-6 only if the user asks for tuning: measure first (ZMK USB log,
+5. FEAT-6 only if the user asks for tuning: measure first (ZMK USB log,
    FEAT-19), then change `tapping-term-ms`.
 
 ## Waiting on the user
 
+- FEAT-20: their fork of `splitkb/zmk` (its URL goes in `west.yml`),
+  and the Halcyon Corne itself for plan step 10.
 - FEAT-9: is the nav layer's undo/copy/paste row used?
 - Work-PC dumps for BUG-8 and FEAT-4.
 - keybr's data export (FEAT-19).
 - Approval to push the 2026-11-18 commits (skills, guide, handoff, the
-  build's `.claude/**` ignore).
+  build's `.claude/**` ignore, and FEAT-20's docs commit).
 
 ## Working agreements
 
@@ -100,9 +125,12 @@ them.
 - Everything is configured on the keyboard, never in the OS or an app.
 - No ApeKey or other secret in the repo.
 - Times in Europe/Paris; GitHub Actions logs are UTC.
+- Possible later move of this repo and the ZMK fork to the user's own
+  Gitea instance (FEAT-20 lists what depends on GitHub). Not planned.
 
 ## First prompt
 
 > Read `docs/HANDOFF.md`. First `git pull` and `git log --oneline -5`
-> (any keymap-editor commits?). Then ask me about FEAT-9's review. Use
-> the repo skills. Don't push anything without asking me first.
+> (any keymap-editor commits?). Then ask me about FEAT-9's review, and
+> whether my fork of splitkb/zmk exists for FEAT-20. Use the repo
+> skills. Don't push anything without asking me first.

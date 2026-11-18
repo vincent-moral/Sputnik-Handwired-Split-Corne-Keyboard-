@@ -300,3 +300,154 @@ _Not yet discussed._
   (user, 2026-11-01); an app without its own login would need an
   authentication layer in front (e.g. Authelia).
 - Does keybr's profile let you download your data? The user checks.
+
+## FEAT-20: Firmware for the Halcyon Corne, from the same keymap
+
+**Priority:** Medium — the Halcyon Corne replaces the Sputnik; both
+must type the same thing until then, and the keymap must stay one
+file (R1). Not urgent: the keyboard isn't bought yet (2026-11-18).
+
+**Complexity:** Medium — no keymap change, but ZMK moves to splitkb's
+fork for both keyboards, and the build tooling assumes one shield.
+
+### Spec
+- The repo builds firmware for both keyboards from
+  `config/corne_hw.keymap`: the Sputnik (nice!nano) as today, and the
+  Halcyon Corne rev2 (Halcyon Wireless controller, LiPo battery
+  board). No dongle, although the bundle includes one: the left half
+  is central and talks to the computers over Bluetooth profiles, as on
+  the Sputnik.
+- Decided (user, 2026-11-18): Halcyon Corne rev2, no Halcyon module
+  planned, Bluetooth name "Halcyon Vincent" (15 characters; the
+  Sputnik stays "Clavier Vincent"). The user forks splitkb's ZMK to
+  their GitHub account. Underglow off: nothing in the keymap uses
+  it. Everything up to flashing is prepared and built before the
+  keyboard arrives.
+- splitkb's support (read 2026-11-18):
+  - Boards and shields are in `splitkb/zmk-halcyon-module` (`main` at
+    `0b95571`, 2026-11-05): board `halcyon_wireless//zmk`, shields
+    `halcyon_corne_left` / `halcyon_corne_right`, battery shield
+    `mod_battery_lipo`. Its template `splitkb/zmk-halcyon-config`
+    floats both the module and ZMK (R2 forbids that here).
+  - The module needs splitkb's ZMK fork, branch
+    `main+halcyon-fixes` (`80cf18d`, 2026-11-04): ZMK `4dd95d7`, the
+    commit pinned here (`BUG-1`), plus 11 commits of power, sleep and
+    BLE options. The wireless board's defconfig sets two of them
+    (`ZMK_EXT_POWER_START`, `ZMK_SLEEP_POWER_OFF_ON_SUSPEND_FAILURE`),
+    which upstream ZMK doesn't define. A `west.yml` holds one ZMK, so
+    **the Sputnik moves to the fork too.**
+  - splitkb rebases that branch: nine of the 11 commits were
+    re-committed together on 2026-10-12, and the module's commit
+    `d5ed4c1` links to a fork commit (`b315fde`) that is no longer on
+    the branch. A pinned commit can vanish, hence the user's copy.
+    The module's own history is linear (author and commit dates
+    match): it is pinned straight from splitkb.
+  - What stays the same: the keymap, the drawing, the audit, the
+    cheatsheet, the key-check page, the skills and the workflows all
+    live in this repo and never read ZMK's source. `build.yml` keeps
+    ZMK's own build workflow at `4dd95d7`: the fork doesn't change it.
+  - Effect on the Sputnik: every new option defaults to today's
+    behavior except one ungated change in `pm.c`: a device that fails
+    to suspend is now skipped instead of cancelling sleep. The
+    module's code is gated by devicetree compatibles that only splitkb
+    boards declare, so it compiles nothing into the Sputnik. Its
+    `.uf2` won't be byte-identical (`FEAT-13`'s check); the build log
+    and a day of use are the check.
+  - Upgrading ZMK later means waiting for splitkb to rebase their
+    branch, syncing the user's fork, then moving `west.yml` and
+    `build.yml` together to the new base, as `BUG-1` requires.
+- The keymap fits as is: the module's 42-key physical layout
+  `splitkb_halcyon_corne` (`default_transform`) has the same key
+  order as the Sputnik (three rows of 12, then the six thumbs 36–41),
+  so the hold-trigger positions and the BT layer keep their meaning.
+  The shield's default layout is `splitkb_halcyon_corne_hlc`: 52 keys,
+  10 of them on Halcyon modules. With no module it goes back to 42.
+- How ZMK picks files (`post_boards_shields.cmake` at `4dd95d7`): the
+  keymap is `config/<shield name>.keymap`, and every
+  `config/<shield>.conf` that exists is merged (`halcyon_corne.conf`
+  for both halves, `halcyon_corne_right.conf` for the right one).
+  `.conf` files can't include each other, so the shared settings are
+  repeated, each file pointing to the other.
+- **Maybe later (user, 2026-11-18): this repo and the ZMK fork may
+  move to the user's own Gitea instance.** Not part of this entry. Unchecked,
+  what depends on GitHub today: the keymap-editor
+  (it commits to GitHub), the build and draw workflows (ZMK's reusable
+  workflow, `GITHUB_TOKEN`, artifacts), and `gh` in the skills. The
+  ZMK fork's URL in `west.yml` would change with it.
+- Unchecked:
+  - Whether keymap-editor is confused by a second `.keymap` file in
+    `config/` (`FEAT-11`'s kind of test).
+  - Whether the right half warns about USB like the Sputnik did
+    (`BUG-6`): the board's defconfig sets `ZMK_USB=y` too.
+
+### Implementation Plan
+Approved 2026-11-18; the user codes it later. Each step is one commit
+unless it says otherwise; `git pull` first (keymap-editor commits).
+
+1. **User:** fork `splitkb/zmk` to their GitHub account, branch
+   `main+halcyon-fixes` included. Check: commit `80cf18d` shows on
+   the fork's branch.
+2. **ZMK from the fork** (`chore(FEAT-20)`). `config/west.yml`:
+   - remote for the user's account; project `zmk` from it at
+     `80cf18d57c52a8ed4badc7f330cec7eada6521d8`, `import:
+     app/west.yml`;
+   - remote `splitkb`, project `zmk-halcyon-module` at
+     `0b95571b332862a6fda8d62a0f0a4c6ccd7895dc`;
+   - comments: why the fork (this entry), and that its base is the
+     `4dd95d7` of `build.yml`.
+   `build.yml`: same pin, comment now says "the base of the fork in
+   `config/west.yml`". Check: `pixi run build` builds the Sputnik's
+   three targets; read every warning against the last build.
+3. **The Halcyon targets** (`feat(FEAT-20)`):
+   - `config/halcyon_corne.keymap`: a comment saying why it exists,
+     `#include "corne_hw.keymap"`, then `/ { chosen {
+     zmk,physical-layout = &splitkb_halcyon_corne; }; };` (42 keys,
+     no module).
+   - `config/halcyon_corne.conf`: `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=600000`,
+     `CONFIG_ZMK_STUDIO=y`, `CONFIG_ZMK_STUDIO_LOCKING=n`,
+     `CONFIG_ZMK_KEYBOARD_NAME="Halcyon Vincent"`, and
+     `CONFIG_ZMK_RGB_UNDERGLOW=n`: the module's board file for this
+     shield turns underglow on, and the keymap has no key for it.
+     `config/corne_hw.conf` gets a matching "keep in
+     step with" comment. Sleep itself is already on in the board's
+     defconfig.
+   - `build.yaml`, on `halcyon_wireless//zmk`: `halcyon_corne_left
+     mod_battery_lipo` with the `studio-rpc-usb-uart` snippet;
+     `halcyon_corne_right mod_battery_lipo`; `settings_reset`. Each
+     gets an `artifact-name` (`halcyon_corne_left`,
+     `halcyon_corne_right`, `halcyon_settings_reset`) so the Actions
+     artifacts say which keyboard they are for. No
+     `ZMK_SPLIT_ROLE_CENTRAL=n`: that is for dongle builds.
+4. **Local build tool** (`fix(FEAT-20)`, same commit as step 3 if it
+   is needed to build it): `tools/zmk_build.py` passes the shield
+   unquoted to its `build` function and names logs after it; quote
+   the shield and name targets by `artifact-name` when there is one.
+   Check: `pixi run build` builds all six targets.
+5. **Read the build** for the Halcyon: the right half's USB warning
+   (if present, `config/halcyon_corne_right.conf` with
+   `CONFIG_ZMK_USB=n`, as in `BUG-6`), any sensor warning, and that
+   underglow is off in both halves' `.config`.
+6. **keymap-editor test**, as in `FEAT-6` step 4: on a throwaway
+   branch, open and save one key. Check: it still edits
+   `config/corne_hw.keymap`, and `config/halcyon_corne.keymap` is
+   untouched.
+7. **Docs** (same commit as step 3): README "Building and flashing"
+   for both keyboards: which artifacts go where; on the Halcyon,
+   double-tap reset, copy to the `HALCYON` drive, then press reset
+   once more after flashing (splitkb's docs: a bootloader bug that
+   drains the battery otherwise); first flash with `settings_reset`
+   on both halves. The guide's keymap-editor note and the
+   `keymap-change` and `ship-firmware` skills: two keyboards, one
+   keymap.
+8. **Ship** with `ship-firmware`: all six jobs green.
+9. **Sputnik check**, flashed from that build: a day of use, sleep
+   and wake, Bluetooth profiles. Then `key-check` can close the
+   Sputnik side.
+10. **When the Halcyon arrives:** `settings_reset` then the firmware
+    on both halves, pair as "Halcyon Vincent", and run the key check
+    over every key (a full pass, since everything is new to this
+    hardware). Then `close-entry`.
+
+### Prerequisites
+- None left: the user answered every question on 2026-11-18. The
+  keyboard itself is only needed for step 10.
