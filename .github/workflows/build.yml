@@ -4,7 +4,7 @@ on:
   push:
     # Docs-only pushes don't change the firmware (BUG-2), and neither
     # does the keymap drawing or its setup (FEAT-5), or the local checks
-    # in tools/ (FEAT-17).
+    # in tools/ (FEAT-17), or the AI assistants' repo skills.
     paths-ignore:
       - '**.md'
       - 'docs/**'
@@ -14,6 +14,7 @@ on:
       - 'pixi.lock'
       - '.github/workflows/draw.yml'
       - 'tools/**'
+      - '.claude/**'
   workflow_dispatch:
 
 jobs:
