@@ -182,7 +182,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;",
 const store = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
                 set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
 
-// ---- the keymap (config/corne_hw.keymap, 2026-10-25), as typed on AZERTY ----
+// ---- the keymap (config/corne_hw.keymap, 2026-11-21), as typed on AZERTY ----
 // Positions 0-11 top row, 12-23 home row, 24-35 bottom row, 36-41 thumbs.
 // null: transparent (shows the base legend faded). "": nothing. H: the thumb that opens the layer.
 const T = null, H = { held: true };
@@ -199,8 +199,8 @@ const LAYERS = {
         "Shift",T,T,T,T,T,"","1","2","3","","", "",H,"Space","Enter","0",["Mods","AltGr","tap"]],
   Raise: [T,"^","<",">","$","%","@","&","*","'","`","⌫", "Ctrl","{","(",")","}","=","\\","+","-","/",'"',T,
           T,"~","[","]","_","#","|","!",";",":","?",T, "",T,"Space","Enter",H,["Mods","AltGr","tap"]],
-  Nav: [T,T,T,T,T,T,"PgUp","Home","↑","End","^","Del", T,T,T,T,T,T,"PgDn","←","↓","→",["Copy","","kitty"],["Paste","","kitty"],
-        T,T,T,T,T,T,"Undo","Cut","Copy","Paste","Redo",["Term","","nvim"], H,T,T,T,T,T],
+  Nav: [T,T,T,T,T,T,"PgUp","Home","↑","End","^","Del", T,T,T,T,T,T,"PgDn","←","↓","→",T,T,
+        T,T,T,T,T,T,T,T,T,T,T,["Term","","nvim"], H,T,T,T,T,T],
   Mods: [T,T,T,T,T,T,T,T,T,T,T,T, T,["Super","","sticky"],["Alt","","sticky"],["Ctrl","","sticky"],["Shift","","sticky"],T,
          T,["Shift","","sticky"],["Ctrl","","sticky"],["Alt","","sticky"],["Super","","sticky"],T,
          T,T,T,T,T,T,T,T,T,T,T,T, T,T,T,T,T,H],
@@ -227,8 +227,7 @@ add("Base", 38, "Space"); add("Base", 39, "Enter"); add("Base", 41, "AltRight");
  [27,"Minus",1],[28,"Digit8"],[29,"Digit3",1],[30,"Digit6",1],[31,"Slash"],[32,"Comma"],[33,"Period"],[34,"KeyM",0,1]]
   .forEach(([p, c, ag, sh]) => add("Raise", p, c, !!ag, !!sh));
 [[6,"PageUp"],[7,"Home"],[8,"ArrowUp"],[9,"End"],[10,"Digit9",1],[11,"Delete"],[18,"PageDown"],[19,"ArrowLeft"],
- [20,"ArrowDown"],[21,"ArrowRight"],[22,"KeyC",0,1,1],[23,"KeyV",0,1,1],[30,"KeyW",0,0,1],[31,"KeyX",0,0,1],
- [32,"KeyC",0,0,1],[33,"KeyV",0,0,1],[34,"KeyW",0,1,1],[35,"Digit8",0,0,1]].forEach(([p, c, ag, sh, ct]) => add("Nav", p, c, !!ag, !!sh, !!ct));
+ [20,"ArrowDown"],[21,"ArrowRight"],[35,"Digit8",0,0,1]].forEach(([p, c, ag, sh, ct]) => add("Nav", p, c, !!ag, !!sh, !!ct));
 // A dead key (AltGr+7 is a dead ` on some layouts, BUG-8) arrives as key "Dead": name it from its code.
 const DEAD_AS = { "Digit7+ag": "`", "Digit2+ag": "~", "Digit9+ag": "^", "BracketLeft": "^", "BracketLeft+sh": "¨" };
 const deadName = (ev, m) => DEAD_AS[ev.code + (m.AltGraph ? "+ag" : "") + (m.Shift ? "+sh" : "")];
@@ -312,41 +311,39 @@ function drillKey(d, ch) {
   if (D.acc.seen.size === D.acc.chars.length && !res.allacc) { res.allacc = "pass"; store.set(RES, res); }
 }
 
-// ---- checklist (BUG-9: Low and Raise are balanced hold-taps) ----
-// A roll: the thumb goes down, the key goes down before the thumb is up, the
-// thumb comes up first. Balanced makes that the tap; hold-preferred made it the hold.
+// ---- checklist (FEAT-6: 200 ms term on the home-row Shifts; FEAT-9: nav edit keys removed) ----
+// A quick capital: f (Shift) down, the letter down, f up first. Balanced makes
+// that a tap unless f was held past the term, now 200 ms instead of 280.
 const CHECKS = [
-  { g: "BUG-9", id: "rolle", title: "A fast roll: Low, then e", layer: "Accents", keys: [37, 3],
-    steps: ["Low down", "e down", "Low up first", "=é"], how: "Overlap them on purpose, as when typing fast. Before the fix this gave a plain e.",
-    ok: e => e.key === "é" },
-  { g: "BUG-9", id: "rolli", title: "A fast roll on the right: Low, then i", layer: "Accents", keys: [37, 8],
-    steps: ["Low down", "i down", "Low up first", "=î"], how: "The right side is the numpad when Low is held: before the fix this gave 8.",
-    ok: e => e.key === "î" },
-  { g: "BUG-9", id: "rollsym", title: "A fast roll: Raise, then j", layer: "Raise", keys: [40, 19],
-    steps: ["Raise down", "j down", "Raise up first", "=+"], how: "Tap or hold, Raise gives the same symbol: this one should always work.",
-    ok: e => e.key === "+" },
-  { g: "BUG-9", id: "digits", title: "Low held still types digits", layer: "Low", keys: [37, 7, 8, 9],
-    steps: ["hold Low", "u i o", "let go of Low", "=789"], how: "Keep Low down until the last digit is up (NumLock on). Passes on the 9.",
-    ok: e => e.code === "Numpad9" },
-  { g: "BUG-9", id: "digitsfast", title: "Digits at full speed", layer: "Low", keys: [37, 31, 32, 33, 40],
-    steps: ["hold Low", "type 2026, 1230 fast", "=only digits"], how: "Your call: watch for an accent instead of a digit, especially the last one before you let go." },
-  { g: "BUG-9", id: "symheld", title: "Raise held, several symbols", layer: "Raise", keys: [40, 14, 15],
-    steps: ["hold Raise", "s d s d", "=()()"], how: "Holding Raise is unchanged: as many symbols as you want.",
-    ok: e => e.key === ")" },
-  { g: "BUG-9", id: "slow", title: "Tap Low slowly, then e", layer: "Accents", keys: [37, 3],
-    steps: ["tap Low", "pause", "e", "=é"], how: "The usual way still works: Low fully up, then the letter.", ok: e => e.key === "é" },
-  { g: "BUG-9", id: "lapse", title: "The tap still lapses after 1.5 s", layer: "Base", keys: [37, 3],
-    steps: ["tap Low", "wait 2 s", "e", "=e"], how: "Past 1.5 s the tap is forgotten: a plain e.",
-    ok: e => e.key === "e" && !e.anyMod && e.idle >= 1600 },
-  { g: "BUG-9", id: "bt", title: "Low + Raise still reach Bluetooth", layer: "BT", keys: [37, 40, 17],
-    steps: ["hold Low + Raise", "g (BT 4)", "=typing stops", "again, your BT key", "=back"],
-    how: "Both thumbs changed: check holding both still opens BT. Never tap BT clr (outer left)." },
-  { g: "BUG-9", id: "sentences", title: "Two clean sentences, fast", layer: "Accents", keys: [37],
-    steps: ["Sentences tab", "2 clean"], how: "As fast as you can, accents from the Low tap. Passes by itself.", auto: true },
-  { g: "FEAT-16", id: "allacc", title: "Every accent", layer: "Accents", keys: Object.values(ACCENTS),
-    steps: ["Accents tab", "all 14 green"], how: "Passes by itself once the Accents drill has seen all 14.", auto: true },
+  { g: "FEAT-6", id: "capi", title: "A quick capital with f: I", layer: "Base", keys: [16, 8],
+    steps: ["f down", "i down", "both up, fast", "=I"], how: "At your normal speed, as in a sentence start. Before the change this often gave fi.",
+    ok: e => e.key === "I" },
+  { g: "FEAT-6", id: "cape", title: "A quick capital with j: E", layer: "Base", keys: [19, 3],
+    steps: ["j down", "e down", "both up, fast", "=E"], how: "The same on the other hand (Shift on j).",
+    ok: e => e.key === "E" },
+  { g: "FEAT-6", id: "capsentence", title: "Capitals in real typing", layer: "Base", keys: [16, 19],
+    steps: ["Sentences tab", "type them fast", "=every capital right"], how: "Your call: count the capitals that came out as two letters. A few days of daily use are the real test." },
+  { g: "FEAT-6", id: "rolls", title: "Fast rolls stay lowercase", layer: "Base", keys: [16, 8, 19, 3],
+    steps: ["type fast", "afin fin profiter je jeu fil", "=no capital"], how: "Your call: the trade-off of the shorter term. A stray capital here means 200 ms is too short." },
+  { g: "FEAT-6", id: "repeat", title: "Tap then hold j still repeats", layer: "Base", keys: [19],
+    steps: ["tap j", "hold j at once", "=jjjjj"], how: "Your call: the quick-tap window (175 ms) is unchanged, but check it in vim or here." },
+  { g: "FEAT-6", id: "shiftnav", title: "Shift + nav + arrow still selects", layer: "Nav", keys: [16, 36, 21],
+    steps: ["hold f", "hold nav", "→", "=Shift + →"], how: "The nav-layer exception: Shift from f, then an arrow.",
+    ok: e => e.code === "ArrowRight" && e.mods.Shift },
+  { g: "FEAT-6", id: "ctrl", title: "Ctrl on k is unchanged", layer: "Base", keys: [20, 27],
+    steps: ["hold k", "c", "=Ctrl + C"], how: "Ctrl, Alt and Super keep 280 ms: hold k a moment, then c.",
+    ok: e => e.code === "KeyC" && e.mods.Control },
+  { g: "FEAT-9", id: "navrow", title: "Nav + bottom row types the base keys", layer: "Nav", keys: [36, 30, 31, 32, 33, 34],
+    steps: ["hold nav", "n , ; : !", "=n,;:!"], how: "Undo, Cut, Copy, Paste and Redo are gone: the base keys come through. Passes on the !.",
+    ok: e => e.key === "!" && !e.anyMod },
+  { g: "FEAT-9", id: "navhome", title: "Nav + m and ' type the base keys", layer: "Nav", keys: [36, 22, 23],
+    steps: ["hold nav", "m '", "=m'"], how: "kitty's Copy and Paste are gone (use the Mods layer: AltGr k, AltGr j, then c). Passes on the '.",
+    ok: e => e.key === "'" && !e.anyMod },
+  { g: "FEAT-9", id: "navarrows", title: "Nav arrows unchanged", layer: "Nav", keys: [36, 8, 19, 20, 21],
+    steps: ["hold nav", "i j k l", "=↑ ← ↓ →"], how: "The rest of nav didn't move. Passes on →.",
+    ok: e => e.code === "ArrowRight" && !e.mods.Shift },
 ];
-const RES = "res-1025";
+const RES = "res-1121";
 const res = store.get(RES, {});
 let cur = Math.max(0, CHECKS.findIndex(c => !res[c.id]));
 const auto = c => !!(c.ok || c.up || c.auto);
@@ -448,7 +445,7 @@ function renderOverview() {
 $("ov").addEventListener("click", ev => { const li = ev.target.closest("[data-i]"); if (!li) return;
   cur = +li.dataset.i; delete res[CHECKS[cur].id]; store.set(RES, res); setMode("checks"); });
 function renderReport() {
-  const lines = ["Sputnik firmware 2026-10-25 (BUG-9 balanced Low and Raise), key check results:"];
+  const lines = ["Sputnik firmware 2026-11-21 (FEAT-6 200 ms Shift term, FEAT-9 nav edit keys removed), key check results:"];
   for (const c of CHECKS) lines.push(`${c.g} ${c.title}: ${res[c.id] === "pass" ? "works" : res[c.id] === "fail" ? "DOESN'T WORK" : "not checked"}`);
   for (const [k, n] of [["acc", "Accents drill"], ["sym", "Symbols drill"]]) {
     const d = D[k]; lines.push(`${n}: ${d.seen.size - d.skipped}/${d.chars.length} typed, ${d.skipped} skipped, ${d.misses} misses.`);
