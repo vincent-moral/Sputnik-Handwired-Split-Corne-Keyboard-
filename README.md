@@ -19,7 +19,7 @@ The keymap is only changed through this repository: no ZMK Studio edits.
 - **Home row modifiers**: GUI / Alt / Ctrl / Shift on `q s d f` and `j k l m`.
   The firmware enforces the same-hand rule for them: a home-row key only
   becomes a modifier when the next key is on the other hand or a thumb, or
-  when held past 280 ms. To repeat a home-row letter (e.g. `j` in vim), tap
+  when held past 280 ms (200 ms for Shift, so quick capitals come out). To repeat a home-row letter (e.g. `j` in vim), tap
   it, then hold it.
 - **Everything lives on the keyboard**, so it works plug and play on any
   machine with an AZERTY layout: no OS or app configuration is needed.

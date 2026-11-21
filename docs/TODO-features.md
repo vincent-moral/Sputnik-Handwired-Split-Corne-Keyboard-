@@ -108,8 +108,18 @@ Approved 2026-10-16.
      makes it the tap. The fast roll `f`→`i` (afin, fin, profiter)
      looks the same by key order, so only how long `f` was held before
      `i` can tell them apart: a shorter `tapping-term-ms` on
-     `hsl`/`hsr` is the candidate, to measure before choosing a value
-     (how: `FEAT-19`).
+     `hsl`/`hsr` is the candidate.
+8. **Done (2026-11-21):** `tapping-term-ms` 280 → 200 on `hsl`/`hsr`
+   only. The user misses many capitals and chose to tune by feel rather
+   than measure (`FEAT-19` dropped). Balanced flavor checked in
+   `behavior_hold_tap.c` at `4dd95d7`: releasing `f` first is a tap,
+   unless the timer fired first (hold). The trade-off: a slow roll with
+   `f` or `j` held over 200 ms now gives a capital.
+9. Flash, then a few days of daily use: capitals reliable, and no
+   stray capitals in rolls like `afin`, `fin`, `je`. Too many stray
+   capitals → back up (e.g. 230); capitals still missed → down (e.g.
+   170). Then close the entry, or keep it for the `quick-tap-ms`
+   question in step 7.
 
 ### Prerequisites
 - Plan approved 2026-10-16. Holding `j`/`k`: tap-then-hold for now;
