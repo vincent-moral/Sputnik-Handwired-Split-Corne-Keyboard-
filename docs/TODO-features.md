@@ -451,3 +451,60 @@ unless it says otherwise; `git pull` first (keymap-editor commits).
 ### Prerequisites
 - None left: the user answered every question on 2026-11-18. The
   keyboard itself is only needed for step 10.
+
+## FEAT-21: Study: fievel's keyboard mouse, natively in ZMK?
+
+**Priority:** Low — a study; nothing is broken.
+
+**Complexity:** Low for the mouse layer (native ZMK, no module); hint
+mode can't be done in firmware at all.
+
+### Spec
+Study only (2026-11-21): **the user has taken no decision.** The
+question: can ZMK do what
+[fievel](https://github.com/MontyTheSoftwareEngineer/fievel) does
+natively, or does it need a ZMK module?
+
+What fievel is (README read 2026-11-21, source not read): **a Rust
+program on the computer**, not firmware. It reads the keyboard through
+the OS (evdev and uinput on Linux) and drives the mouse from the
+keyboard. So adopting fievel itself would break the plug-and-play rule
+(everything on the keyboard): it needs an install and permissions on
+every computer, the work PC included.
+
+Its features, against ZMK at our pin (`4dd95d7`, checked in its source
+and docs 2026-11-21):
+
+| fievel | ZMK | How |
+|---|---|---|
+| Mouse mode, held or toggled (F3, chord D+F) | Native | a layer: `&mo`, `&tog`, or a combo |
+| Move with H/J/K/L, easing | Native | `&mmv` (`zmk,behavior-input-two-axis`: `time-to-max-speed-ms`, `acceleration-exponent`); no easing on release (stops at once) |
+| Fast / slow keys | Native | a layer override on `mmv_input_listener` with `&zip_xy_scaler`, or several `&mmv` instances with their own speeds |
+| Left/right/middle click, drag | Native | `&mkp LCLK` etc., held for a drag |
+| Scroll, Home/End by chording scroll keys | Native | `&msc`; combos for Home/End |
+| Chorded home-row mods (A+S = Super, 25 ms) | Native | combos with a short `timeout-ms`; but it competes with our hold-tap home-row mods (README ground rules) |
+| Caps Lock: tap Ctrl, hold nav | Native | a hold-tap |
+| Hint mode (labels on clickable things), locator, keycast, on-screen indicator | **Impossible in firmware** | needs to see or draw on the screen; a ZMK module can't either |
+| Odometer | Not native | a module could count `&mmv` output; little use |
+
+Notes:
+- Mouse keys are HID mouse reports: AZERTY doesn't touch them (R3).
+- `CONFIG_ZMK_POINTING=y` changes the HID descriptor: each paired
+  computer must refresh it (ZMK docs: re-pair) or the mouse doesn't
+  work over Bluetooth.
+- Known for the browser: Vimium C (already used) gives hints there.
+  Outside the browser, hints need a computer-side tool, which conflicts
+  with the plug-and-play rule.
+- `FEAT-20` moves ZMK to splitkb's fork: check pointing is there too
+  before planning.
+
+**Conclusion:** everything fievel does with the keyboard alone (mouse
+mode, movement, speeds, clicks, scroll, chords) is native ZMK; no
+module. Hint mode and the overlays are computer-side by nature.
+
+### Implementation Plan
+_Not yet discussed._
+
+### Prerequisites
+- Is a mouse layer wanted? If so: which keys, entered how (layer key,
+  combo), and does it fit the README's ground rules?
