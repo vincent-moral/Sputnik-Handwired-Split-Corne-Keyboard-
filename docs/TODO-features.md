@@ -182,8 +182,14 @@ Approved 2026-10-16.
 3. **Done (2026-10-16):** flashed the left half and verified in COSMIC
    Text Editor (select on nav then copy, paste, undo, redo, cut) and in
    kitty (nav + `m` copies, nav + `'` pastes, nav + `;` stops `sleep`).
-4. Around 2026-11-06: is it used? If not, remove it rather than keep
-   unused keys.
+4. **Done (2026-11-21):** reviewed: the user doesn't use them and chose
+   to remove all seven (the bottom row and kitty's two). Bindings,
+   legends, README note and Arsenik credit removed; kitty's
+   Ctrl+Shift+C/V stay reachable through the Mods layer (one-shot Ctrl,
+   then Shift).
+5. Push (`ship-firmware`), flash, and check on the keyboard that nav +
+   `n , ; : ! m '` now type nothing new (the base letters pass through,
+   as before `FEAT-9`). Then `close-entry`.
 
 ## FEAT-18: Low's digits without NumLock
 

@@ -63,9 +63,8 @@ tapped instead):
 - **BT** (Low and Raise held together): Bluetooth profiles 0–4 and
   `BT clear`, which erases the current profile's pairing.
 - **Nav** (left outer thumb, which has no tap since 2026-10-19: Super is
-  on the home row): arrows and edit
-  shortcuts on the right. `kitty` Copy / Paste are kitty's Ctrl+Shift+C /
-  V. `plain ^` types right away (AltGr+9), for vim and regexes.
+  on the home row): arrows on the right. `plain ^` types right away
+  (AltGr+9), for vim and regexes.
 
 ### Accents: how and when to use it
 
@@ -87,17 +86,6 @@ to build. **Tap Low, then the key**, and the layer closes again:
 
 ### Nav: how and when to use it
 
-Added 2026-10-16, still a habit to build:
-
-- **Edit shortcuts without a chord:** hold nav, tap one key. Use them
-  instead of `k` + a letter for undo, cut, copy, paste and redo
-  (Ctrl+Shift+Z), mostly while already on nav.
-- **Select then copy in one go:** hold nav, hold `f` (Shift), move with the
-  arrows, let go of `f`, tap `Copy` (or `Cut`), all without leaving nav.
-- **In kitty, use `kitty` Copy / Paste**, never the plain ones: plain Ctrl+C
-  stops the running program and Ctrl+V doesn't paste. They replace
-  Ctrl+Shift+C/V, which the same-hand rule makes impossible otherwise
-  (Ctrl and Shift are both right-hand home-row mods).
 - **LazyVim's terminal: `nvim` Term** (added 2026-10-17) opens it from
   normal mode and hides it from inside. It replaces Ctrl+/, which needs
   Shift on AZERTY: the key sends Ctrl+`_`, LazyVim's built-in alias.
@@ -148,7 +136,7 @@ the same-hand rule makes impossible with home-row mods alone.
   implementation [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox):
   the advice behind the home-row mod timing, and the 150 ms of the thumb
   keys with a tap,
-  the single-key edit shortcuts on the nav layer, the one-shot
+  the one-shot
   modifiers of the Mods layer, and the raise layer's symbols (Arsenik's
   symbols layer, from Ergo-L, with Ækeynox's AZERTY keycodes).
 - [Lafayette](https://qwerty-lafayette.org/): the idea of a single key

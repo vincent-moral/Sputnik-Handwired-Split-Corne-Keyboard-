@@ -152,19 +152,19 @@ layers:
   - ←
   - ↓
   - →
-  - {t: Copy, s: kitty}
-  - {t: Paste, s: kitty}
   - {type: trans}
   - {type: trans}
   - {type: trans}
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  - Undo
-  - Cut
-  - Copy
-  - Paste
-  - Redo
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
   - {t: Term, s: nvim}
   - {type: held}
   - {type: trans}

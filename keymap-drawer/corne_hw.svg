@@ -734,15 +734,11 @@ rect.key, rect.combo { stroke: #6a737d; stroke-width: 2.5; }
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
 <text x="0" y="0" class="key tap">→</text>
 </g>
-<g transform="translate(750, 112)" class="key keypos-22">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">Copy</text>
-<text x="0" y="-26" class="key shifted">kitty</text>
+<g transform="translate(750, 112)" class="key trans keypos-22">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
 </g>
-<g transform="translate(810, 112)" class="key keypos-23">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">Paste</text>
-<text x="0" y="-26" class="key shifted">kitty</text>
+<g transform="translate(810, 112)" class="key trans keypos-23">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
 </g>
 <g transform="translate(30, 172)" class="key trans keypos-24">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
@@ -762,25 +758,20 @@ rect.key, rect.combo { stroke: #6a737d; stroke-width: 2.5; }
 <g transform="translate(330, 164)" class="key trans keypos-29">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
 </g>
-<g transform="translate(510, 164)" class="key keypos-30">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">Undo</text>
+<g transform="translate(510, 164)" class="key trans keypos-30">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
 </g>
-<g transform="translate(570, 157)" class="key keypos-31">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">Cut</text>
+<g transform="translate(570, 157)" class="key trans keypos-31">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
 </g>
-<g transform="translate(630, 150)" class="key keypos-32">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">Copy</text>
+<g transform="translate(630, 150)" class="key trans keypos-32">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
 </g>
-<g transform="translate(690, 157)" class="key keypos-33">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">Paste</text>
+<g transform="translate(690, 157)" class="key trans keypos-33">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
 </g>
-<g transform="translate(750, 172)" class="key keypos-34">
-<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">Redo</text>
+<g transform="translate(750, 172)" class="key trans keypos-34">
+<rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key trans"/>
 </g>
 <g transform="translate(810, 172)" class="key keypos-35">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>

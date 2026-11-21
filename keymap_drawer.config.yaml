@@ -83,14 +83,6 @@ parse_config:
     "&kp RA(N9)": {t: "^", s: plain}
     "&kp RA(MINUS)": "]"
     "&kp RA(EQUAL)": "}"
-    # Edit shortcuts on the nav layer (FEAT-9)
-    "&kp LC(W)": Undo
-    "&kp LC(X)": Cut
-    "&kp LC(C)": Copy
-    "&kp LC(V)": Paste
-    "&kp LC(LS(W))": Redo
-    "&kp LC(LS(C))": {t: Copy, s: kitty}
-    "&kp LC(LS(V))": {t: Paste, s: kitty}
     # LazyVim's terminal toggle (FEAT-3): Ctrl+_ is its <C-_> alias of Ctrl+/
     "&kp LC(N8)": {t: Term, s: nvim}
     # One-shot modifiers on the Mods layer (FEAT-7); "sticky" on top, since
