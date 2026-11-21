@@ -31,6 +31,12 @@ rules in `README.md#layout-ground-rules`.
    build; read the warnings. For a refactor that shouldn't change the
    firmware, compare the `.uf2` sha256 with a build of the previous
    commit. Never flash these `.uf2` files.
+   - `tools/zmk_build.py` prints the warnings after all the sizes, not
+     per target. Before calling a warning new or explaining it, build
+     the previous commit's keymap and compare: `git checkout <commit> --
+     config/`, `pixi run build`, `git checkout HEAD -- config/` (the
+     build copies the working tree's `config/`). Same warnings: not
+     from this change.
 7. **Commit** as `feat|fix(<ID>): what` with the why and "Effect on
    push: CI builds new firmware; nothing changes until flashed". Mark
    the plan step **Done (date)**. Stop and ask before pushing; pushing
