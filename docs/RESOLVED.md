@@ -303,3 +303,31 @@ Things that weren't obvious:
   letter needs the release order to decide.
 - On Raise the tap and the hold open the same layer, so balanced cost
   nothing there.
+
+## FEAT-19: Study: measuring typing per key, and the firmware's decisions
+
+**Closed:** 2026-11-21, dropped by the user: they tune `FEAT-6`'s
+timings by feel rather than build a measurement. Nothing was built.
+
+Things that weren't obvious, if measuring comes back:
+
+- **No computer-side tool sees real key timing on this keyboard**
+  (browser page, keybr, Monkeytype, a native app alike). While a
+  hold-tap is undecided, ZMK holds back the keys pressed meanwhile and
+  replays them after its decision (`behavior_hold_tap.c` at `4dd95d7`):
+  `f` then `i` reach the computer together, the real hold time already
+  lost. Only the keyboard sees it.
+- **The cheapest measurement is ZMK's USB debug log** (snippet
+  `zmk-usb-logging`): no firmware code, one more build target. The
+  hold-tap logs each undecided hold-tap, each captured key and each
+  `decided tap/hold` with its flavor, timed by the keyboard. Needs the
+  left half on USB for the session.
+- keybr (AGPL, read 2026-11-01) models one character per PC key: no
+  layers, no hold-taps, no key-up timing; its users with home-row mods
+  see those letters at half speed. A fork is a large TypeScript
+  monorepo on an active upstream.
+- A live trainer would need a ZMK telemetry module (subscribing to
+  `zmk_position_state_changed` and friends; hold-tap decisions aren't
+  events) streaming over USB, and right-half keys are timed on arrival
+  at the left half, so they carry the split link's delay. A keystroke
+  stream is a keylogger: off by default if ever built.

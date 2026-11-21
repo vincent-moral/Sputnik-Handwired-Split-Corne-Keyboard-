@@ -21,9 +21,8 @@ that only come back if the practice asks for them.
   `splitkb/zmk` (plan step 1); steps 2–9 need no keyboard, step 10
   does. Every question in it is answered.
 - **FEAT-9** ([entry](TODO-features.md#feat-9-single-key-shortcuts-on-the-nav-layer)):
-  step 4, the review "is it used?", was due around 2026-11-06 and is
-  **overdue**. Ask the user; if unused, remove the keys (a firmware
-  change).
+  reviewed 2026-11-21: unused, all seven keys removed (committed, not
+  pushed). Waits on flashing and plan step 5.
 - **BUG-8** ([entry](TODO-bugs.md#bug-8--is-a-dead-key-on-the-work-pc)) and
   **FEAT-4** ([entry](TODO-features.md#feat-4-workspace-switching-by-number-on-niri-and-cosmic)):
   blocked on the work PC's `localectl status` and
@@ -31,12 +30,8 @@ that only come back if the practice asks for them.
   2026-11-01).
 - **FEAT-6** ([entry](TODO-features.md#feat-6-home-row-mods-that-only-trigger-with-the-other-hand)):
   fast typing gives `fi` instead of `I` (reported 2026-11-01). Candidate:
-  a shorter `tapping-term-ms` on `hsl`/`hsr`. The user chose practice
-  first; tuning waits for a measurement (FEAT-19).
-- **FEAT-19** ([entry](TODO-features.md#feat-19-study-measuring-typing-per-key-and-the-firmwares-decisions)):
-  study only, no decision taken. The user checks whether keybr's
-  profile page can export data. A custom trainer comes back only if
-  they want per-key stats and hold-tap tuning.
+  `tapping-term-ms` 200 on `hsl`/`hsr` committed 2026-11-21 (tuned by
+  feel; FEAT-19 dropped, its lessons in `RESOLVED.md`). Not pushed.
 - **FEAT-8** (rewrite or close when accents are next discussed),
   **FEAT-18**, **BUG-5**: no action pending.
 
@@ -67,7 +62,8 @@ that only come back if the practice asks for them.
   and the board files before explaining a Kconfig value (R3).
 - **Said a web page could measure the hold time of `f`.** It can't: an
   undecided hold-tap holds back later key events and replays them, so
-  only the keyboard (ZMK's USB log) sees real timing (FEAT-19).
+  only the keyboard (ZMK's USB log) sees real timing (FEAT-19, in
+  `RESOLVED.md`).
 - **`git rebase --autosquash` needs `-i`** on git 2.43, which isn't
   available here. To squash a fixup: detached checkout of the target,
   `cherry-pick -n` the fix, `commit --amend`, cherry-pick the rest,
@@ -88,9 +84,8 @@ that only come back if the practice asks for them.
 
 ## Plan
 
-1. Ask about FEAT-9's use (overdue). If unused: remove the keys with
-   `keymap-change`, then `ship-firmware`; if used, close it with
-   `close-entry`.
+1. FEAT-9: removal committed 2026-11-21 (unused). After pushing and
+   flashing, its plan step 5, then `close-entry`.
 2. FEAT-20, once the user has forked `splitkb/zmk`: plan steps 2–9 in
    order, each with the check its step names. Step 2 alone first, and
    compare the Sputnik's build warnings with the last build before
@@ -99,18 +94,15 @@ that only come back if the practice asks for them.
 3. When the user brings the work-PC dumps: BUG-8, then FEAT-4. Check:
    `localectl status` shows the layout and variant; `binds.kdl` lists
    the workspace bindings.
-4. When the user reports on keybr's export: update FEAT-19's
-   Prerequisites, nothing else.
-5. FEAT-6 only if the user asks for tuning: measure first (ZMK USB log,
-   FEAT-19), then change `tapping-term-ms`.
+4. FEAT-6: after flashing, follow its plan step 9 (tune by feel).
 
 ## Waiting on the user
 
 - FEAT-20: their fork of `splitkb/zmk` (its URL goes in `west.yml`),
   and the Halcyon Corne itself for plan step 10.
-- FEAT-9: is the nav layer's undo/copy/paste row used?
+- Approval to push FEAT-9's removal and FEAT-6's 200 ms (firmware).
+- FEAT-20's fork: doesn't exist yet (2026-11-21).
 - Work-PC dumps for BUG-8 and FEAT-4.
-- keybr's data export (FEAT-19).
 - Approval to push the 2026-11-18 commits (skills, guide, handoff, the
   build's `.claude/**` ignore, and FEAT-20's docs commit).
 
