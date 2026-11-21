@@ -1,4 +1,4 @@
-# Handoff (2026-11-18)
+# Handoff (2026-11-21)
 
 Temporary note for resuming in a new session. Delete it once the items
 below are closed. The authoritative state is the TODO files,
@@ -7,104 +7,111 @@ below are closed. The authoritative state is the TODO files,
 
 ## Goal
 
-The keyboard is the user's daily driver and the firmware is stable
-(BUG-9's balanced Low and Raise, flashed 2026-10-25). They're practising
-on keybr and Monkeytype now. Next: the same keymap on the Halcyon Corne
-that will replace the Sputnik (FEAT-20), ready before the keyboard
-arrives. The rest is small items that wait on the user, and two studies
-that only come back if the practice asks for them.
+The keyboard is the user's daily driver. Today's firmware (`ef52ad4`)
+fixes missed capitals (FEAT-6) and removes unused nav keys (FEAT-9); it
+is built and on `main`, not yet flashed. Next: verify it, then the same
+keymap on the Halcyon Corne (FEAT-20) once the user's fork exists.
 
 ## Problems we're solving
 
-- **FEAT-20** ([entry](TODO-features.md#feat-20-firmware-for-the-halcyon-corne-from-the-same-keymap)):
-  plan approved 2026-11-18, nothing coded. Waits on the user's fork of
-  `splitkb/zmk` (plan step 1); steps 2–9 need no keyboard, step 10
-  does. Every question in it is answered.
+- **FEAT-6** ([entry](TODO-features.md#feat-6-home-row-mods-that-only-trigger-with-the-other-hand)):
+  `tapping-term-ms` 280 → 200 on `hsl`/`hsr` (2026-11-21), tuned by
+  feel. Waits on flashing, the key check and a few days of daily use
+  (plan step 9).
 - **FEAT-9** ([entry](TODO-features.md#feat-9-single-key-shortcuts-on-the-nav-layer)):
-  reviewed 2026-11-21: unused, all seven keys removed (committed, not
-  pushed). Waits on flashing and plan step 5.
+  unused, all seven keys removed (2026-11-21). Waits on flashing and
+  plan step 5, then `close-entry`.
+- **FEAT-20** ([entry](TODO-features.md#feat-20-firmware-for-the-halcyon-corne-from-the-same-keymap)):
+  plan approved 2026-11-18, nothing coded. The user's fork of
+  `splitkb/zmk` doesn't exist yet (2026-11-21).
+- **FEAT-21** ([entry](TODO-features.md#feat-21-study-fievels-keyboard-mouse-natively-in-zmk)):
+  study added 2026-11-21: fievel's keyboard mouse is native ZMK (no
+  module); hint mode can't be done in firmware. Waits on the user: is a
+  mouse layer wanted?
 - **BUG-8** ([entry](TODO-bugs.md#bug-8--is-a-dead-key-on-the-work-pc)) and
   **FEAT-4** ([entry](TODO-features.md#feat-4-workspace-switching-by-number-on-niri-and-cosmic)):
   blocked on the work PC's `localectl status` and
-  `~/.config/niri/dms/binds.kdl`. The user forgot them twice (last asked
-  2026-11-01).
-- **FEAT-6** ([entry](TODO-features.md#feat-6-home-row-mods-that-only-trigger-with-the-other-hand)):
-  fast typing gives `fi` instead of `I` (reported 2026-11-01). Candidate:
-  `tapping-term-ms` 200 on `hsl`/`hsr` committed 2026-11-21 (tuned by
-  feel; FEAT-19 dropped, its lessons in `RESOLVED.md`). Not pushed.
+  `~/.config/niri/dms/binds.kdl` (last asked 2026-11-01).
 - **FEAT-8** (rewrite or close when accents are next discussed),
   **FEAT-18**, **BUG-5**: no action pending.
+- Closed today: FEAT-19, dropped (lessons in `RESOLVED.md`).
 
 ## Main files
 
-- `docs/TODO-features.md`: FEAT-20, added 2026-11-18. Its plan lists
-  every file it touches: `config/west.yml`, `build.yml`,
-  `config/halcyon_corne.keymap` and `.conf` (new), `build.yaml`,
-  `tools/zmk_build.py`, README, guide, `keymap-change` and
-  `ship-firmware` skills.
-- `config/corne_hw.keymap`: `hsl`/`hsr` (FEAT-6 timing), `ltsl`/`mtsl`
-  (BUG-9), the nav layer (FEAT-9).
-- `tools/key-check.html`: the verification page (pinned artifact
-  https://claude.ai/artifact/Lykm8JfAtP6KVqetzvraFx, version 6); its
-  checklist still holds BUG-9's checks.
-- `.claude/skills/`, `AGENTS.md`: added 2026-11-18, copied and adapted
-  from `homelab-iac`.
+- `config/corne_hw.keymap`: `hsl`/`hsr` (FEAT-6), the nav layer (FEAT-9).
+  Still one line per layer: the user's next keymap-editor save turns it
+  into the grid the guide describes. Don't edit the guide for this.
+- `README.md`, `keymap_drawer.config.yaml`, `keymap-drawer/`: FEAT-9's
+  legends and nav note removed, FEAT-6's 200 ms in the ground rules.
+- `tools/key-check.html`: rewritten for `ef52ad4` (FEAT-6 and FEAT-9
+  checks, `RES` `res-1121`), published as version 7 of
+  https://claude.ai/artifact/Lykm8JfAtP6KVqetzvraFx.
+- `docs/TODO-features.md` (FEAT-6, FEAT-9, FEAT-21), `docs/RESOLVED.md`
+  (FEAT-19).
 
 ## What failed (don't repeat)
 
+- **Explained build warnings before checking them** (2026-11-21): said
+  three `keymap.c` warnings were "apparently from `settings_reset`".
+  `tools/zmk_build.py` prints warnings after all the sizes, not per
+  target. Building the previous commit showed them identical, so they
+  aren't new. To build an older keymap: `git checkout <commit> --
+  config/`, `pixi run build`, `git checkout HEAD -- config/` (the build
+  copies the working tree's `config/`).
+- **No `node` on this machine:** the key-check page's JavaScript wasn't
+  syntax-checked before publishing. If the page shows nothing, look at
+  the `CHECKS` block first.
+- **fievel (FEAT-21) was studied from its README only**, not its
+  source. Read the code before relying on a detail of its behavior.
 - **Pushed to `dev` without asking** (BUG-6). Every push needs its own
-  approval, `dev` included; "you can push to dev" for one change doesn't
-  cover the next.
-- **Claimed checks the user hadn't reported** (BUG-9 "digits too").
-  Write only what the pasted report says; the rest is "not reported".
-- **A Kconfig claim without reading the build** (BUG-6 said our Kconfig
-  set `ZMK_USB=y`; it was nice!nano's defconfig). Read the build log
-  and the board files before explaining a Kconfig value (R3).
-- **Said a web page could measure the hold time of `f`.** It can't: an
-  undecided hold-tap holds back later key events and replays them, so
-  only the keyboard (ZMK's USB log) sees real timing (FEAT-19, in
-  `RESOLVED.md`).
+  approval, `dev` included.
+- **Claimed checks the user hadn't reported** (BUG-9). Write only what
+  the pasted report says; the rest is "not reported".
+- **A Kconfig claim without reading the build** (BUG-6). Read the build
+  log and the board files before explaining a Kconfig value (R3).
 - **`git rebase --autosquash` needs `-i`** on git 2.43, which isn't
-  available here. To squash a fixup: detached checkout of the target,
-  `cherry-pick -n` the fix, `commit --amend`, cherry-pick the rest,
-  `git branch -f main`.
-- **The scratchpad is wiped between sessions:** the key-check page was
-  lost twice. It now lives in `tools/`; read the artifact by URL
-  (`path: index.html`) if the file is ever behind.
-- **zsh treats `=====` as a command** (`=` expansion) in an echo. Use
-  `---` as a separator.
-- **FEAT-20 was written from a claude.ai session linked to the
-  computer, without a shell on it** (2026-11-18): files can be read
-  and written there, but git, pixi and podman can't run, so the user
-  commits. Writing a file back twice under the same staged name saved
-  the older copy, silently, twice: give each write-back a new staged
-  file name, then check the size on disk.
-- **splitkb's fork branch gets rebased** (FEAT-20): never pin a commit
-  that only lives there. Pin the user's copy of it.
+  available here. To squash a fixup into the last commit: `git commit
+  --amend`; deeper: detached checkout, `cherry-pick -n`, `--amend`,
+  cherry-pick the rest, `git branch -f main`.
+- **The scratchpad is wiped between sessions:** the key-check page lives
+  in `tools/`; read the artifact by URL if the file is ever behind.
+- **zsh treats `=====` as a command** in an echo. Use `---`.
+- **A claude.ai session linked to the computer has no shell** (FEAT-20,
+  2026-11-18): give each write-back a new staged file name, then check
+  the size on disk.
+- **splitkb's fork branch gets rebased** (FEAT-20): pin the user's copy
+  of it, never a commit that only lives there.
 
 ## Plan
 
-1. FEAT-9: removal committed 2026-11-21 (unused). After pushing and
-   flashing, its plan step 5, then `close-entry`.
-2. FEAT-20, once the user has forked `splitkb/zmk`: plan steps 2–9 in
-   order, each with the check its step names. Step 2 alone first, and
-   compare the Sputnik's build warnings with the last build before
-   adding the Halcyon. Check the fork first:
+1. When the user pastes the key-check report: record it in FEAT-6 and
+   FEAT-9 as reported (unreported checks say so). FEAT-9 all passed →
+   `close-entry`. FEAT-6 stays open for daily use (step 9).
+2. FEAT-6 after a few days: stray capitals in rolls → 230 ms; capitals
+   still missed → 170 ms (`keymap-change`, then `ship-firmware`).
+3. FEAT-20, once the fork exists: plan steps 2–9 in order. Check first:
    `git ls-remote <fork URL> 'main+halcyon-fixes'` shows `80cf18d`.
-3. When the user brings the work-PC dumps: BUG-8, then FEAT-4. Check:
-   `localectl status` shows the layout and variant; `binds.kdl` lists
-   the workspace bindings.
-4. FEAT-6: after flashing, follow its plan step 9 (tune by feel).
+4. FEAT-21: if the user wants a mouse layer, write its plan (keys, how
+   to enter it, ground rules, `CONFIG_ZMK_POINTING=y` and the HID
+   re-pair on each computer).
+5. Work-PC dumps: BUG-8, then FEAT-4.
 
 ## Waiting on the user
 
-- FEAT-20: their fork of `splitkb/zmk` (its URL goes in `west.yml`),
-  and the Halcyon Corne itself for plan step 10.
-- Approval to push FEAT-9's removal and FEAT-6's 200 ms (firmware).
-- FEAT-20's fork: doesn't exist yet (2026-11-21).
+- Flash `ef52ad4` (`gh run download 44941738003`, artifact `firmware`:
+  left `corne_hw_left-studio-rpc-usb-uart`, right `corne_hw_right`),
+  then run the key check and paste its report.
+- Approval to push `e5c7fde` (key-check page, docs only) and this
+  handoff commit.
+- FEAT-21: is a mouse layer wanted?
+- FEAT-20: the fork of `splitkb/zmk`, later the Halcyon Corne itself.
 - Work-PC dumps for BUG-8 and FEAT-4.
-- Approval to push the 2026-11-18 commits (skills, guide, handoff, the
-  build's `.claude/**` ignore, and FEAT-20's docs commit).
+
+## In progress
+
+- Firmware `ef52ad4` (FEAT-6, FEAT-9): `dev` build green 2026-11-21
+  20:35 (19:35 UTC), all five jobs, no annotations; `main`
+  fast-forwarded, `dev` deleted, `main`'s own build green. Not flashed.
 
 ## Working agreements
 
@@ -123,6 +130,6 @@ that only come back if the practice asks for them.
 ## First prompt
 
 > Read `docs/HANDOFF.md`. First `git pull` and `git log --oneline -5`
-> (any keymap-editor commits?). Then ask me about FEAT-9's review, and
-> whether my fork of splitkb/zmk exists for FEAT-20. Use the repo
-> skills. Don't push anything without asking me first.
+> (any keymap-editor commits?). Then ask me whether I flashed `ef52ad4`
+> and for the key-check report (FEAT-6, FEAT-9). Use the repo skills.
+> Don't push anything without asking me first.
