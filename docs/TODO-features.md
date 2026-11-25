@@ -27,8 +27,9 @@ the same-hand rule anyway.
 _Not yet discussed._
 
 ### Prerequisites
-- `~/.config/niri/dms/binds.kdl` from the work PC (the user brings it on
-  2026-10-22).
+- `~/.config/niri/dms/binds.kdl` from the work PC: read it from the
+  user's chezmoi repo once it's set up (2026-11-25), which unifies the
+  home and work configs.
 - Does the user switch workspaces by number?
 
 ## FEAT-8: One accent key (1dk) instead of the accent combos

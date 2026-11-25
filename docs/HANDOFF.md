@@ -22,8 +22,9 @@ The keyboard is the user's daily driver, on firmware `ef52ad4`
   mouse layer wanted?
 - **BUG-8** ([entry](TODO-bugs.md#bug-8--is-a-dead-key-on-the-work-pc)) and
   **FEAT-4** ([entry](TODO-features.md#feat-4-workspace-switching-by-number-on-niri-and-cosmic)):
-  blocked on the work PC's `localectl status` and
-  `~/.config/niri/dms/binds.kdl` (last asked 2026-11-01).
+  wait on the user's chezmoi repo (home and work configs unified,
+  being set up 2026-11-25) for `~/.config/niri/dms/binds.kdl`, plus the
+  work PC's `localectl status`, which may not be in it.
 - **FEAT-8** (rewrite or close when accents are next discussed),
   **FEAT-18**, **BUG-5**: no action pending.
 - Closed 2026-11-25: FEAT-6 (lessons in `RESOLVED.md`) and FEAT-9.
@@ -78,13 +79,14 @@ The keyboard is the user's daily driver, on firmware `ef52ad4`
 2. FEAT-21: if the user wants a mouse layer, write its plan (keys, how
    to enter it, ground rules, `CONFIG_ZMK_POINTING=y` and the HID
    re-pair on each computer).
-3. Work-PC dumps: BUG-8, then FEAT-4.
+3. Once the chezmoi repo is set up: read the work configs from it,
+   then BUG-8, then FEAT-4.
 
 ## Waiting on the user
 
 - FEAT-21: is a mouse layer wanted?
 - FEAT-20: the fork of `splitkb/zmk`, later the Halcyon Corne itself.
-- Work-PC dumps for BUG-8 and FEAT-4.
+- The chezmoi repo (BUG-8, FEAT-4): where it is, once set up.
 
 ## Working agreements
 
@@ -104,5 +106,5 @@ The keyboard is the user's daily driver, on firmware `ef52ad4`
 
 > Read `docs/HANDOFF.md`. First `git pull` and `git log --oneline -5`
 > (any keymap-editor commits?). Then ask me about FEAT-20's fork,
-> FEAT-21's mouse layer and the work-PC dumps. Use the repo skills.
+> FEAT-21's mouse layer and the chezmoi repo. Use the repo skills.
 > Don't push anything without asking me first.

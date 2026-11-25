@@ -45,4 +45,6 @@ _Not yet discussed._
 ### Prerequisites
 - The work PC's layout: niri's `xkb` block is empty there (read
   2026-10-20), so it comes from `org.freedesktop.locale1`:
-  `localectl status` on the work PC (the user brings it on 2026-10-22).
+  `localectl status` on the work PC. Waits on the user's chezmoi repo
+  (2026-11-25), which unifies the home and work configs; a system
+  setting like locale1 may not be in it, so ask for this output too.
