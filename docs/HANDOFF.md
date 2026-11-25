@@ -41,24 +41,11 @@ The keyboard is the user's daily driver, on firmware `ef52ad4`
 
 ## What failed (don't repeat)
 
-- **Explained build warnings before checking them** (2026-11-21): said
-  three `keymap.c` warnings were "apparently from `settings_reset`".
-  `tools/zmk_build.py` prints warnings after all the sizes, not per
-  target. Building the previous commit showed them identical, so they
-  aren't new. To build an older keymap: `git checkout <commit> --
-  config/`, `pixi run build`, `git checkout HEAD -- config/` (the build
-  copies the working tree's `config/`).
-- **No `node` on this machine:** the key-check page's JavaScript wasn't
-  syntax-checked before publishing. If the page shows nothing, look at
-  the `CHECKS` block first.
+- **No `node` on this machine:** the key-check page's JavaScript can't
+  be syntax-checked before publishing. If the page shows nothing, look
+  at the `CHECKS` block first.
 - **fievel (FEAT-21) was studied from its README only**, not its
   source. Read the code before relying on a detail of its behavior.
-- **Pushed to `dev` without asking** (BUG-6). Every push needs its own
-  approval, `dev` included.
-- **Claimed checks the user hadn't reported** (BUG-9). Write only what
-  the pasted report says; the rest is "not reported".
-- **A Kconfig claim without reading the build** (BUG-6). Read the build
-  log and the board files before explaining a Kconfig value (R3).
 - **`git rebase --autosquash` needs `-i`** on git 2.43, which isn't
   available here. To squash a fixup into the last commit: `git commit
   --amend`; deeper: detached checkout, `cherry-pick -n`, `--amend`,
@@ -71,6 +58,9 @@ The keyboard is the user's daily driver, on firmware `ef52ad4`
   the size on disk.
 - **splitkb's fork branch gets rebased** (FEAT-20): pin the user's copy
   of it, never a commit that only lives there.
+- **chezmoi won't hold system settings** (BUG-8, 2026-11-25): the work
+  PC's layout comes from `localectl`, not a dotfile; ask for its output
+  even once the repo exists.
 
 ## Plan
 
