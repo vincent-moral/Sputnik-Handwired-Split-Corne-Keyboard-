@@ -37,8 +37,9 @@ first. This skill is the procedure, not the rules.
 4. **Promote lasting lessons.** For each "What failed" item that will
    still matter after the handoff is deleted, propose where it belongs:
    a rule in the guide, a backlog entry, `docs/RESOLVED.md`, a comment
-   in the keymap or a tool, a repo skill, or the assistant's memory (an
-   assistant habit, such as shell quoting). Ask before adding a rule.
+   in the keymap or a tool, a repo skill, or `docs/ASSISTANT-NOTES.md`
+   (an assistant habit, such as shell quoting; never a private memory).
+   Ask before adding a rule.
 5. **No secrets** (an ApeKey or any token), not even partial values.
 6. Commit as `docs: handoff <date>` with "Effect on push: docs only".
    Unpushed commits are listed in the handoff; don't push without

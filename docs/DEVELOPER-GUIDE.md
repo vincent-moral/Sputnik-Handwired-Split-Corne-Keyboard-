@@ -159,8 +159,11 @@ by [Ækeynox](https://github.com/OneDeadKey/zmk-config-aekeynox).
 
 ## 5. For AI assistants
 
-- Read this guide, `docs/HANDOFF.md` (if present), then the backlog,
-  before assuming something is new.
+- Read this guide, [`ASSISTANT-NOTES.md`](ASSISTANT-NOTES.md),
+  `docs/HANDOFF.md` (if present), then the backlog, before assuming
+  something is new. Lessons that outlive a handoff and concern the
+  assistant rather than the keymap go in `ASSISTANT-NOTES.md`, not in a
+  private memory.
 - Follow §1's authorization rules exactly: prepare, explain, ask.
 - Keep the user's decisions: don't move a key they placed, or change an
   accepted exception, without saying so explicitly.

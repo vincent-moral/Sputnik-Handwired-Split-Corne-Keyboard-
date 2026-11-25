@@ -6,3 +6,7 @@ exists, and the backlog in `docs/TODO-features.md` and
 `docs/TODO-bugs.md`.
 
 @docs/DEVELOPER-GUIDE.md
+
+Lessons and context for assistants (imported in full):
+
+@docs/ASSISTANT-NOTES.md

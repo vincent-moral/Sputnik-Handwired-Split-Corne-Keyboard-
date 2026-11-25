@@ -41,21 +41,10 @@ The keyboard is the user's daily driver, on firmware `ef52ad4`
 
 ## What failed (don't repeat)
 
-- **No `node` on this machine:** the key-check page's JavaScript can't
-  be syntax-checked before publishing. If the page shows nothing, look
-  at the `CHECKS` block first.
+Lasting habits are in [`ASSISTANT-NOTES.md`](ASSISTANT-NOTES.md).
+
 - **fievel (FEAT-21) was studied from its README only**, not its
   source. Read the code before relying on a detail of its behavior.
-- **`git rebase --autosquash` needs `-i`** on git 2.43, which isn't
-  available here. To squash a fixup into the last commit: `git commit
-  --amend`; deeper: detached checkout, `cherry-pick -n`, `--amend`,
-  cherry-pick the rest, `git branch -f main`.
-- **The scratchpad is wiped between sessions:** the key-check page lives
-  in `tools/`; read the artifact by URL if the file is ever behind.
-- **zsh treats `=====` as a command** in an echo. Use `---`.
-- **A claude.ai session linked to the computer has no shell** (FEAT-20,
-  2026-11-18): give each write-back a new staged file name, then check
-  the size on disk.
 - **splitkb's fork branch gets rebased** (FEAT-20): pin the user's copy
   of it, never a commit that only lives there.
 - **chezmoi won't hold system settings** (BUG-8, 2026-11-25): the work
