@@ -331,3 +331,31 @@ Things that weren't obvious, if measuring comes back:
   events) streaming over USB, and right-half keys are timed on arrival
   at the left half, so they carry the split link's delay. A keystroke
   stream is a keylogger: off by default if ever built.
+
+## FEAT-6: Home-row mods that only trigger with the other hand
+
+**Closed:** 2026-11-25. Verified 2026-10-16 (fast rolls give letters,
+`k`+`c` copies, Shift + nav + arrow selects) and, for the 200 ms Shift
+term, in daily use: "it works very well" (2026-11-25). The
+`quick-tap-ms` question (tap-then-hold `j` repeats only with a fast
+second press) was dropped by the user.
+
+Four custom hold-taps (`hml`/`hmr`, `hsl`/`hsr`) after ZMK's "timeless
+home-row mods": `balanced`, `hold-trigger-on-release`, the other hand
+and all thumbs as `hold-trigger-key-positions`, `require-prior-idle-ms`
+on all but Shift. Things that weren't obvious:
+
+- **With `balanced` and `hold-trigger-on-release`, key order alone
+  can't tell a capital from a roll.** `f`→`i` with `f` released first
+  is a tap unless the tapping term ran out first. A quick capital and a
+  fast roll (`fin`) look the same; only how long `f` was held separates
+  them. So the Shifts got their own, shorter term (280 → 200 ms) while
+  the other mods kept 280. The cost: a slow roll holding `f` or `j`
+  over 200 ms types a capital.
+- **ZMK counts `quick-tap-ms` from the first tap's press**, not its
+  release (`behavior_hold_tap.c` at `4dd95d7`), so the tap-then-hold
+  repeat window is shorter than it reads.
+- **Shift stays instant** (no `require-prior-idle-ms`), so a capital
+  right after a quick space still works.
+- **keymap-editor keeps custom behaviors:** opening and saving the
+  keymap left behaviors, combos and comments byte-identical.

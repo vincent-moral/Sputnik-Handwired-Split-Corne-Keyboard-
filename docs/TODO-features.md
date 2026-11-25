@@ -31,102 +31,6 @@ _Not yet discussed._
   2026-10-22).
 - Does the user switch workspaces by number?
 
-## FEAT-6: Home-row mods that only trigger with the other hand
-
-**Priority:** High — the home-row mods use ZMK's default `&mt`
-(hold-preferred, 200 ms, checked in ZMK `4dd95d7` on 2026-10-16): any key
-pressed while a home-row key is still down makes it a modifier, so a fast
-roll like `f`→`r` types `R` and `d`→`e` sends Ctrl+E.
-
-**Complexity:** Medium — one custom hold-tap behavior, but its timings
-need tuning by daily use.
-
-**From Arsenik** (guide §4): its FAQ recommends, for ZMK, the
-`balanced` flavor plus positional hold-tap.
-
-### Spec
-- A custom hold-tap for the eight home-row mods:
-  - `hold-trigger-key-positions`: the other hand's keys and the thumbs,
-    so a same-hand key always resolves as a tap. This is the same-hand
-    rule enforced by the firmware.
-  - `balanced` or `tap-preferred` flavor instead of `hold-preferred`, so
-    rolls across hands stay letters.
-  - Candidates to evaluate: `require-prior-idle-ms` (letters while typing
-    fast), `quick-tap-ms` (key repeat), `hold-trigger-on-release`.
-  - Arsenik's own default is tap-preferred with a 300 ms term.
-- Study (2026-10-16): fits the ground rules. It enforces the same-hand
-  rule and moves no key. The thumbs count as triggers, which keeps the
-  nav-layer exception (Shift on `f` + nav + arrow) working. A same-hand
-  modifier is still possible on purpose, by holding past the tapping term.
-- The user confirmed misfires (2026-10-16): Alt sometimes fires instead
-  of the letter. Alt is on the ring fingers (`s`, `l`), which release
-  late in rolls like `l`→`e`.
-- Shift stays instant (user's choice, 2026-10-16): no
-  `require-prior-idle-ms` on the Shift keys, so a capital right after a
-  quick space still works.
-- The user holds `j`/`k` to scroll in vim and Vimium. Both are home-row
-  mods (Shift, Ctrl), so a long press is a modifier, today and after this
-  change. `quick-tap-ms` makes tap-then-hold repeat; hjkl arrows on the
-  nav layer are the other option (see Prerequisites).
-
-### Implementation Plan
-Approved 2026-10-16.
-1. **Done (2026-10-16):** add four hold-tap behaviors to `config/corne_hw.keymap`, following
-   ZMK's "timeless home-row mods" example: `balanced`,
-   `tapping-term-ms` 280, `quick-tap-ms` 175, `hold-trigger-on-release`,
-   `hold-trigger-key-positions` = the other hand's 18 keys plus all six
-   thumbs (36–41).
-   - `hml` / `hmr` (GUI, Alt, Ctrl): with `require-prior-idle-ms` 150.
-   - `hsl` / `hsr` (Shift): without it.
-2. **Done (2026-10-16):** use them for the eight home-row keys instead
-   of `&mt`.
-3. **Done (2026-10-16):** README: say the firmware enforces the same-hand rule, and credit
-   Arsenik and ZMK's timeless home-row mods (guide §4).
-4. **Done (2026-10-16):** the user opens and saves the keymap in
-   keymap-editor: the behaviors survive. Opening: the editor shows the
-   home-row keys as `&hml`/`&hmr`/`&hsl`/`&hsr` and the nav thumb as
-   `&lthp` (its warning, no row/col in the layout file, fixed 2026-10-16). Saving: on a throwaway
-   `editor-test` branch the user changed one key (position 31, `M` to
-   `A`); the editor's commit `5a059ab` changed only that binding, and
-   left behaviors, combos and comments byte-identical. Branch deleted.
-5. **Done (2026-10-16):** pushed to `dev`; all five jobs green, the only
-   annotation the known Ubuntu 26 runner notice (full logs need a `gh`
-   login); `main` fast-forwarded to `7a40cc5`.
-6. **Done (2026-10-16):** flashed (`8f5aa23`) and verified: fast rolls
-   (`le`, `la`, `sd`, `de`, `fr`) give letters; `k`+`c` copies; a
-   capital right after a space works; Shift + nav + arrow selects;
-   tap-then-hold `j` repeats, but only when the second press is fast.
-7. Tune the timings after a week of daily use. Candidate: the
-   tap-then-hold window is short because ZMK counts `quick-tap-ms` (175)
-   from the first tap's *press* (`behavior_hold_tap.c` at `4dd95d7`); if
-   it stays awkward, raise it to about 250 on `hmr`/`hsr`.
-
-   - Reported 2026-11-01: typing fast, a capital often comes out as two
-     letters, e.g. `fi` for `I` (Shift on `f`). With `balanced` and
-     `hold-trigger-on-release`, Shift needs `i` to be released while `f`
-     is still down, or `f` held past 280 ms; letting go of `f` first
-     makes it the tap. The fast roll `f`→`i` (afin, fin, profiter)
-     looks the same by key order, so only how long `f` was held before
-     `i` can tell them apart: a shorter `tapping-term-ms` on
-     `hsl`/`hsr` is the candidate.
-8. **Done (2026-11-21):** `tapping-term-ms` 280 → 200 on `hsl`/`hsr`
-   only. The user misses many capitals and chose to tune by feel rather
-   than measure ([`FEAT-19`](RESOLVED.md#feat-19-study-measuring-typing-per-key-and-the-firmwares-decisions)
-   dropped). Balanced flavor checked in
-   `behavior_hold_tap.c` at `4dd95d7`: releasing `f` first is a tap,
-   unless the timer fired first (hold). The trade-off: a slow roll with
-   `f` or `j` held over 200 ms now gives a capital.
-9. Flash, then a few days of daily use: capitals reliable, and no
-   stray capitals in rolls like `afin`, `fin`, `je`. Too many stray
-   capitals → back up (e.g. 230); capitals still missed → down (e.g.
-   170). Then close the entry, or keep it for the `quick-tap-ms`
-   question in step 7.
-
-### Prerequisites
-- Plan approved 2026-10-16. Holding `j`/`k`: tap-then-hold for now;
-  hjkl arrows on the nav layer are deferred until the user has more
-  experience with arrows on this keyboard.
-
 ## FEAT-8: One accent key (1dk) instead of the accent combos
 
 **Priority:** Low — capital accented letters (É, À, Ç, È) can't be
@@ -156,51 +60,6 @@ _Not yet discussed._
 - Study with the user: does it fit the README's ground rules?
 - Were the accent combos an intended exception to the same-hand rule?
 - Where would the accent key go, given that `'` must stay one keypress?
-
-## FEAT-9: Single-key shortcuts on the nav layer
-
-**Priority:** Low — undo, cut, copy, paste (and kitty's Ctrl+Shift+C /
-Ctrl+Shift+V) as single keys need no chord at all.
-
-**Complexity:** Low — a few bindings on the nav layer's free right-hand
-slots.
-
-**From Arsenik** (guide §4): its nav layer has them on ZXCV.
-
-### Spec
-- On AZERTY the keyboard sends QWERTY positions: undo is `LC(W)`, select
-  all `LC(Q)` (Ækeynox's AZERTY aliases).
-- The nav layer is held by the left thumb, so under the same-hand rule
-  they go on the right hand.
-
-- Study (2026-10-16): fits the ground rules (nav thumb on the left, the
-  shortcuts on the right). The real gain is kitty's Ctrl+Shift+C/V,
-  impossible today since Ctrl (`k`) and Shift (`j`) are both right-hand
-  home-row mods; plain undo/copy/paste already work as `k` + a letter.
-- Layout (proposed, the user liked it 2026-10-16): undo, cut, copy,
-  paste, redo (Ctrl+Shift+Z) on the bottom row (`n , ; : !`); kitty copy
-  and paste on the two free home-row slots (`m`, `'`).
-- New habit for the user: the README says how and when to use it.
-
-### Implementation Plan
-Approved 2026-10-16.
-1. **Done (2026-10-16):** bindings on the nav layer: `LC(W)`, `LC(X)`,
-   `LC(C)`, `LC(V)`, `LC(LS(W))` at 30–34, `LC(LS(C))`, `LC(LS(V))` at
-   22–23; README diagram plus a "how and when" note; README credits
-   Arsenik (guide §4).
-2. **Done (2026-10-16):** pushed to `dev`, all five jobs green (only the
-   Ubuntu 26 runner notice), `main` fast-forwarded to `4109eae`.
-3. **Done (2026-10-16):** flashed the left half and verified in COSMIC
-   Text Editor (select on nav then copy, paste, undo, redo, cut) and in
-   kitty (nav + `m` copies, nav + `'` pastes, nav + `;` stops `sleep`).
-4. **Done (2026-11-21):** reviewed: the user doesn't use them and chose
-   to remove all seven (the bottom row and kitty's two). Bindings,
-   legends, README note and Arsenik credit removed; kitty's
-   Ctrl+Shift+C/V stay reachable through the Mods layer (one-shot Ctrl,
-   then Shift).
-5. Push (`ship-firmware`), flash, and check on the keyboard that nav +
-   `n , ; : ! m '` now type nothing new (the base letters pass through,
-   as before `FEAT-9`). Then `close-entry`.
 
 ## FEAT-18: Low's digits without NumLock
 
@@ -347,7 +206,7 @@ unless it says otherwise; `git pull` first (keymap-editor commits).
    (if present, `config/halcyon_corne_right.conf` with
    `CONFIG_ZMK_USB=n`, as in `BUG-6`), any sensor warning, and that
    underglow is off in both halves' `.config`.
-6. **keymap-editor test**, as in `FEAT-6` step 4: on a throwaway
+6. **keymap-editor test**, as for [`FEAT-6`](RESOLVED.md#feat-6-home-row-mods-that-only-trigger-with-the-other-hand): on a throwaway
    branch, open and save one key. Check: it still edits
    `config/corne_hw.keymap`, and `config/halcyon_corne.keymap` is
    untouched.

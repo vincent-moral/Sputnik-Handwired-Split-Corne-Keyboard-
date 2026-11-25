@@ -1,4 +1,4 @@
-# Handoff (2026-11-21)
+# Handoff (2026-11-25)
 
 Temporary note for resuming in a new session. Delete it once the items
 below are closed. The authoritative state is the TODO files,
@@ -7,20 +7,12 @@ below are closed. The authoritative state is the TODO files,
 
 ## Goal
 
-The keyboard is the user's daily driver. Today's firmware (`ef52ad4`)
-fixes missed capitals (FEAT-6) and removes unused nav keys (FEAT-9); it
-is built and on `main`, not yet flashed. Next: verify it, then the same
-keymap on the Halcyon Corne (FEAT-20) once the user's fork exists.
+The keyboard is the user's daily driver, on firmware `ef52ad4`
+(verified 2026-11-25). Next: the same keymap on the Halcyon Corne
+(FEAT-20) once the user's fork exists.
 
 ## Problems we're solving
 
-- **FEAT-6** ([entry](TODO-features.md#feat-6-home-row-mods-that-only-trigger-with-the-other-hand)):
-  `tapping-term-ms` 280 → 200 on `hsl`/`hsr` (2026-11-21), tuned by
-  feel. Waits on flashing, the key check and a few days of daily use
-  (plan step 9).
-- **FEAT-9** ([entry](TODO-features.md#feat-9-single-key-shortcuts-on-the-nav-layer)):
-  unused, all seven keys removed (2026-11-21). Waits on flashing and
-  plan step 5, then `close-entry`.
 - **FEAT-20** ([entry](TODO-features.md#feat-20-firmware-for-the-halcyon-corne-from-the-same-keymap)):
   plan approved 2026-11-18, nothing coded. The user's fork of
   `splitkb/zmk` doesn't exist yet (2026-11-21).
@@ -34,20 +26,17 @@ keymap on the Halcyon Corne (FEAT-20) once the user's fork exists.
   `~/.config/niri/dms/binds.kdl` (last asked 2026-11-01).
 - **FEAT-8** (rewrite or close when accents are next discussed),
   **FEAT-18**, **BUG-5**: no action pending.
-- Closed today: FEAT-19, dropped (lessons in `RESOLVED.md`).
+- Closed 2026-11-25: FEAT-6 (lessons in `RESOLVED.md`) and FEAT-9.
 
 ## Main files
 
-- `config/corne_hw.keymap`: `hsl`/`hsr` (FEAT-6), the nav layer (FEAT-9).
-  Still one line per layer: the user's next keymap-editor save turns it
-  into the grid the guide describes. Don't edit the guide for this.
-- `README.md`, `keymap_drawer.config.yaml`, `keymap-drawer/`: FEAT-9's
-  legends and nav note removed, FEAT-6's 200 ms in the ground rules.
-- `tools/key-check.html`: rewritten for `ef52ad4` (FEAT-6 and FEAT-9
-  checks, `RES` `res-1121`), published as version 7 of
-  https://claude.ai/artifact/Lykm8JfAtP6KVqetzvraFx.
-- `docs/TODO-features.md` (FEAT-6, FEAT-9, FEAT-21), `docs/RESOLVED.md`
-  (FEAT-19).
+- `config/corne_hw.keymap`: still one line per layer; the user's next
+  keymap-editor save turns it into the grid the guide describes. Don't
+  edit the guide for this.
+- `tools/key-check.html`: still the `ef52ad4` checklist (version 7 of
+  https://claude.ai/artifact/Lykm8JfAtP6KVqetzvraFx); rewrite it for
+  the next firmware.
+- `docs/TODO-features.md` (FEAT-20, FEAT-21), `docs/TODO-bugs.md` (BUG-8).
 
 ## What failed (don't repeat)
 
@@ -84,34 +73,18 @@ keymap on the Halcyon Corne (FEAT-20) once the user's fork exists.
 
 ## Plan
 
-1. When the user pastes the key-check report: record it in FEAT-6 and
-   FEAT-9 as reported (unreported checks say so). FEAT-9 all passed →
-   `close-entry`. FEAT-6 stays open for daily use (step 9).
-2. FEAT-6 after a few days: stray capitals in rolls → 230 ms; capitals
-   still missed → 170 ms (`keymap-change`, then `ship-firmware`).
-3. FEAT-20, once the fork exists: plan steps 2–9 in order. Check first:
+1. FEAT-20, once the fork exists: plan steps 2–9 in order. Check first:
    `git ls-remote <fork URL> 'main+halcyon-fixes'` shows `80cf18d`.
-4. FEAT-21: if the user wants a mouse layer, write its plan (keys, how
+2. FEAT-21: if the user wants a mouse layer, write its plan (keys, how
    to enter it, ground rules, `CONFIG_ZMK_POINTING=y` and the HID
    re-pair on each computer).
-5. Work-PC dumps: BUG-8, then FEAT-4.
+3. Work-PC dumps: BUG-8, then FEAT-4.
 
 ## Waiting on the user
 
-- Flash `ef52ad4` (`gh run download 44941738003`, artifact `firmware`:
-  left `corne_hw_left-studio-rpc-usb-uart`, right `corne_hw_right`),
-  then run the key check and paste its report.
-- Approval to push `e5c7fde` (key-check page, docs only) and this
-  handoff commit.
 - FEAT-21: is a mouse layer wanted?
 - FEAT-20: the fork of `splitkb/zmk`, later the Halcyon Corne itself.
 - Work-PC dumps for BUG-8 and FEAT-4.
-
-## In progress
-
-- Firmware `ef52ad4` (FEAT-6, FEAT-9): `dev` build green 2026-11-21
-  20:35 (19:35 UTC), all five jobs, no annotations; `main`
-  fast-forwarded, `dev` deleted, `main`'s own build green. Not flashed.
 
 ## Working agreements
 
@@ -130,6 +103,6 @@ keymap on the Halcyon Corne (FEAT-20) once the user's fork exists.
 ## First prompt
 
 > Read `docs/HANDOFF.md`. First `git pull` and `git log --oneline -5`
-> (any keymap-editor commits?). Then ask me whether I flashed `ef52ad4`
-> and for the key-check report (FEAT-6, FEAT-9). Use the repo skills.
+> (any keymap-editor commits?). Then ask me about FEAT-20's fork,
+> FEAT-21's mouse layer and the work-PC dumps. Use the repo skills.
 > Don't push anything without asking me first.
